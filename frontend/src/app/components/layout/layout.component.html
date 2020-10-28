@@ -1,0 +1,34 @@
+<header class="header">
+  <div class="logo">
+    <a routerLink="/">Spring Bank</a>
+  </div>
+
+  <div *ngIf="currentUser">
+    <div [matMenuTriggerFor]="menu" class="user">
+      <div class="user-avatar">
+        <img [src]="currentUser.avatar || 'assets/img/default-avatar.png'" />
+      </div>
+
+      <div class="user-name">{{ currentUser.name }}</div>
+    </div>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/profile">Profile</a>
+      <mat-divider></mat-divider>
+      <a mat-menu-item (click)="logout()">Log out</a>
+    </mat-menu>
+  </div>
+
+  <ul class="menu" *ngIf="!currentUser">
+    <li><a routerLink="/login">Login</a></li>
+    <li><a routerLink="/register">Register</a></li>
+  </ul>
+</header>
+
+<main class="main">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <div>© 2018 Spring Bank.</div>
+</footer>

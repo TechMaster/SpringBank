@@ -1,0 +1,33 @@
+<mat-card class="form">
+  <h1>Login to Spring Bank</h1>
+
+  <div class="error text-center" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <mat-form-field class="form-field">
+    <input
+      matInput
+      placeholder="Email"
+      autocomplete="off"
+      [(ngModel)]="email"
+      email
+    />
+    <mat-error>Invalid email address</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form-field">
+    <input
+      matInput
+      placeholder="Password"
+      type="password"
+      [(ngModel)]="password"
+      (keyup.enter)="login()"
+    />
+    <mat-error>Please input password</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button class="btn-login" color="primary" (click)="login()">
+    <span> Login</span>
+  </button>
+
+  <a class="text-center" routerLink="/login">Forgot Password?</a>
+</mat-card>
