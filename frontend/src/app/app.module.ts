@@ -13,6 +13,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { httpInterceptorProviders } from "./http-interceptors";
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { httpInterceptorProviders } from "./http-interceptors";
     HomeComponent,
     NotFoundComponent,
     ProfileComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

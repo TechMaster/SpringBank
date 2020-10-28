@@ -8,9 +8,49 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.text-center {
-  text-align: center;
+body ::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
 }
-.mat-body, .mat-body-1, .mat-typography {
-  font: 400 1rem/1.5rem Roboto, "Helvetica Neue", sans-serif;
+body ::-webkit-scrollbar-thumb {
+  background: #e4e9f2;
+  cursor: pointer;
+  border-radius: 0.15625rem;
+}
+img {
+  max-width: 100%;
+}
+a {
+  text-decoration: none;
+}
+.text-center {
+  text-align: center !important;
+}
+.all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  padding-right: 2rem;
+}
+.mat-form-field {
+  margin-bottom: 1rem;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+router-outlet + * {
+  display: block;
+  -webkit-animation: fade 1s;
+  animation: fade 1s;
 }

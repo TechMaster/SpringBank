@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-not-found',
+  selector: 'app-about',
   template: `
-    <h1>Ops! Trang này không tồn tại!</h1>
+    <h1>Trang này hiện đang được xây dựng!</h1>
 
     <p class="text-center" style="margin-top: 3rem;">
       <button mat-raised-button routerLink="/">
@@ -12,4 +12,4 @@ import { Component } from '@angular/core';
     </p>
   `,
 })
-export class NotFoundComponent {}
+export class AboutComponent {}

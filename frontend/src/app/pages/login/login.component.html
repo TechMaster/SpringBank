@@ -1,5 +1,5 @@
 <mat-card class="form">
-  <h1>Login to Spring Bank</h1>
+  <h1>Đăng nhập tài khoản Spring Bank</h1>
 
   <div class="error text-center" *ngIf="errorMessage">{{ errorMessage }}</div>
 
@@ -11,23 +11,23 @@
       [(ngModel)]="email"
       email
     />
-    <mat-error>Invalid email address</mat-error>
+    <mat-error>Sai định dạng Email</mat-error>
   </mat-form-field>
 
   <mat-form-field class="form-field">
     <input
       matInput
-      placeholder="Password"
+      placeholder="Mật khẩu"
       type="password"
       [(ngModel)]="password"
       (keyup.enter)="login()"
     />
-    <mat-error>Please input password</mat-error>
+    <mat-error>Xin vui lòng nhập mật khẩu</mat-error>
   </mat-form-field>
 
   <button mat-raised-button class="btn-login" color="primary" (click)="login()">
-    <span> Login</span>
+    <span>Đăng nhập</span>
   </button>
 
-  <a class="text-center" routerLink="/login">Forgot Password?</a>
+  <a class="text-center" routerLink="/login">Quên mật khẩu?</a>
 </mat-card>
