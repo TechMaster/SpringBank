@@ -28,8 +28,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
                 auth
-                    .userDetailsService(userDetailsService)
-                    .passwordEncoder(bCryptPasswordEncoder);
+                    .userDetailsService(userDetailsService) // Set userService using
+                    .passwordEncoder(bCryptPasswordEncoder); // Set encryption algorithm using
     }
 
     @Override
@@ -40,20 +40,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.
                 authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers(loginPage).permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/").permitAll() // All user can access
+                .antMatchers(loginPage).permitAll() // All user can access
+                .antMatchers("/registration").permitAll() // All user can access
+                .antMatchers("/admin/**").hasAuthority("ADMIN") // User has role ADMIN can access
                 .anyRequest()
                 .authenticated()
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage(loginPage)
                 .loginPage("/")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("user_name")
-                .passwordParameter("password")
+                .failureUrl("/login?error=true") // Url forward when login fail
+                .defaultSuccessUrl("/admin/home") // Url redirect when login success
+                .usernameParameter("user_name") // Name input form username
+                .passwordParameter("password") // Name input form password
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(logoutPage))
                 .logoutSuccessUrl(loginPage).and().exceptionHandling();
@@ -61,6 +61,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        // ignore security for resource file
         web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
