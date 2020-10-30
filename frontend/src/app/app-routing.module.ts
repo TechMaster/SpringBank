@@ -7,8 +7,11 @@ import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { UsersComponent } from './pages/users/users.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { CreateUserComponent } from './pages/users/create-user/create-user.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -19,6 +22,21 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'about', component: AboutComponent },
+      {
+        path: 'users',
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'users/create',
+        component: CreateUserComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'users/edit/:id',
+        component: EditUserComponent,
+        canActivate: [AuthGuard],
+      },
       {
         path: 'profile',
         component: ProfileComponent,

@@ -20,9 +20,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         (error) => {
           if (error.status === 401) {
             this.userService.logout();
-            this.router.navigateByUrl("/admin/login");
+            this.router.navigateByUrl("/login");
           } else if (error.status === 404) {
-            this.router.navigateByUrl("/admin/404-not-found");
+            this.router.navigateByUrl("/not-found");
           }
         }
       )

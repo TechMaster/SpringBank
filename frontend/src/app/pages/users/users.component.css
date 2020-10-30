@@ -1,0 +1,52 @@
+:host {
+  width: 100%;
+  margin: 30px 0;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-new {
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+.avatar {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.btn-edit,
+.btn-delete {
+  opacity: 0.5;
+}
+
+.btn-edit:hover {
+  opacity: 1;
+  color: #3366ff;
+}
+
+.btn-delete:hover {
+  opacity: 1;
+  color: #ff3d71;
+}
+
+.bg-loading {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.1);
+}

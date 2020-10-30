@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Edit User</mat-card-title>
+  </mat-card-header>
+
+  <div [formGroup]="updateUserForm" style="margin-left: 16px">
+    <app-user-form formControlName="profile"></app-user-form>
+
+    <button
+      mat-raised-button
+      routerLink="/users"
+      style="margin-right: 10px"
+    >
+      Cancel
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!updateUserForm.valid"
+      (click)="updateUser()"
+    >
+      Update user
+    </button>
+  </div>
+</mat-card>

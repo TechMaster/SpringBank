@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header mat-elevation-z2">
   <nav class="nav">
     <div class="logo">
       <a routerLink="/">Spring Bank</a>
@@ -16,6 +16,12 @@
       <li>
         <a routerLink="/about" routerLinkActive="active">Giới thiệu</a>
       </li>
+      <li *ngIf="currentUser">
+        <a routerLink="/users" routerLinkActive="active">Quản lý User</a>
+      </li>
+      <li *ngIf="currentUser">
+        <a routerLink="/profile" routerLinkActive="active">Trang cá nhân</a>
+      </li>
     </ul>
   </nav>
 
@@ -29,9 +35,17 @@
     </div>
 
     <mat-menu #menu="matMenu">
-      <a mat-menu-item routerLink="/profile">Tài khoản</a>
+      <a mat-menu-item routerLink="/profile"
+        ><mat-icon inline>person</mat-icon> Thông tin cá nhân</a
+      >
       <mat-divider></mat-divider>
-      <a mat-menu-item (click)="logout()">Đăng xuất</a>
+      <a mat-menu-item routerLink="/profile"
+        ><mat-icon inline>lock</mat-icon> Đổi mật khẩu</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-menu-item (click)="logout()"
+        ><mat-icon inline>login</mat-icon> Đăng xuất</a
+      >
     </mat-menu>
   </div>
 
@@ -50,7 +64,9 @@
 </header>
 
 <main class="main">
-  <router-outlet></router-outlet>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </main>
 
 <footer class="footer">
