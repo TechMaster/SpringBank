@@ -12,5 +12,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String fullName;
+
+    private String email;
+
+    private String mobile;
+
+    private String photo;
+
+    private String createdDate;
 }
