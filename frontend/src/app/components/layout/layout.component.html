@@ -1,0 +1,74 @@
+<header class="header mat-elevation-z2">
+  <nav class="nav">
+    <div class="logo">
+      <a routerLink="/">Spring Bank</a>
+    </div>
+
+    <ul class="menu">
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Trang chủ</a
+        >
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active">Giới thiệu</a>
+      </li>
+      <li *ngIf="currentUser">
+        <a routerLink="/users" routerLinkActive="active">Quản lý User</a>
+      </li>
+      <li *ngIf="currentUser">
+        <a routerLink="/profile" routerLinkActive="active">Trang cá nhân</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div *ngIf="currentUser">
+    <div [matMenuTriggerFor]="menu" class="user">
+      <div class="user-avatar">
+        <img [src]="currentUser.avatar || 'assets/img/default-avatar.png'" />
+      </div>
+
+      <div class="user-name">{{ currentUser.name }}</div>
+    </div>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/profile"
+        ><mat-icon inline>person</mat-icon> Thông tin cá nhân</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="/profile"
+        ><mat-icon inline>lock</mat-icon> Đổi mật khẩu</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-menu-item (click)="logout()"
+        ><mat-icon inline>login</mat-icon> Đăng xuất</a
+      >
+    </mat-menu>
+  </div>
+
+  <ul class="menu" *ngIf="!currentUser">
+    <li>
+      <a class="all-center" routerLink="/login" routerLinkActive="active">
+        <mat-icon inline>lock</mat-icon> &nbsp;<span>Đăng nhập</span>
+      </a>
+    </li>
+    <li>
+      <a class="all-center" routerLink="/register" routerLinkActive="active">
+        <mat-icon inline>person</mat-icon> &nbsp;<span>Đăng ký</span>
+      </a>
+    </li>
+  </ul>
+</header>
+
+<main class="main">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<footer class="footer">
+  <div>© 2020 Spring Bank.</div>
+</footer>
