@@ -9,10 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.techmaster</groupId>
-    <artifactId>helloworld</artifactId>
+    <artifactId>spring-boot-docker-ssl</artifactId>
     <version>0.0.1</version>
-    <name>helloworld</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project for Spring Boot with docker and ssl</description>
 
     <properties>
         <java.version>1.8</java.version>

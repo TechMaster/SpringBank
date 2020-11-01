@@ -24,23 +24,29 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserByName(String name){
-        return userRepository.searchUserByName(name);
+    public User getUserByFullName(String fullName){
+        return userRepository.searchUserByFullName(fullName);
     }
 
     public User createUser(UserDTO dto) {
         User user = new User();
         if (Objects.nonNull(dto)) {
-            user.setName(dto.getName());
+            user.setFullName(dto.getFullName());
+            user.setEmail(dto.getEmail());
+            user.setMobile(dto.getMobile());
+            user.setPhoto(dto.getPhoto());
         }
         return userRepository.save(user);
     }
 
-    public User updateUser(UserDTO userDTO, long id) {
+    public User updateUser(UserDTO dto, long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()){
             User user = userOptional.get();
-            user.setName(userDTO.getName());
+            user.setFullName(dto.getFullName());
+            user.setEmail(dto.getEmail());
+            user.setMobile(dto.getMobile());
+            user.setPhoto(dto.getPhoto());
             return userRepository.save(user);
         }
         return null;
