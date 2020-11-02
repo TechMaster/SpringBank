@@ -1,0 +1,2 @@
+INSERT INTO USER(full_name, email, mobile, photo, created_date)
+VALUES('QuangHoa', 'hoa9x3@gmail.com', '0969600981', 'https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083377_960_720.jpg', '2020-01-01');

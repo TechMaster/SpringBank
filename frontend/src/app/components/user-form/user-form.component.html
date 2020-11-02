@@ -1,0 +1,44 @@
+<div class="form" [formGroup]="userForm">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Name"
+      autocomplete="off"
+      formControlName="name"
+    />
+    <mat-error>You must enter a value</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Email"
+      autocomplete="off"
+      formControlName="email"
+    />
+    <mat-error>Invalid email address</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      placeholder="Birthday"
+      autocomplete="off"
+      formControlName="birthday"
+    />
+    <mat-error>Invalid date format</mat-error>
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Phone"
+      autocomplete="off"
+      formControlName="phone"
+    />
+  </mat-form-field>
+</div>

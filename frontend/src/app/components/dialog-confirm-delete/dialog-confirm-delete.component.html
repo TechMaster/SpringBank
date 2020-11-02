@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Confirm Delete {{ data.name | titlecase }}</h1>
+
+<div mat-dialog-content>
+  <p>Are you sure to delete this {{ data.name }}?</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button mat-dialog-close="ok" color="primary" cdkFocusInitial>
+    Agree
+  </button>
+</div>

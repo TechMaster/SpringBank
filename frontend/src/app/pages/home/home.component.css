@@ -1,0 +1,26 @@
+a {
+  color: inherit;
+}
+.container {
+  max-width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.card {
+  max-width: 300px;
+  margin: 15px;
+  transition: 0.3s;
+}
+.card:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.mat-card-header {
+  justify-content: center;
+}
+.icon {
+  padding: 3rem 0 2.5rem 0;
+  font-size: 5rem;
+  color: #21409a;
+}
