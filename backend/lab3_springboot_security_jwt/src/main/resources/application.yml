@@ -1,0 +1,41 @@
+server:
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springJWT
+    username: root
+    password: Quanghoa1993
+  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        id:
+          new_generator_mappings: false
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  devtools:
+    restart:
+      enabled: true
+
+jwt:
+  secret: mySecret
+  header: Authorization
+  expiration: 604800
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  token-validity-in-seconds: 86400
+  token-validity-in-seconds-for-remember-me: 108000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+logging:
+  level:
+    org.zerhusen.security: DEBUG
+    org.springframework.security: DEBUG
