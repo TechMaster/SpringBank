@@ -42,7 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() // All user can access
                 .antMatchers(loginPage).permitAll() // All user can access
                 .antMatchers("/registration").permitAll() // All user can access
-                .antMatchers("/admin/**").hasAuthority("ADMIN") // User has role ADMIN can access
+                .antMatchers("/admin/**").hasAuthority("BANK_OPERATOR") // User has role ADMIN can access
                 .anyRequest()
                 .authenticated()
                 .and().csrf().disable()
