@@ -3,48 +3,81 @@
     <mat-card-title>Chuyển tiền</mat-card-title>
   </mat-card-header>
 
-  <div class="form" [formGroup]="transferForm">
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Name"
-        autocomplete="off"
-        formControlName="name"
-      />
-      <mat-error>You must enter a value</mat-error>
-    </mat-form-field>
+  <div [formGroup]="transferForm" style="margin: 20px 0 0 16px">
+    <div class="form">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Tài khoản nguồn"
+          autocomplete="off"
+          formControlName="source"
+        />
+      </mat-form-field>
 
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Email"
-        autocomplete="off"
-        formControlName="email"
-      />
-      <mat-error>Invalid email address</mat-error>
-    </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Tài khoản thụ hưởng"
+          autocomplete="off"
+          formControlName="target"
+        />
+        <button
+          mat-button
+          *ngIf="transferForm.controls.target.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="transferForm.controls.target.value = ''"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error
+          >Quý khách vui lòng nhập/chọn tài khoản thụ hưởng VND</mat-error
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        placeholder="Birthday"
-        autocomplete="off"
-        formControlName="birthday"
-      />
-      <mat-error>Invalid date format</mat-error>
+      <mat-form-field appearance="fill">
+        <mat-label>Ngân hàng thụ hưởng</mat-label>
+        <mat-select formControlName="bankTarget">
+          <mat-option value="option1">Option 1</mat-option>
+          <mat-option value="option1">Option 2</mat-option>
+          <mat-option value="option3">Option 3</mat-option>
+        </mat-select>
+        <mat-error>Quý khách vui lòng chọn ngân hàng thụ hưởng</mat-error>
+      </mat-form-field>
 
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Số tiền"
+          autocomplete="off"
+          formControlName="money"
+        />
+        <mat-error>Quý khách vui lòng nhập số tiền chuyển khoản</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Phone"
-        autocomplete="off"
-        formControlName="phone"
-      />
-    </mat-form-field>
+      <p>Phí giao dịch</p>
+      <mat-radio-group formControlName="cost">
+        <mat-radio-button value="1"> Người chuyển trả </mat-radio-button>
+        <mat-radio-button value="2"> Người nhận trả </mat-radio-button>
+      </mat-radio-group>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Nội dung</mat-label>
+        <textarea matInput formControlName="note">Chuyển tiền</textarea>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button routerLink="/profile">Hủy</button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!transferForm.valid"
+      (click)="transferMoney()"
+    >
+      Xác nhận
+    </button>
   </div>
 </mat-card>

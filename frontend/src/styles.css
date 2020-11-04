@@ -23,6 +23,8 @@ img {
 a {
   text-decoration: none;
 }
+
+/* Generic classes */
 .text-center {
   text-align: center !important;
 }
@@ -38,9 +40,19 @@ a {
   max-width: 500px;
   padding-right: 2rem;
 }
+
+/* Custom style Angular Material components */
 .mat-form-field {
   margin-bottom: 1rem;
 }
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.mat-raised-button ~ .mat-raised-button {
+  margin-left: 16px;
+}
+
+/* Page transition animation */
 @keyframes fade {
   0% {
     opacity: 0;

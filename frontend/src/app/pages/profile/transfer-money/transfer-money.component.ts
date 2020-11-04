@@ -8,13 +8,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class TransferMoneyComponent implements OnInit {
   transferForm = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.email]],
-    birthday: [''],
-    phone: [''],
+    source: [''],
+    target: [''],
+    bankTarget: [''],
+    money: [''],
+    cost: ['1'],
+    note: [''],
   });
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {}
+
+  transferMoney() {}
 }

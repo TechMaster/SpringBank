@@ -1,20 +1,14 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>New User</mat-card-title>
+    <mat-card-title>Thêm tài khoản</mat-card-title>
   </mat-card-header>
 
-  <div [formGroup]="createUserForm" style="margin-left: 16px">
+  <div [formGroup]="createUserForm" style="margin: 20px 0 0 16px">
     <app-user-form formControlName="profile"></app-user-form>
 
     <app-password-form formControlName="password"></app-password-form>
 
-    <button
-      mat-raised-button
-      routerLink="/users"
-      style="margin-right: 10px"
-    >
-      Cancel
-    </button>
+    <button mat-raised-button routerLink="/users">Hủy</button>
 
     <button
       mat-raised-button
@@ -22,7 +16,7 @@
       [disabled]="!createUserForm.valid"
       (click)="createUser()"
     >
-      Add new user
+      Thêm mới
     </button>
   </div>
 </mat-card>

@@ -1,17 +1,16 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Edit User</mat-card-title>
+    <mat-card-title>Cập nhật tài khoản</mat-card-title>
   </mat-card-header>
 
-  <div [formGroup]="updateUserForm" style="margin-left: 16px">
+  <div [formGroup]="updateUserForm" style="margin: 20px 0 0 16px">
     <app-user-form formControlName="profile"></app-user-form>
 
     <button
       mat-raised-button
       routerLink="/users"
-      style="margin-right: 10px"
     >
-      Cancel
+      Hủy
     </button>
 
     <button
@@ -20,7 +19,7 @@
       [disabled]="!updateUserForm.valid"
       (click)="updateUser()"
     >
-      Update user
+      Cập nhật
     </button>
   </div>
 </mat-card>
