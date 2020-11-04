@@ -19,6 +19,7 @@ a:hover {
 }
 .logo a {
   font-size: 1.2rem;
+  font-weight: bold;
   margin-right: 2rem;
 }
 .menu {
@@ -31,6 +32,9 @@ a:hover {
 .menu li a {
   padding: 0.5rem;
   text-decoration: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 .menu li a.active {
   color: #21409a;
@@ -58,6 +62,7 @@ a:hover {
 }
 .notifications {
   margin: 0 20px;
+  cursor: pointer;
 }
 .main {
   background: #eee;

@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styles: [':host {width: 100%; max-width: 500px; margin: 30px 0;}'],
+  styles: [':host {width: 100%; max-width: 500px; margin: 30px auto;}'],
 })
 export class EditUserComponent implements OnInit {
   userId: string;

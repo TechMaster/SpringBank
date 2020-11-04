@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styles: [':host {width: 100%; max-width: 500px; margin: 30px 0;}'],
+  styles: [':host {width: 100%; max-width: 500px; margin: 30px auto;}'],
 })
 export class CreateUserComponent {
   createUserForm = this.fb.group({
