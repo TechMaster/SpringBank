@@ -1,6 +1,0 @@
-com/xbank/Application.class
-com/xbank/repository/UserRepository.class
-com/xbank/domain/User.class
-com/xbank/controller/UserController.class
-com/xbank/service/UserService.class
-com/xbank/dto/UserDTO.class
