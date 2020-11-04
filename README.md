@@ -5,9 +5,10 @@
 
 ### Backend
 
-Chạy server qua docker bằng lệnh:
+Chạy server qua docker:
 
 ```
+  cd backend
   docker-compose build && docker-compose up -d
 ```
 
@@ -15,10 +16,11 @@ Xem API document tại: http://localhost:8080/swagger-ui.html
 
 ### Frontend
 
-Cài đặt dependencies: `npm install`
+Chạy server dev bằng Angular CLI:
 
-Cài đặt Angular CLI: `npm install -g @angular/cli`
-
-Start server bằng lệnh: `ng serve`
+```
+  cd frontend
+  npm install && ng serve
+```
 
 Website chạy ở địa chỉ: http://localhost:4200
