@@ -7,8 +7,11 @@ a {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.title {
+  margin: 30px 0;
+}
 .card {
-  max-width: 300px;
+  width: 300px;
   margin: 15px;
   transition: 0.3s;
 }

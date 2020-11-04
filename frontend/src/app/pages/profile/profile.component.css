@@ -1,5 +1,11 @@
+:host {
+  margin-top: 10%;
+}
 a {
   color: inherit;
+}
+.title {
+  margin: 30px 0 50px 0;
 }
 .container {
   max-width: 1000px;
@@ -8,7 +14,7 @@ a {
   justify-content: space-between;
 }
 .card {
-  max-width: 200px;
+  width: 180px;
   margin: 15px;
   transition: 0.3s;
 }

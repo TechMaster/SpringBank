@@ -25,8 +25,8 @@
     </ul>
   </nav>
 
-  <div *ngIf="currentUser">
-    <div [matMenuTriggerFor]="menu" class="user">
+  <div *ngIf="currentUser" class="right-menu">
+    <div [matMenuTriggerFor]="userDropdown" class="user">
       <div class="user-avatar">
         <img [src]="currentUser.avatar || 'assets/img/default-avatar.png'" />
       </div>
@@ -34,7 +34,11 @@
       <div class="user-name">{{ currentUser.name }}</div>
     </div>
 
-    <mat-menu #menu="matMenu">
+    <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
+      <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+    </div>
+
+    <mat-menu #userDropdown="matMenu">
       <a mat-menu-item routerLink="/profile"
         ><mat-icon inline>person</mat-icon> Thông tin cá nhân</a
       >
@@ -45,6 +49,16 @@
       <mat-divider></mat-divider>
       <a mat-menu-item (click)="logout()"
         ><mat-icon inline>login</mat-icon> Đăng xuất</a
+      >
+    </mat-menu>
+
+    <mat-menu #notificationsDropdown="matMenu">
+      <a mat-menu-item routerLink="/notifications"
+        >Khuyến mãi cho chủ thẻ mới mở sau 20/10</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="/notifications"
+        >Bạn vừa nhận được 500,000 từ Robin Huy</a
       >
     </mat-menu>
   </div>

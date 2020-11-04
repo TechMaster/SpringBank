@@ -35,6 +35,11 @@ a:hover {
 .menu li a.active {
   color: #21409a;
 }
+.right-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .user {
   display: flex;
   align-items: center;
@@ -51,16 +56,17 @@ a:hover {
   line-height: 1.25rem;
   color: #192038;
 }
+.notifications {
+  margin: 0 20px;
+}
 .main {
   background: #eee;
+  min-height: calc(100vh - 7.5rem);
+  padding: 30px 0;
 }
 .container {
   max-width: 1000px;
-  min-height: calc(100vh - 7.5rem);
   margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .footer {
   height: 3rem;

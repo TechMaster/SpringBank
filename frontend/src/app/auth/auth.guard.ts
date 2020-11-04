@@ -33,6 +33,6 @@ export class AuthGuard implements CanActivate {
     this.userService.redirectUrl = url;
 
     // Redirect to the login page
-    return this.router.parseUrl("/admin/login");
+    return this.router.parseUrl("/login");
   }
 }
