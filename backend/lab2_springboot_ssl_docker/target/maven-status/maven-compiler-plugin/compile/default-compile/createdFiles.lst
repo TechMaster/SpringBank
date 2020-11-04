@@ -1,6 +1,6 @@
-com/techmaster/repository/UserRepository.class
-com/techmaster/service/UserService.class
-com/techmaster/Application.class
-com/techmaster/controller/UserController.class
-com/techmaster/domain/User.class
-com/techmaster/dto/UserDTO.class
+com/xbank/Application.class
+com/xbank/repository/UserRepository.class
+com/xbank/domain/User.class
+com/xbank/controller/UserController.class
+com/xbank/service/UserService.class
+com/xbank/dto/UserDTO.class
