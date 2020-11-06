@@ -1,11 +1,15 @@
 package com.xbank.config;
 
-import com.xbank.security.JwtAccessDeniedHandler;
 import com.xbank.security.JwtAuthenticationEntryPoint;
-import com.xbank.security.jwt.JWTConfigurer;
-import com.xbank.security.jwt.TokenProvider;
+import com.xbank.security.JwtAuthenticationFilter;
+import com.xbank.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,98 +19,88 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@Profile("!dev")
+@Configuration
+@EnableWebSecurity()
+@EnableJpaRepositories(basePackages = "com.xbank.repository")
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-   private final TokenProvider tokenProvider;
-   private final CorsFilter corsFilter;
-   private final JwtAuthenticationEntryPoint authenticationErrorHandler;
-   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomUserDetailsService userDetailsService;
 
-   public WebSecurityConfig(
-      TokenProvider tokenProvider,
-      CorsFilter corsFilter,
-      JwtAuthenticationEntryPoint authenticationErrorHandler,
-      JwtAccessDeniedHandler jwtAccessDeniedHandler
-   ) {
-      this.tokenProvider = tokenProvider;
-      this.corsFilter = corsFilter;
-      this.authenticationErrorHandler = authenticationErrorHandler;
-      this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-   }
+    private final JwtAuthenticationEntryPoint jwtEntryPoint;
 
-   // Configure BCrypt password encoder =====================================================================
+    @Autowired
+    public WebSecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthenticationEntryPoint jwtEntryPoint) {
+        this.userDetailsService = userDetailsService;
+        this.jwtEntryPoint = jwtEntryPoint;
+    }
 
-   @Bean
-   public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder();
-   }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
-   // Configure paths and requests that should be ignored by Spring Security ================================
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 
-   @Override
-   public void configure(WebSecurity web) {
-      web.ignoring()
-         .antMatchers(HttpMethod.OPTIONS, "/**")
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-         // allow anonymous resource requests
-         .antMatchers(
-            "/",
-            "/*.html",
-            "/favicon.ico",
-            "/**/*.html",
-            "/**/*.css",
-            "/**/*.js",
-            "/h2-console/**"
-         );
-   }
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+                "/swagger-ui.html", "/webjars/**");
+    }
 
-   // Configure security settings ===========================================================================
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors() // https://www.baeldung.com/spring-security-cors-preflight
+                .and()
+                .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .requiresChannel().anyRequest().requiresSecure()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/",
+                		"/favicon.ico",
+                        "/**/*.json",
+                        "/**/*.xml",
+                        "/**/*.properties",
+                        "/**/*.woff2",
+                        "/**/*.woff",
+                        "/**/*.ttf",
+                        "/**/*.ttc",
+                        "/**/*.ico",
+                        "/**/*.bmp",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.jpeg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js").permitAll()
+                .antMatchers("/**/api/auth/**").permitAll()
+                .anyRequest().authenticated();
 
-   @Override
-   protected void configure(HttpSecurity httpSecurity) throws Exception {
-      httpSecurity
-         // we don't need CSRF because our token is invulnerable
-         .csrf().disable()
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
 
-         .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-
-         .exceptionHandling()
-         .authenticationEntryPoint(authenticationErrorHandler)
-         .accessDeniedHandler(jwtAccessDeniedHandler)
-
-         // enable h2-console
-         .and()
-         .headers()
-         .frameOptions()
-         .sameOrigin()
-
-         // create no session
-         .and()
-         .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-         .and()
-         .authorizeRequests()
-         .antMatchers("/api/authenticate").permitAll()
-         // .antMatchers("/api/register").permitAll()
-         // .antMatchers("/api/activate").permitAll()
-         // .antMatchers("/api/account/reset-password/init").permitAll()
-         // .antMatchers("/api/account/reset-password/finish").permitAll()
-
-         .antMatchers("/api/person").hasAuthority("ROLE_USER")
-         .antMatchers("/api/hiddenmessage").hasAuthority("ROLE_ADMIN")
-
-         .anyRequest().authenticated()
-
-         .and()
-         .apply(securityConfigurerAdapter());
-   }
-
-   private JWTConfigurer securityConfigurerAdapter() {
-      return new JWTConfigurer(tokenProvider);
-   }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

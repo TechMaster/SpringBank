@@ -3,13 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
-   <groupId>org.zerhusen</groupId>
-   <artifactId>jwtdemo</artifactId>
-   <version>2.0.0</version>
+   <groupId>com.xbank</groupId>
+   <artifactId>xbank</artifactId>
+   <version>0.0.1</version>
    <packaging>jar</packaging>
 
-   <name>jwtdemo</name>
-   <description>Demo project for JWT with Spring Security</description>
+   <description>Demo project for Spring Boot JWT</description>
 
    <parent>
       <groupId>org.springframework.boot</groupId>
@@ -19,72 +18,142 @@
    </parent>
 
    <properties>
+      <!--Build-->
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
       <java.version>1.8</java.version>
-      <jjwt.version>0.11.1</jjwt.version>
-      <dockerfile-maven-plugin.version>1.4.12</dockerfile-maven-plugin.version>
+
+      <!--Build-->
+      <jjwt.version>0.9.1</jjwt.version>
+      <log4j.version>1.2.17</log4j.version>
+      <freemarker.version>2.3.28</freemarker.version>
+      <swagger.version>2.9.2</swagger.version>
+      <expiring.map.version>0.5.9</expiring.map.version>
+
+      <!--Sonar / Code Coverage-->
+      <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+      <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+      <sonar.jacoco.reportPaths>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPaths>
+      <surefire.version>2.19.1</surefire.version>
+      <sonar.language>java</sonar.language>
+      <jacoco.version>0.8.2</jacoco.version>
+      <sonar.exclusions>**/*Configuration.java,**/*Exception.java,**/conf/**/*,**/model/**/*</sonar.exclusions>
    </properties>
 
    <dependencies>
       <dependency>
          <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-data-jpa</artifactId>
+         <artifactId>spring-boot-starter-actuator</artifactId>
       </dependency>
+
       <dependency>
          <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-data-rest</artifactId>
+         <artifactId>spring-boot-starter-data-jpa</artifactId>
       </dependency>
+
       <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-security</artifactId>
       </dependency>
+
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+
       <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-devtools</artifactId>
+         <scope>runtime</scope>
       </dependency>
-      <dependency>
-         <groupId>io.jsonwebtoken</groupId>
-         <artifactId>jjwt-api</artifactId>
-         <version>${jjwt.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>io.jsonwebtoken</groupId>
-         <artifactId>jjwt-impl</artifactId>
-         <version>${jjwt.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>io.jsonwebtoken</groupId>
-         <artifactId>jjwt-jackson</artifactId>
-         <version>${jjwt.version}</version>
-      </dependency>
+
       <dependency>
          <groupId>mysql</groupId>
          <artifactId>mysql-connector-java</artifactId>
+         <scope>runtime</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.flywaydb</groupId>
+         <artifactId>flyway-core</artifactId>
       </dependency>
       <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-test</artifactId>
          <scope>test</scope>
       </dependency>
-      <dependency>
-         <groupId>org.projectlombok</groupId>
-         <artifactId>lombok</artifactId>
-         <optional>true</optional>
-      </dependency>
+
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-test</artifactId>
          <scope>test</scope>
       </dependency>
+
+      <!--Log4j-->
       <dependency>
-         <groupId>javax.validation</groupId>
-         <artifactId>validation-api</artifactId>
-         <version>2.0.1.Final</version>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+         <version>${log4j.version}</version>
+      </dependency>
+
+      <!--Jwt-->
+      <dependency>
+         <groupId>io.jsonwebtoken</groupId>
+         <artifactId>jjwt</artifactId>
+         <version>${jjwt.version}</version>
+      </dependency>
+
+      <!-- For Java 8 Date/Time Support -->
+      <dependency>
+         <groupId>com.fasterxml.jackson.datatype</groupId>
+         <artifactId>jackson-datatype-jsr310</artifactId>
+      </dependency>
+
+      <!--Spring Mail -->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-mail</artifactId>
+      </dependency>
+
+      <!--Template engine-->
+      <dependency>
+         <groupId>org.freemarker</groupId>
+         <artifactId>freemarker</artifactId>
+         <version>${freemarker.version}</version>
+      </dependency>
+
+      <!--Swagger UI-->
+      <dependency>
+         <groupId>io.springfox</groupId>
+         <artifactId>springfox-swagger-ui</artifactId>
+         <version>${swagger.version}</version>
+      </dependency>
+
+      <!--Swagger 2-->
+      <dependency>
+         <groupId>io.springfox</groupId>
+         <artifactId>springfox-swagger2</artifactId>
+         <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.postgresql</groupId>
+         <artifactId>postgresql</artifactId>
+         <scope>runtime</scope>
+      </dependency>
+      <!--Expiring Map-->
+      <dependency>
+         <groupId>net.jodah</groupId>
+         <artifactId>expiringmap</artifactId>
+         <version>${expiring.map.version}</version>
       </dependency>
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate-validator</artifactId>
          <version>6.1.6.Final</version>
+      </dependency>
+      <dependency>
+         <groupId>org.projectlombok</groupId>
+         <artifactId>lombok</artifactId>
+         <version>1.18.12</version>
       </dependency>
    </dependencies>
 
@@ -96,4 +165,5 @@
          </plugin>
       </plugins>
    </build>
+
 </project>
