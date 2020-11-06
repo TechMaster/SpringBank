@@ -18,6 +18,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { PasswordFormComponent } from './components/password-form/password-form.component';
 
 import { httpInterceptorProviders } from './http-interceptors';
+import { NotificationsBoxComponent } from './components/notifications-box/notifications-box.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { httpInterceptorProviders } from './http-interceptors';
     NotFoundComponent,
     UserFormComponent,
     PasswordFormComponent,
+    NotificationsBoxComponent,
   ],
   imports: [
     BrowserModule,

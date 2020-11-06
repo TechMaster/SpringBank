@@ -22,6 +22,10 @@ img {
 }
 a {
   text-decoration: none;
+  color: #192038;
+}
+a:hover {
+  color: #21409a;
 }
 
 /* Generic classes */
