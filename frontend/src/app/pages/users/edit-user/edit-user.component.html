@@ -1,25 +1,22 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Cập nhật tài khoản</mat-card-title>
+    <mat-card-title>Cập nhật User</mat-card-title>
   </mat-card-header>
 
-  <div [formGroup]="updateUserForm" style="margin: 20px 0 0 16px">
+  <div [formGroup]="updateUserForm" class="form-wrapper">
     <app-user-form formControlName="profile"></app-user-form>
 
-    <button
-      mat-raised-button
-      routerLink="/users"
-    >
-      Hủy
-    </button>
+    <div class="button-group">
+      <button mat-raised-button routerLink="/users">Hủy</button>
 
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!updateUserForm.valid"
-      (click)="updateUser()"
-    >
-      Cập nhật
-    </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!updateUserForm.valid"
+        (click)="updateUser()"
+      >
+        Cập nhật
+      </button>
+    </div>
   </div>
 </mat-card>

@@ -1,44 +1,51 @@
-import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Sort } from "@angular/material/sort";
-import { User } from "src/app/models/user.model";
-import { UserService } from "src/app/services/user.service";
-import { Subject } from "rxjs";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogConfirmDeleteComponent } from "src/app/components/dialog-confirm-delete/dialog-confirm-delete.component";
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmDeleteComponent } from 'src/app/components/dialog-confirm-delete/dialog-confirm-delete.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: "app-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.css"],
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   displayedColumns: string[] = [
-    "avatar",
-    "name",
-    "email",
-    "birthday",
-    "action",
+    'avatar',
+    'name',
+    'email',
+    'birthday',
+    'action',
   ];
 
   itemsPerPage: number = 10;
   totalItems: number = 0;
-  column: string = "id";
-  direction: string = "desc";
+  column: string = 'id';
+  direction: string = 'desc';
 
-  searchUserInput: string = "";
+  searchUserInput: string = '';
   searchUserInput$ = new Subject<string>();
 
   isUserChangePage: boolean = true;
 
-  @ViewChild("paginator") paginator: MatPaginator;
+  @ViewChild('paginator') paginator: MatPaginator;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(
+    private titleService: Title,
+    private userService: UserService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('Quản lý User');
+
     // Get users with default options
     this.userService
       .getUsers({
@@ -48,7 +55,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       })
       .subscribe((result) => {
         this.users = result.body;
-        this.totalItems = parseInt(result.headers.get("X-Total-Count"));
+        this.totalItems = parseInt(result.headers.get('X-Total-Count'));
       });
 
     // Listen search user input change
@@ -70,7 +77,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           })
           .subscribe((result) => {
             this.users = result.body;
-            this.totalItems = parseInt(result.headers.get("X-Total-Count"));
+            this.totalItems = parseInt(result.headers.get('X-Total-Count'));
           });
       });
   }
@@ -89,7 +96,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         })
         .subscribe((result) => {
           this.users = result.body;
-          this.totalItems = parseInt(result.headers.get("X-Total-Count"));
+          this.totalItems = parseInt(result.headers.get('X-Total-Count'));
         });
     }
   }
@@ -113,7 +120,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       })
       .subscribe((result) => {
         this.users = result.body;
-        this.totalItems = parseInt(result.headers.get("X-Total-Count"));
+        this.totalItems = parseInt(result.headers.get('X-Total-Count'));
       });
   }
 
@@ -123,8 +130,8 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   openDialogDeleteUser(userId: string) {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
-      width: "300px",
-      data: { name: "User" },
+      width: '300px',
+      data: { name: 'User' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

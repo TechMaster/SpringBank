@@ -6,13 +6,13 @@
     routerLink="/users/create"
   >
     <mat-icon aria-hidden="false" aria-label="Add icon">add</mat-icon>
-    <span> New User </span>
+    <span> Thêm User </span>
   </button>
 
   <mat-form-field>
     <input
       matInput
-      placeholder="Search User"
+      placeholder="Tìm kiếm"
       [(ngModel)]="searchUserInput"
       (input)="searchUser()"
     />
@@ -28,7 +28,7 @@
       (matSortChange)="sortData($event)"
     >
       <ng-container matColumnDef="avatar">
-        <th mat-header-cell *matHeaderCellDef>Avatar</th>
+        <th mat-header-cell *matHeaderCellDef>Ảnh đại diện</th>
         <td mat-cell *matCellDef="let element">
           <div class="avatar" style="padding: 10px">
             <img
@@ -40,7 +40,7 @@
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Họ tên</th>
         <td mat-cell *matCellDef="let element">
           {{ element.name }}
         </td>
@@ -52,14 +52,14 @@
       </ng-container>
 
       <ng-container matColumnDef="birthday">
-        <th mat-header-cell *matHeaderCellDef>Birthday</th>
+        <th mat-header-cell *matHeaderCellDef>Ngày sinh</th>
         <td mat-cell *matCellDef="let element">
           {{ element.birthday | date: "MM/dd/yyyy" }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
+        <th mat-header-cell *matHeaderCellDef class="text-center"></th>
         <td mat-cell *matCellDef="let element" class="text-center">
           <button
             mat-button

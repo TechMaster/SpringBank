@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -7,12 +8,20 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private titleService: Title,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Đăng ký tài khoản');
+  }
 
   login() {
     this.userService.login(this.email, this.password).subscribe(

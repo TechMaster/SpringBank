@@ -3,7 +3,7 @@
     <mat-card-title>Chuyển tiền</mat-card-title>
   </mat-card-header>
 
-  <div [formGroup]="transferForm" style="margin: 20px 0 0 16px">
+  <div [formGroup]="transferForm" class="form-wrapper">
     <div class="form">
       <mat-form-field>
         <input
@@ -39,9 +39,13 @@
       <mat-form-field appearance="fill">
         <mat-label>Ngân hàng thụ hưởng</mat-label>
         <mat-select formControlName="bankTarget">
-          <mat-option value="option1">Option 1</mat-option>
-          <mat-option value="option1">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option>
+          <mat-option value="agribank"
+            >NNO&PT NONG THON VN (AGRIBANK)</mat-option
+          >
+          <mat-option value="bidv">DAU TU VA PHAT TRIEN VN (BIDV)</mat-option>
+          <mat-option value="vietinbank"
+            >CONG THUONG VN (VIETINBANK)</mat-option
+          >
         </mat-select>
         <mat-error>Quý khách vui lòng chọn ngân hàng thụ hưởng</mat-error>
       </mat-form-field>
@@ -69,15 +73,17 @@
       </mat-form-field>
     </div>
 
-    <button mat-raised-button routerLink="/profile">Hủy</button>
+    <div class="button-group">
+      <button mat-raised-button routerLink="/profile">Hủy</button>
 
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!transferForm.valid"
-      (click)="transferMoney()"
-    >
-      Xác nhận
-    </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!transferForm.valid"
+        (click)="transferMoney()"
+      >
+        Xác nhận
+      </button>
+    </div>
   </div>
 </mat-card>

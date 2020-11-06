@@ -33,12 +33,21 @@ a {
   justify-content: center;
   align-items: center;
 }
+.form-wrapper {
+  margin: 20px 16px;
+}
 .form {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 500px;
-  padding-right: 2rem;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+.button-group > button {
+  min-width: 130px;
 }
 
 /* Custom style Angular Material components */

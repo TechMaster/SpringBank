@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-user',
@@ -16,6 +17,7 @@ export class EditUserComponent implements OnInit {
   });
 
   constructor(
+    private titleService: Title,
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -23,6 +25,8 @@ export class EditUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('Cập nhật User');
+
     const id = this.route.snapshot.paramMap.get('id');
     this.userId = id;
 
@@ -37,7 +41,7 @@ export class EditUserComponent implements OnInit {
 
     this.userService.updateUser(user).subscribe(
       () => this.router.navigate(['/users']),
-      () => alert('Cannot update user at this time!')
+      () => alert('Cập nhật thất bại!')
     );
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-user',
@@ -15,10 +16,15 @@ export class CreateUserComponent {
   });
 
   constructor(
+    private titleService: Title,
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Thêm User');
+  }
 
   createUser() {
     const formValues = this.createUserForm.value;
@@ -29,7 +35,7 @@ export class CreateUserComponent {
       })
       .subscribe(
         () => this.router.navigate(['/users']),
-        () => alert('Cannot create user at this time!')
+        () => alert('Thêm User thất bại!')
       );
   }
 }

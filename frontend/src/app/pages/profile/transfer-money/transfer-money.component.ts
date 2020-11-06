@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-transfer-money',
@@ -16,9 +17,11 @@ export class TransferMoneyComponent implements OnInit {
     note: [''],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private titleService: Title, private fb: FormBuilder) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleService.setTitle('Chuyển tiền');
+  }
 
   transferMoney() {}
 }
