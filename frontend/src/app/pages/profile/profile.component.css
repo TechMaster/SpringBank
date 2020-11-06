@@ -1,11 +1,5 @@
 :host {
-  margin-top: 10%;
-}
-a {
-  color: inherit;
-}
-.title {
-  margin: 30px 0 50px 0;
+  margin-top: 30px;
 }
 .container {
   max-width: 1000px;
@@ -13,12 +7,29 @@ a {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.card {
+.user-name .mat-icon {
+  display: none;
+}
+.user-name:hover .mat-icon {
+  display: inline-block;
+}
+.title {
+  margin: 60px 0 30px 0;
+}
+.info-box {
+  margin: 15px;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.service-box {
   width: 180px;
   margin: 15px;
   transition: 0.3s;
 }
-.card:hover {
+.service-box:hover {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
