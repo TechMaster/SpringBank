@@ -15,24 +15,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
 	}
 
-	// security for all API
-
-	/*
-	 * @Override protected void configure(HttpSecurity http) throws Exception {
-	 * http.csrf().disable();
-	 * http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-	 * httpBasic(); }
-	 */
-
-	// security based on URL
-
-	/*
-	 * @Override protected void configure(HttpSecurity http) throws Exception {
-	 * http.csrf().disable();
-	 * http.authorizeRequests().antMatchers("/rest/**").fullyAuthenticated().and
-	 * ().httpBasic(); }
-	 */
-
 	// security based on ROLE
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

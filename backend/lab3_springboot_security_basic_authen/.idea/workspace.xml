@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7ce99b2-de23-4f9f-ab46-6fca63d0205e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../lab3_springboot_security/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3_springboot_security/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3_springboot_security/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3_springboot_security/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3_springboot_security/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3_springboot_security/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xbank/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xbank/config/SpringSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab3_springboot_security_jwt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3_springboot_security_jwt/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +34,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab3_springboot_security" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RunManager">
     <configuration name="BasicSecurityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -51,10 +62,21 @@
       <option name="presentableId" value="Default" />
       <updated>1604682262983</updated>
       <workItem from="1604682264435" duration="9000" />
+      <workItem from="1604685271135" duration="1481000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2695" y="298" width="424" height="491" key="FileChooserDialogImpl" timestamp="1604685275432">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2695" y="298" width="424" height="491" key="FileChooserDialogImpl/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604685275432" />
+    <state x="2219" y="119" width="1372" height="667" key="new project wizard" timestamp="1604685608890">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2219" y="119" width="1372" height="667" key="new project wizard/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604685608890" />
   </component>
 </project>
