@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="xbank" target="1.8" />
+      <module name="xbank" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

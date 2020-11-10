@@ -5,7 +5,7 @@
 -- DROP TABLE public."user";
 
 CREATE TABLE users (
-	user_id varchar(12) NULL,
+	user_id varchar(12) NOT NULL,
 	username varchar(255) NULL,
 	password varchar(255) NULL,
 	full_name varchar(255) NULL,
@@ -17,6 +17,45 @@ CREATE TABLE users (
 	created_at timestamp NULL,
 	updated_at timestamp null,
 	CONSTRAINT uk_sdgdfgsdfsdfg234eg57odfsd UNIQUE (user_id)
+);
+
+-- public.account definition
+
+-- Drop table
+
+-- DROP TABLE public.account;
+
+CREATE TABLE account (
+	id varchar(12) NOT NULL,
+	owner varchar(255) NOT NULL,
+	username varchar(255) NULL,
+	balance int8 NULL,
+	currency varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_at timestamp null,
+	CONSTRAINT ak_sdgdfgsdfsdfg23sdsdsdsdfsd UNIQUE (id)
+);
+
+-- public.transaction definition
+
+-- Drop table
+
+-- DROP TABLE public.transaction;
+
+CREATE TABLE transaction (
+	id varchar(255) NOT NULL,
+	owner varchar(255) NOT NULL,
+	actions int4 NULL,
+	account varchar(255) NULL,
+	to_account varchar(255) NULL,
+	amount int8 NULL,
+	currency varchar(3) NULL,
+	transac_at timestamp NULL,
+	result int4 NULL,
+	error varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_at timestamp null,
+	CONSTRAINT ak_sdgdfgsdfsdfcvgsdfsdasfsd UNIQUE (id)
 );
 
 -- public.email_verification_token definition

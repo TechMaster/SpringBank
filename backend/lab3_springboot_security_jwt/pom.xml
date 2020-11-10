@@ -18,19 +18,14 @@
    </parent>
 
    <properties>
-      <!--Build-->
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
       <java.version>1.8</java.version>
-
-      <!--Build-->
       <jjwt.version>0.9.1</jjwt.version>
       <log4j.version>1.2.17</log4j.version>
       <freemarker.version>2.3.28</freemarker.version>
       <swagger.version>2.9.2</swagger.version>
       <expiring.map.version>0.5.9</expiring.map.version>
-
-      <!--Sonar / Code Coverage-->
       <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
       <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
       <sonar.jacoco.reportPaths>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPaths>
@@ -60,16 +55,9 @@
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-web</artifactId>
       </dependency>
-
       <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-devtools</artifactId>
-         <scope>runtime</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>mysql</groupId>
-         <artifactId>mysql-connector-java</artifactId>
          <scope>runtime</scope>
       </dependency>
       <dependency>
@@ -81,54 +69,43 @@
          <artifactId>spring-boot-starter-test</artifactId>
          <scope>test</scope>
       </dependency>
-
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-test</artifactId>
          <scope>test</scope>
       </dependency>
-
-      <!--Log4j-->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-webflux</artifactId>
+      </dependency>
       <dependency>
          <groupId>log4j</groupId>
          <artifactId>log4j</artifactId>
          <version>${log4j.version}</version>
       </dependency>
-
-      <!--Jwt-->
       <dependency>
          <groupId>io.jsonwebtoken</groupId>
          <artifactId>jjwt</artifactId>
          <version>${jjwt.version}</version>
       </dependency>
-
-      <!-- For Java 8 Date/Time Support -->
       <dependency>
          <groupId>com.fasterxml.jackson.datatype</groupId>
          <artifactId>jackson-datatype-jsr310</artifactId>
       </dependency>
-
-      <!--Spring Mail -->
       <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-mail</artifactId>
       </dependency>
-
-      <!--Template engine-->
       <dependency>
          <groupId>org.freemarker</groupId>
          <artifactId>freemarker</artifactId>
          <version>${freemarker.version}</version>
       </dependency>
-
-      <!--Swagger UI-->
       <dependency>
          <groupId>io.springfox</groupId>
          <artifactId>springfox-swagger-ui</artifactId>
          <version>${swagger.version}</version>
       </dependency>
-
-      <!--Swagger 2-->
       <dependency>
          <groupId>io.springfox</groupId>
          <artifactId>springfox-swagger2</artifactId>
@@ -139,7 +116,6 @@
          <artifactId>postgresql</artifactId>
          <scope>runtime</scope>
       </dependency>
-      <!--Expiring Map-->
       <dependency>
          <groupId>net.jodah</groupId>
          <artifactId>expiringmap</artifactId>
