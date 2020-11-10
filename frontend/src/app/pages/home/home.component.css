@@ -8,7 +8,7 @@ a {
   justify-content: space-between;
 }
 .title {
-  margin: 30px 0;
+  margin: 50px 0 30px 0;
 }
 .card {
   width: 300px;
@@ -26,4 +26,22 @@ a {
   padding: 3rem 0 2.5rem 0;
   font-size: 5rem;
   color: #21409a;
+}
+
+/* Carousel */
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+  margin: 15px;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float: left;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
