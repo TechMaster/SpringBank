@@ -58,7 +58,6 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse(true, usernameExists.toString()));
     }
 
-
     /**
      * Entry point for the user log in. Return the jwt auth token and the refresh token
      */
@@ -126,7 +125,6 @@ public class AuthController {
      * Receives a new passwordResetRequest and sends the acknowledgement after
      * changing the password to the user's mail through the event.
      */
-
     @PostMapping("/password/reset")
     @ApiOperation(value = "Reset the password after verification and publish an event to send the acknowledgement " +
             "email")

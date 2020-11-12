@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0-SNAPSHOT/springfox-spring-webflux-3.0.0-20200714.030224-104.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0-SNAPSHOT/springfox-spring-webflux-3.0.0-20200714.030224-104-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0-SNAPSHOT/springfox-spring-webflux-3.0.0-20200714.030224-104-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

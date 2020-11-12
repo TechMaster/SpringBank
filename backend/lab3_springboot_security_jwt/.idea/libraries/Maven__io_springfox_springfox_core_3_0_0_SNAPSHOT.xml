@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.springfox:springfox-core:3.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-core/3.0.0-SNAPSHOT/springfox-core-3.0.0-20200714.030221-113.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-core/3.0.0-SNAPSHOT/springfox-core-3.0.0-20200714.030221-113-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-core/3.0.0-SNAPSHOT/springfox-core-3.0.0-20200714.030221-113-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

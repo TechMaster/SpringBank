@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -16,6 +17,7 @@ public class RegistrationRequest {
     private String username;
 
     @NullOrNotBlank(message = "Registration email can be null but not blank")
+    @Email
     @ApiModelProperty(value = "A valid email", required = true, allowableValues = "NonEmpty String")
     private String email;
 
