@@ -2,11 +2,6 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="spring-milestone" />
-      <option name="name" value="spring-milestone" />
-      <option name="url" value="https://repo.spring.io/milestone" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
@@ -15,11 +10,6 @@
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="springfox-snapshots" />
-      <option name="name" value="springfox-snapshots" />
-      <option name="url" value="https://oss.jfrog.org/artifactory/oss-snapshot-local/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss.community" />

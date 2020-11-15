@@ -5,13 +5,10 @@ import com.xbank.event.OnUserAccountChangeEvent;
 import com.xbank.event.OnUserLogoutSuccessEvent;
 import com.xbank.exception.UpdatePasswordException;
 import com.xbank.model.CustomUserDetails;
-import com.xbank.model.User;
 import com.xbank.model.dto.ApiResponse;
 import com.xbank.model.dto.LogOutRequest;
 import com.xbank.model.dto.UpdatePasswordRequest;
-import com.xbank.repository.UserRepositoryCustomR2dpc;
 import com.xbank.service.AuthService;
-import com.xbank.service.FileService;
 import com.xbank.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -39,20 +34,13 @@ public class UserController {
 
     private final UserService userService;
 
-    private final FileService fileService;
-
-    private final UserRepositoryCustomR2dpc userRepositoryCustom;
-
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public UserController(AuthService authService, UserService userService,
-                          ApplicationEventPublisher applicationEventPublisher, FileService fileService, UserRepositoryCustomR2dpc userRepositoryCustom) {
+    public UserController(AuthService authService, UserService userService, ApplicationEventPublisher applicationEventPublisher) {
         this.authService = authService;
         this.userService = userService;
-        this.fileService = fileService;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.userRepositoryCustom = userRepositoryCustom;
     }
 
     @GetMapping("/all")
@@ -68,7 +56,6 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @ApiOperation(value = "Returns the current user profile")
     public ResponseEntity getUserProfile(@CurrentUser CustomUserDetails currentUser) {
-        Mono<User> userMono = userRepositoryCustom.findOneByUsername("hoaronal");
         logger.info(currentUser.getEmail() + " has role: " + currentUser.getRoles());
         return ResponseEntity.ok("Hello. This is about me");
     }
@@ -117,15 +104,5 @@ public class UserController {
         OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(customUserDetails.getEmail(), credentials.toString(), logOutRequest);
         applicationEventPublisher.publishEvent(logoutSuccessEvent);
         return ResponseEntity.ok(new ApiResponse(true, "Log out successful"));
-    }
-
-    @PostMapping("/avatar")
-    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    @ApiOperation(value = "Allows the user to change his avatar")
-    public ResponseEntity changeAvatar(@CurrentUser CustomUserDetails customUser,
-                                     @ApiParam(value = "The Avatar image") MultipartFile fileAvatar) {
-        logger.info(customUser.getEmail() + " has role: " + customUser.getRoles());
-        userService.updateAvatar(customUser, fileAvatar);
-        return ResponseEntity.ok(new ApiResponse(true, "Update avatar success"));
     }
 }

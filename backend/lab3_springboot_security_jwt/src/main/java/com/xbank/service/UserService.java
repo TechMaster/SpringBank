@@ -1,7 +1,6 @@
 package com.xbank.service;
 
 import com.xbank.annotation.CurrentUser;
-import com.xbank.exception.EntityNotfoundException;
 import com.xbank.exception.UserLogoutException;
 import com.xbank.model.CustomUserDetails;
 import com.xbank.model.Role;
@@ -10,17 +9,15 @@ import com.xbank.model.UserDevice;
 import com.xbank.model.dto.LogOutRequest;
 import com.xbank.model.dto.RegistrationRequest;
 import com.xbank.repository.UserRepository;
-import com.xbank.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Flux;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -86,11 +83,9 @@ public class UserService {
     public User createUser(RegistrationRequest registerRequest) {
         User newUser = new User();
         Boolean isNewUserAsAdmin = registerRequest.getRegisterAsAdmin();
-//        newUser.setId(String.valueOf(ThreadLocalRandom.current().nextInt(100000, 999999)));
-        newUser.setId(UuidUtil.generateRandomUuid());
+        newUser.setId(String.valueOf(ThreadLocalRandom.current().nextInt(100000, 999999)));
         newUser.setEmail(registerRequest.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        newUser.setFullName(registerRequest.getUsername());
         newUser.setUsername(registerRequest.getUsername());
         newUser.addRoles(getRolesForNewUser(isNewUserAsAdmin));
         newUser.setActive(true);
@@ -124,19 +119,5 @@ public class UserService {
 
         logger.info("Removing refresh token associated with device [" + userDevice + "]");
         refreshTokenService.deleteById(userDevice.getRefreshToken().getId());
-    }
-
-    public void updateAvatar(@CurrentUser CustomUserDetails currentUser, Flux<FilePart> fileAvatar) {
-        String email = currentUser.getEmail();
-        User user = findByEmail(email).orElseThrow(() ->
-                new EntityNotfoundException(("Notfound user with email " + email)));
-        if (Objects.nonNull(user)) {
-            try {
-                user.setPhoto(fileAvatar.getBytes());
-                userRepository.save(user);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

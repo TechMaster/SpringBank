@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Profile("!dev")
 @Configuration
 @EnableWebSecurity()
-//@EnableJpaRepositories(basePackages = "com.xbank.repository")
+@EnableJpaRepositories(basePackages = "com.xbank.repository")
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
         jsr250Enabled = true,

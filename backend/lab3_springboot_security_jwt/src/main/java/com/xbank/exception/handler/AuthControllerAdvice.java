@@ -179,11 +179,4 @@ public class AuthControllerAdvice {
         return new ApiResponse(false, ex.getMessage(), ex.getClass().getName(), resolvePathFromWebRequest(request));
     }
 
-    @ExceptionHandler(value = FileStorageException.class)
-    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-    @ResponseBody
-    public ApiResponse handleFileStorageException(FileStorageException ex, WebRequest request) {
-        return new ApiResponse(false, ex.getMessage(), ex.getClass().getName(), resolvePathFromWebRequest(request));
-    }
-
 }

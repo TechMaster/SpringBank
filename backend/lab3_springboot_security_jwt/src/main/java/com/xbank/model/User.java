@@ -12,7 +12,6 @@ import java.util.Set;
 @Entity(name = "users")
 public class User extends DateAudit {
 
-
     @Id
     @Column(name = "user_id")
     private String id;
@@ -37,10 +36,6 @@ public class User extends DateAudit {
 
     @Column(name = "is_email_verified", nullable = false)
     private Boolean isEmailVerified;
-
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_role", joinColumns = {
@@ -136,14 +131,6 @@ public class User extends DateAudit {
 
     public void setEmailVerified(Boolean emailVerified) {
         isEmailVerified = emailVerified;
-    }
-
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
     }
 
     public Set<Role> getRoles() {
