@@ -43,10 +43,10 @@ CREATE TABLE account (
 -- DROP TABLE public.transaction;
 
 CREATE TABLE transaction (
-	id int8 NOT NULL,
+	id varchar NOT NULL,
 	"action" int4 NULL,
-	account int8 NULL,
-	to_account int8 NULL,
+	account varchar NULL,
+	to_account varchar NULL,
 	amount int8 NULL,
 	currency varchar(3) NULL,
 	transact_at timestamp NULL,
