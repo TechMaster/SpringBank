@@ -12,7 +12,7 @@ security:
 
 spring:
   datasource:
-    url: jdbc:postgresql://13.250.33.32:5432/xbank
+    url: jdbc:postgresql://13.229.132.148:5432/xbank
     username: root
     password: xbank@123
     driver-class-name: org.postgresql.Driver

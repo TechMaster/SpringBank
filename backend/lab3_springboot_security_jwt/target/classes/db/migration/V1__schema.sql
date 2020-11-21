@@ -43,21 +43,19 @@ CREATE TABLE account (
 -- DROP TABLE public.transaction;
 
 CREATE TABLE transaction (
-	id varchar(255) NOT NULL,
-	owner varchar(255) NOT NULL,
-	action int4 NULL,
-	account varchar(255) NULL,
-	to_account varchar(255) NULL,
+	id varchar NOT NULL,
+	"action" int4 NULL,
+	account varchar NULL,
+	to_account varchar NULL,
 	amount int8 NULL,
 	currency varchar(3) NULL,
 	transact_at timestamp NULL,
-	result int4 NULL,
+	"result" int4 NULL,
 	error varchar(255) NULL,
 	created_at timestamp NULL,
-	updated_at timestamp null,
+	updated_at timestamp NULL,
 	CONSTRAINT ak_sdgdfgsdfsdfcvgsdfsdasfsd UNIQUE (id)
 );
-
 -- public.email_verification_token definition
 
 -- Drop table
