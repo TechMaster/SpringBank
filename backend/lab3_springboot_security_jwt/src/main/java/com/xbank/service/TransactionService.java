@@ -1,14 +1,14 @@
 package com.xbank.service;
 
-
-import com.xbank.exception.UpdatePasswordException;
-import com.xbank.model.CustomUserDetails;
 import com.xbank.model.Transaction;
-import com.xbank.model.User;
 import com.xbank.model.dto.TransactionRequest;
 import com.xbank.repository.TransactionRepository;
 import com.xbank.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,4 +37,15 @@ public class TransactionService {
         return Optional.of(transaction);
     }
 
+    public Optional<Transaction> getById(String id) {
+        return transactionRepository.findById(id);
+    }
+
+    public Page<Transaction> pagination(Pageable pageable) {
+        return transactionRepository.findAll(pageable);
+    }
+
+    public Page<Transaction> paginationByAccount(Pageable pageable, String account) {
+        return transactionRepository.findByAccount(pageable, account);
+    }
 }

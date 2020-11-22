@@ -7,12 +7,9 @@ server:
     key-store-password: password # The password used to generate the certificate
     key-alias: tomcat
 
-security:
-  require-ssl: true # Tell Spring Security (if used) to require requests over HTTPS
-
 spring:
   datasource:
-    url: jdbc:postgresql://13.229.132.148:5432/xbank
+    url: jdbc:postgresql://localhost:5432/xbank
     username: root
     password: xbank@123
     driver-class-name: org.postgresql.Driver
@@ -26,7 +23,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         id:
           new_generator_mappings: false
