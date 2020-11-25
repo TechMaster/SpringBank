@@ -1,0 +1,79 @@
+logging:
+  level:
+    ROOT: DEBUG
+    io.github.jhipster: DEBUG
+    com.xbank: DEBUG
+
+spring:
+  profiles:
+    active: dev
+    include:
+      - swagger
+      - tls
+      # Uncomment to activate TLS for the dev profile
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  h2:
+    console:
+      enabled: false
+  liquibase:
+    # Remove 'faker' if you do not want the sample data to be loaded automatically
+    contexts: dev, faker
+    url: jdbc:postgresql://localhost:5432/xbank
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/xbank
+    username: root
+    password: xbank@123
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+
+# ===================================================================
+jhipster:
+  # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: NTJjZDUzY2M1ZjAzZGFkNzM0YWY0MmU1ZjAxZjYxNWY0Nzc3NjVjNDg1OWM3ZWZkNzgyZmMyNjBiNTNjOTViY2IyMDc0MDQzN2QzYWU3M2Q0YTI2OTBiNjQyNWM4NmUzODNkNjc4OWEzYmU4MWIyNjdjMWNiY2RmOTNhYWRkOTY=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
+  mail: # specific JHipster mail property, for standard properties see MailProperties
+    base-url: http://127.0.0.1:8080
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
