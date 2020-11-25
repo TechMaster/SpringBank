@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { BankAccount } from '../models/bank-account.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -27,6 +28,8 @@ export class UserService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
+
+  register() {}
 
   login(email: string, password: string): Observable<User> {
     return this.http
@@ -75,5 +78,10 @@ export class UserService {
 
   deleteUser(userId: string): Observable<any> {
     return this.http.delete<User>(USER_API_ENDPOINT + '/' + userId);
+  }
+
+  getUserBankAccounts(userId: string): Observable<BankAccount[]> {
+    const api = environment.API_ENDPOINT + `/bank_accounts?userId=${userId}`;
+    return this.http.get<BankAccount[]>(api);
   }
 }

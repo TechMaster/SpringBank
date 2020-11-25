@@ -1,20 +1,12 @@
 <h1 class="title" style="margin: 30px 0">Danh sách tài khoản</h1>
 
 <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let account of bankAccounts">
     <mat-expansion-panel-header>
-      <mat-panel-title>0123456789001</mat-panel-title>
-      <mat-panel-description>Tài khoản thanh toán</mat-panel-description>
+      <mat-panel-title>{{ account.id }}</mat-panel-title>
+      <mat-panel-description>{{ account.type }}</mat-panel-description>
     </mat-expansion-panel-header>
-    <p>Số dư: 30,000,000 VNĐ</p>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>0123456789002</mat-panel-title>
-      <mat-panel-description>Tài khoản tiết kiệm</mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>Số dư: 60,000,000 VNĐ</p>
+    <p>Số dư: {{ account.balance | currency: "VND" }}</p>
   </mat-expansion-panel>
 </mat-accordion>
 

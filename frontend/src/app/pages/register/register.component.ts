@@ -23,14 +23,7 @@ export class RegisterComponent implements OnInit {
     this.titleService.setTitle('Đăng ký tài khoản');
   }
 
-  login() {
-    this.userService.login(this.email, this.password).subscribe(
-      () => {
-        this.router.navigateByUrl(this.userService.redirectUrl);
-      },
-      (err) => {
-        this.errorMessage = err.error.message || err.message;
-      }
-    );
+  register() {
+    this.userService.register();
   }
 }
