@@ -24,9 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab5_springboot_webflux/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab5_springboot_webflux/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab5_springboot_webflux/src/main/resources/application.properties" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
