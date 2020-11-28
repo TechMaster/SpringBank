@@ -22,15 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/TransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountExitsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/AccountExitsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml" afterDir="false" />
-    </list>
+    <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
