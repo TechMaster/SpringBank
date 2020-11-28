@@ -1,42 +1,24 @@
-package com.xbank.domain;
+package com.xbank.dto;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
-@Entity(name = "account")
-public class Account extends AbstractAuditingEntity implements Serializable {
+/**
+ * A DTO representing a Account
+ */
+public class AccountDTO {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    private Long id;
-
-    @Column(name = "account")
+    @NotBlank
     private String account;
 
-    @Column(name = "owner")
+    @NotBlank
     private String owner;
 
-    @Column(name = "action")
     private int action;
 
-    @Column(name = "balance")
     private BigDecimal balance;
 
-    @Column(name = "currency")
     private String currency;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getAccount() {
         return account;
@@ -77,4 +59,5 @@ public class Account extends AbstractAuditingEntity implements Serializable {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
 }

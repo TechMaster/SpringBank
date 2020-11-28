@@ -23,12 +23,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xbank/controller/InvestigateController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xbank/model/Investigate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xbank/model/dto/InvestigateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xbank/repository/InvestigateRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xbank/service/InvestigateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3_springboot_security_jwt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3_springboot_security_jwt/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/AccountDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/TransactionDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/TransactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountExitsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/TransactionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/TransactionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/util/UuidUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/domain/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/domain/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/dto/PasswordChangeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/PasswordChangeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/AccountResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/AuditResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/UserJWTController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/UserResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/XbankController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/BadRequestAlertException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/BadRequestAlertException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/EmailAlreadyUsedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/EmailAlreadyUsedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/ErrorConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/ErrorConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/ExceptionTranslator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/ExceptionTranslator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/FieldErrorVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/FieldErrorVM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/InvalidPasswordException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/InvalidPasswordException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/errors/LoginAlreadyUsedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/LoginAlreadyUsedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/vm/KeyAndPasswordVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/vm/KeyAndPasswordVM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/vm/LoginVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/vm/LoginVM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/web/rest/vm/ManagedUserVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/vm/ManagedUserVM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/resources/config/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/resources/config/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/service/UserServiceIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/service/UserServiceIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/service/mapper/UserMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/mapper/UserMapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/AccountResourceIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/AccountResourceIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/AuditResourceIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/AuditResourceIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/TestUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/TestUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/UserJWTControllerIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/UserJWTControllerIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/UserResourceIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/UserResourceIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/WithUnauthenticatedMockUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/WithUnauthenticatedMockUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/errors/ExceptionTranslatorIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/errors/ExceptionTranslatorIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/web/rest/errors/ExceptionTranslatorTestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/test/java/com/xbank/rest/errors/ExceptionTranslatorTestController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +116,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../xbank" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -149,6 +188,7 @@
       <workItem from="1606064760113" duration="4984000" />
       <workItem from="1606143808771" duration="1200000" />
       <workItem from="1606148183730" duration="1517000" />
+      <workItem from="1606574065372" duration="3742000" />
     </task>
     <servers />
   </component>
@@ -194,11 +234,12 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="481" height="503" key="DebuggerActiveHint/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1606067159641" />
-    <state x="2695" y="298" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606067021741">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="813" y="318" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606574772008">
+      <screen x="64" y="27" width="1856" height="1053" />
     </state>
     <state x="620" y="227" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605929942916" />
     <state x="2695" y="298" width="424" height="491" key="FileChooserDialogImpl/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1606067021741" />
+    <state x="813" y="318" width="424" height="491" key="FileChooserDialogImpl/64.27.1856.1053/1920.0.1920.1080@64.27.1856.1053" timestamp="1606574772008" />
     <state width="1810" height="235" key="GridCell.Tab.0.bottom" timestamp="1606149410500">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -271,6 +312,10 @@
     <state width="1877" height="594" key="GridCell.Tab.2.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605521807239" />
     <state width="1493" height="184" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1605930647650" />
     <state width="1810" height="235" key="GridCell.Tab.2.right/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1606149410388" />
+    <state x="577" y="300" width="819" height="514" key="NewModule_or_Project.wizard" timestamp="1606574749193">
+      <screen x="64" y="27" width="1856" height="1053" />
+    </state>
+    <state x="577" y="300" width="819" height="514" key="NewModule_or_Project.wizard/64.27.1856.1053/1920.0.1920.1080@64.27.1856.1053" timestamp="1606574749193" />
     <state x="2401" y="175" width="1022" height="737" key="SettingsEditor" timestamp="1605026945622">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

@@ -40,7 +40,7 @@
         </createTable>
 
         <createTable tableName="transaction">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}" startWith="1" >
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}" startWith="100" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="owner" type="varchar(50)"/>
@@ -62,8 +62,11 @@
 
 
         <createTable tableName="account">
-            <column name="id" type="varchar(50)">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_account_id"/>
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}" startWith="1050" >
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account" type="varchar(50)">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_account"/>
             </column>
             <column name="owner" type="varchar(50)"/>
             <column name="action" type="int"/>

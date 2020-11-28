@@ -4,7 +4,7 @@ import com.xbank.Application;
 import com.xbank.config.Constants;
 import com.xbank.domain.User;
 import com.xbank.repository.UserRepository;
-import com.xbank.service.dto.UserDTO;
+import com.xbank.dto.UserDTO;
 
 import io.github.jhipster.security.RandomUtil;
 

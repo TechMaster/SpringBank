@@ -85,8 +85,6 @@ info:
 
 # ===================================================================
 jhipster:
-  clientApp:
-    name: 'xbankApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #     allowed-origins: "*"
@@ -108,3 +106,5 @@ jhipster:
     contact-email:
     license: unlicensed
     license-url:
+clientApp:
+  name: 'xbankApp'
