@@ -3,13 +3,16 @@ package com.xbank.service;
 import com.xbank.config.Constants;
 import com.xbank.domain.Transaction;
 import com.xbank.dto.TransactionDTO;
+import com.xbank.dto.UserDTO;
 import com.xbank.repository.TransactionRepository;
 import com.xbank.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -51,4 +54,15 @@ public class TransactionService {
                     return transactionRepository.save(transaction);
                 });
     }
+
+    @Transactional(readOnly = true)
+    public Mono<Long> countTransactions() {
+        return transactionRepository.countAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Flux<Transaction> getAllTransactions(Pageable pageable) {
+        return transactionRepository.findAllAsPage(pageable);
+    }
+
 }

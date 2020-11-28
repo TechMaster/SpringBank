@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-@Table("user")
+@Table("\"user\"")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.xbank.rest;
+package com.xbank.rest.errors;
 
 import com.xbank.rest.errors.BadRequestAlertException;
 import com.xbank.rest.errors.ErrorConstants;
