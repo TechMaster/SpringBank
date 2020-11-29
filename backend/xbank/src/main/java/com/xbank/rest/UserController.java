@@ -201,7 +201,7 @@ public class UserController {
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    // @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<User>> createUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to save User : {}", userDTO);
 
