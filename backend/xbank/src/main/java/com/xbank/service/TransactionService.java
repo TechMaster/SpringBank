@@ -3,10 +3,12 @@ package com.xbank.service;
 import com.xbank.config.Constants;
 import com.xbank.domain.Transaction;
 import com.xbank.dto.TransactionDTO;
+import com.xbank.event.TransactionEvent;
 import com.xbank.repository.TransactionRepository;
 import com.xbank.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 /**
- * Service class for managing accounts.
+ * Service class for managing Transactions.
  */
 @Service
 public class TransactionService {
@@ -25,8 +27,11 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-    public TransactionService(TransactionRepository transactionRepository) {
+    private final ApplicationEventPublisher publisher;
+
+    public TransactionService(TransactionRepository transactionRepository, ApplicationEventPublisher publisher) {
         this.transactionRepository = transactionRepository;
+        this.publisher = publisher;
     }
 
     @Transactional
@@ -49,7 +54,8 @@ public class TransactionService {
                         transaction.setCreatedBy(login);
                     }
                     transaction.setLastModifiedBy(login);
-                    return transactionRepository.save(transaction);
+                    return transactionRepository.save(transaction)
+                            .doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, item));
                 });
     }
 
@@ -61,6 +67,10 @@ public class TransactionService {
     @Transactional(readOnly = true)
     public Flux<Transaction> getAllTransactions(Pageable pageable) {
         return transactionRepository.findAllAsPage(pageable);
+    }
+
+    private final void publishTransactionEvent(String eventType, Transaction item) {
+        this.publisher.publishEvent(new TransactionEvent(eventType, item));
     }
 
 }

@@ -21,6 +21,7 @@ To build the final jar and optimize the xbank application for production, run:
 To ensure everything worked, run:
 
 ```
+ws://localhost:8081/ws/events
 
 java -jar target/*.jar
 

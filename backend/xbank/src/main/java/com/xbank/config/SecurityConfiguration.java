@@ -100,6 +100,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/management/info").permitAll()
                 .pathMatchers("/management/prometheus").permitAll()
                 .pathMatchers("/management/**").permitAll()
+                .pathMatchers("/ws/events").permitAll()
                 .pathMatchers("/v1/xbank/get_one_news").hasRole("user") // FIXME demo
                 .and()
                 .oauth2ResourceServer()
