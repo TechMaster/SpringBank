@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
+  API_ENDPOINT: 'http://localhost:8081',
+  KEYCLOAK_ENDPOIT:
+    'http://localhost:8080/auth/realms/microservice/protocol/openid-connect/token',
   SOCKET_ENDPOINT: 'http://localhost:3333',
-  API_ENDPOINT: 'http://localhost:3000'
 };
 
 /*

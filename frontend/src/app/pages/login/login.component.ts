@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.userService.login(this.email, this.password).subscribe(
+    this.userService.loginWithKeycloak(this.email, this.password).subscribe(
       () => {
         this.router.navigateByUrl(this.userService.redirectUrl);
       },

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { BankAccount } from '../models/bank-account.model';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -33,7 +33,7 @@ export class UserService {
 
   login(email: string, password: string): Observable<User> {
     return this.http
-      .post<any>(environment.API_ENDPOINT + '/login', {
+      .post<User>(environment.API_ENDPOINT + '/login', {
         email,
         password,
       })
@@ -44,6 +44,38 @@ export class UserService {
           return user;
         })
       );
+  }
+
+  loginWithKeycloak(email: string, password: string) {
+    const body = new HttpParams()
+      .set('client_id', 'xbank')
+      .set('client_secret', '60bee81a-b06d-4e2f-8d26-7e0f0782bc7d')
+      .set('username', email)
+      .set('password', password)
+      .set('grant_type', 'password');
+
+    return this.http.post(environment.KEYCLOAK_ENDPOIT, body.toString(), {
+      headers: new HttpHeaders().set(
+        'Content-Type',
+        'application/x-www-form-urlencoded'
+      ),
+    });
+
+    // return this.http
+    //   .post<any>(environment.KEYCLOAK_ENDPOIT, {
+    //     client_id: 'xbank',
+    //     client_secret: '60bee81a-b06d-4e2f-8d26-7e0f0782bc7d',
+    //     username: email,
+    //     password: password,
+    //     grant_type: 'password',
+    //   })
+    //   .pipe(
+    //     map((user) => {
+    //       localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(user));
+    //       this.currentUserSubject.next(user);
+    //       return user;
+    //     })
+    //   );
   }
 
   logout(): void {
