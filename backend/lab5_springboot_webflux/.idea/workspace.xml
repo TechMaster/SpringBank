@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ea2373cf-bf6a-425b-b059-42a0d984b7b6" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1kZOCK0Maaq2NwxW4HNOxcC1FmP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="dataflow-next" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xbank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xbank.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea2373cf-bf6a-425b-b059-42a0d984b7b6" name="Default Changelist" comment="" />
+      <created>1605904517305</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605904517305</updated>
+      <workItem from="1605904518475" duration="1207000" />
+      <workItem from="1606502865966" duration="25000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1810" height="284" key="GridCell.Tab.0.bottom" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.0.bottom/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.0.center" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.0.center/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.0.left" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.0.left/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.0.right" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.0.right/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.1.bottom" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.1.bottom/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.1.center" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.1.center/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.1.left" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.1.left/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+    <state width="1810" height="284" key="GridCell.Tab.1.right" timestamp="1605961872111">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1810" height="284" key="GridCell.Tab.1.right/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1605961872111" />
+  </component>
+</project>
