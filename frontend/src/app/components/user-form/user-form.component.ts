@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   ControlValueAccessor,
@@ -8,12 +8,12 @@ import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS,
   Validator,
-} from "@angular/forms";
-import { Subscription } from "rxjs";
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-user-form",
-  templateUrl: "./user-form.component.html",
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -27,12 +27,14 @@ import { Subscription } from "rxjs";
     },
   ],
 })
-export class UserFormComponent implements ControlValueAccessor, Validator, OnDestroy {
+export class UserFormComponent
+  implements ControlValueAccessor, Validator, OnDestroy {
   userForm = this.fb.group({
-    name: ["", [Validators.required]],
-    email: ["", [Validators.email]],
-    birthday: [""],
-    phone: [""],
+    firstName: ['', [Validators.required]],
+    // email: ["", [Validators.email]],
+    login: [''],
+    birthday: [''],
+    phone: [''],
   });
   onChange: any = () => {};
   onTouched: any = () => {};

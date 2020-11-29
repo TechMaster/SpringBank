@@ -15,9 +15,10 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Danh sách tài khoản');
 
-    const currentUserId = this.userService.currentUserValue.id;
+    const currentUserId = this.userService.currentUserValue?.id;
 
     this.userService.getUserBankAccounts(currentUserId).subscribe((data) => {
+      console.log(data)
       this.bankAccounts = data;
     });
   }

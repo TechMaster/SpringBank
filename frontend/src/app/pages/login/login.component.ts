@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  email: string = '';
+  username: string = '';
   password: string = '';
   errorMessage: string = '';
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.userService.loginWithKeycloak(this.email, this.password).subscribe(
+    this.userService.loginWithKeycloak(this.username, this.password).subscribe(
       () => {
         this.router.navigateByUrl(this.userService.redirectUrl);
       },

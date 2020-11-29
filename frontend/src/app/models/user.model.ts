@@ -1,8 +1,9 @@
 export class User {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  birthday: string;
-  avatar: string;
+  imageUrl: string;
   token?: string;
+  activated?: boolean;
 }

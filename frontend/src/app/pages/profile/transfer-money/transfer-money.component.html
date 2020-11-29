@@ -3,14 +3,14 @@
     <mat-card-title>Chuyển tiền</mat-card-title>
   </mat-card-header>
 
-  <div [formGroup]="transferForm" class="form-wrapper">
+  <div *ngIf="!isDone" [formGroup]="transferForm" class="form-wrapper">
     <div class="form">
       <mat-form-field>
         <input
           matInput
           placeholder="Tài khoản nguồn"
           autocomplete="off"
-          formControlName="source"
+          formControlName="account"
         />
       </mat-form-field>
 
@@ -19,15 +19,15 @@
           matInput
           placeholder="Tài khoản thụ hưởng"
           autocomplete="off"
-          formControlName="target"
+          formControlName="toAccount"
         />
         <button
           mat-button
-          *ngIf="transferForm.controls.target.value"
+          *ngIf="transferForm.controls.toAccount.value"
           matSuffix
           mat-icon-button
           aria-label="Clear"
-          (click)="transferForm.controls.target.value = ''"
+          (click)="transferForm.controls.toAccount.value = ''"
         >
           <mat-icon>close</mat-icon>
         </button>
@@ -55,7 +55,7 @@
           matInput
           placeholder="Số tiền"
           autocomplete="off"
-          formControlName="money"
+          formControlName="amount"
         />
         <mat-error>Quý khách vui lòng nhập số tiền chuyển khoản</mat-error>
       </mat-form-field>
@@ -83,6 +83,18 @@
         (click)="transferMoney()"
       >
         Xác nhận
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isDone" class="form-wrapper">
+    <h1>Giao dịch thành công. Bạn có muốn thực hiện giao dịch khác?</h1>
+
+    <div class="button-group">
+      <button mat-raised-button routerLink="/profile/account">Không</button>
+
+      <button mat-raised-button color="primary" (click)="isDone = false">
+        Tiếp tục
       </button>
     </div>
   </div>
