@@ -45,3 +45,8 @@ a {
   position: relative;
   overflow: hidden;
 }
+@media (max-width: 660px) {
+  .container {
+    justify-content: center;
+  }
+}

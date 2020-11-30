@@ -28,10 +28,10 @@
   <div *ngIf="currentUser" class="right-menu">
     <div [matMenuTriggerFor]="userDropdown" class="user">
       <div class="user-avatar">
-        <img [src]="currentUser.avatar || 'assets/img/default-avatar.png'" />
+        <img [src]="currentUser.imageUrl || 'assets/img/default-avatar.png'" />
       </div>
 
-      <div class="user-name">{{ currentUser.name }}</div>
+      <div class="user-name">{{ currentUser.username }}</div>
     </div>
 
     <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
@@ -59,7 +59,10 @@
 
   <ul class="menu" *ngIf="!currentUser">
     <li>
-      <a class="all-center" routerLink="/login" routerLinkActive="active">
+      <!-- <a class="all-center" routerLink="/login" routerLinkActive="active">
+        <mat-icon inline>person</mat-icon> &nbsp;<span>Đăng nhập</span>
+      </a> -->
+      <a class="all-center" (click)="login()" href="javascript: void(0)">
         <mat-icon inline>person</mat-icon> &nbsp;<span>Đăng nhập</span>
       </a>
     </li>

@@ -1,6 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { ShareModule } from './share/share.module';
 
@@ -18,6 +19,20 @@ import { PasswordFormComponent } from './components/password-form/password-form.
 
 import { httpInterceptorProviders } from './http-interceptors';
 import { NotificationsBoxComponent } from './components/notifications-box/notifications-box.component';
+import { environment } from 'src/environments/environment';
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: environment.keycloak,
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
+      bearerExcludedUrls: ['/assets'],
+    });
+}
 
 @NgModule({
   declarations: [
@@ -39,8 +54,18 @@ import { NotificationsBoxComponent } from './components/notifications-box/notifi
     BrowserAnimationsModule,
     AppRoutingModule,
     ShareModule,
+    KeycloakAngularModule,
   ],
-  providers: [Title, httpInterceptorProviders],
+  providers: [
+    Title,
+    // httpInterceptorProviders,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

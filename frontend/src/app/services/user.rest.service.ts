@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { KeycloakService } from 'keycloak-angular';
-import { KeycloakProfile } from 'keycloak-js';
+import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 import { TableOptions } from '../models/table-options.model';
@@ -17,7 +10,6 @@ import { BankAccount } from '../models/bank-account.model';
 import { environment } from 'src/environments/environment';
 
 const USER_API_ENDPOINT: string = environment.API_ENDPOINT + '/users';
-const KEYCLOAK_REALMS = 'microservice';
 const LOCALSTORAGE_KEY = 'user';
 
 @Injectable({
@@ -28,59 +20,35 @@ export class UserService {
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
 
-  public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
-
-  constructor(private http: HttpClient, private keycloak: KeycloakService) {
+  constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))
     );
     this.currentUser = this.currentUserSubject.asObservable();
-
-    this.checkLogin();
   }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
-  async checkLogin() {
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
-
-    if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-      this.currentUserSubject.next(this.userProfile as User);
-    }
-  }
-
-  login() {
-    this.keycloak.login();
-  }
-
-  loginWithKeycloakREST(username: string, password: string) {
-    const body = new HttpParams()
-      .set('client_id', environment.keycloak.clientId)
-      .set('client_secret', environment.keycloak.clientSecret)
-      .set('username', username)
-      .set('password', password)
-      .set('grant_type', 'password');
-
-    return this.http.post(
-      environment.keycloak.url +
-        `/realms/${KEYCLOAK_REALMS}/protocol/openid-connect/token`,
-      body.toString(),
-      {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        ),
-      }
-    );
+  login(email: string, password: string): Observable<User> {
+    return this.http
+      .post<User>(environment.API_ENDPOINT + '/login', {
+        email,
+        password,
+      })
+      .pipe(
+        map((user) => {
+          localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          return user;
+        })
+      );
   }
 
   logout(): void {
+    localStorage.removeItem(LOCALSTORAGE_KEY);
     this.currentUserSubject.next(null);
-    this.keycloak.logout();
   }
 
   getUsers(options: TableOptions): Observable<HttpResponse<User[]>> {
@@ -113,7 +81,7 @@ export class UserService {
   }
 
   getUserBankAccounts(userId: string): Observable<BankAccount[]> {
-    const api = environment.API_ENDPOINT + '/accounts';
+    const api = environment.API_ENDPOINT + `/bank_accounts?userId=${userId}`;
     return this.http.get<BankAccount[]>(api);
   }
 }

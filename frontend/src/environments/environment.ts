@@ -5,8 +5,13 @@
 export const environment = {
   production: false,
   API_ENDPOINT: 'http://localhost:8081/api',
-  KEYCLOAK_ENDPOINT: 'http://localhost:8080/auth',
   SOCKET_ENDPOINT: 'http://localhost:3333',
+  keycloak: {
+      url: 'http://localhost:8080/auth',
+      realm: 'microservice',
+      clientId: 'xbank',
+      clientSecret: '60bee81a-b06d-4e2f-8d26-7e0f0782bc7d'
+  }
 };
 
 /*

@@ -41,3 +41,8 @@
   font-size: 4rem;
   color: #21409a;
 }
+@media (max-width: 675px) {
+  .container {
+    justify-content: center;
+  }
+}

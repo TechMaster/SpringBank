@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~10.0.4",
     "@angular/platform-browser-dynamic": "~10.0.4",
     "@angular/router": "~10.0.4",
+    "keycloak-angular": "^8.0.1",
+    "keycloak-js": "^11.0.3",
     "rxjs": "~6.5.5",
     "swipejs": "^2.2.18",
     "tslib": "^2.0.0",

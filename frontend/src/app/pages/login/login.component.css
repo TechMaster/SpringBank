@@ -16,6 +16,8 @@ h1 {
   border: 1px solid transparent;
   border-radius: 0.25rem;
   border-color: #f5c6cb;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .form {

@@ -12,11 +12,21 @@ export class LayoutComponent {
   currentUser: User;
 
   constructor(private userService: UserService, private router: Router) {
-    this.userService.currentUser.subscribe((user) => (this.currentUser = user));
+    this.userService.currentUser.subscribe((user) => {
+      if (user) {
+        console.log(user)
+        this.currentUser = user;
+        this.router.navigateByUrl('/');
+      }
+    });
+  }
+
+  login() {
+    this.userService.login();
   }
 
   logout() {
     this.userService.logout();
-    this.router.navigateByUrl('/login');
+    // this.router.navigateByUrl('/login');
   }
 }
