@@ -108,6 +108,7 @@ public class AuditEventService {
         persistentAuditEvent.setPrincipal(login);
         persistentAuditEvent.setAuditEventType(AUTHENTICATION_SUCCESS);
         persistentAuditEvent.setAuditEventDate(Instant.now());
+
         return persistenceAuditEventRepository.save(persistentAuditEvent);
     }
 

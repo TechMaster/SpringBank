@@ -2,14 +2,20 @@ package com.xbank.service;
 
 import com.xbank.config.Constants;
 import com.xbank.domain.Account;
+import com.xbank.domain.Transaction;
 import com.xbank.dto.AccountDTO;
+import com.xbank.dto.AccountTranferDTO;
+import com.xbank.dto.WithDrawDTO;
+import com.xbank.event.TransactionEvent;
 import com.xbank.repository.AccountRepository;
+import com.xbank.repository.TransactionRepository;
 import com.xbank.rest.errors.AccountExitsException;
 import com.xbank.security.SecurityUtils;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +23,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 
 /**
  * Service class for managing accounts.
@@ -31,8 +38,14 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    private final TransactionRepository transactionRepository;
+
+    private final ApplicationEventPublisher publisher;
+
+    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository, ApplicationEventPublisher publisher) {
         this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
+        this.publisher = publisher;
     }
 
     @Transactional
@@ -69,5 +82,85 @@ public class AccountService {
                                 }
                             });
                 });
+    }
+
+    @Transactional
+    public Mono<ResponseEntity<Account>> transfer(AccountTranferDTO data) {
+        return SecurityUtils.getCurrentUserLogin()
+                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
+                        .flatMap(account -> {
+                            account.setBalance(account.getBalance().subtract(data.getBalance()));
+                            return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
+                                acc1.setBalance(acc1.getBalance().add(data.getBalance()));
+                                return accountRepository.save(acc1);
+                            }));
+                        }).map(acc -> {
+                            try {
+                                return ResponseEntity.created(new URI("/api/accounts/tranfer" + acc.getId()))
+                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.tranfered", acc.getAccount()))
+                                        .body(acc);
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
+    }
+
+    @Transactional
+    public Mono<ResponseEntity<Account>> withDraw(WithDrawDTO data) {
+        return SecurityUtils.getCurrentUserLogin()
+                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
+                        .flatMap(account -> {
+                            account.setBalance(account.getBalance().subtract(data.getBalance()));
+                            return accountRepository.save(account);
+                        }).map(acc -> {
+                            try {
+                                return ResponseEntity.created(new URI("/api/accounts/withdraw" + acc.getId()))
+                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.withdraw", acc.getAccount()))
+                                        .body(acc);
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
+    }
+
+    @Transactional
+    public Mono<ResponseEntity<Account>> loaded(WithDrawDTO data) {
+        return SecurityUtils.getCurrentUserLogin()
+                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
+                        .flatMap(account -> {
+                            account.setBalance(account.getBalance().add(data.getBalance()));
+                            return accountRepository.save(account);
+                        }).map(acc -> {
+                            Transaction transaction = new Transaction();
+                            transaction.setOwner(login);
+                            transaction.setAction(1);
+                            transaction.setAccount(data.getAccount());
+                            transaction.setToAccount(data.getAccount());
+                            transaction.setAmount(data.getBalance());
+                            transaction.setCurrency("VND");
+                            transaction.setTransactAt(LocalDateTime.now());
+                            transaction.setResult(1);
+                            transaction.setError("No error");
+                            if (transaction.getCreatedBy() == null) {
+                                transaction.setCreatedBy(login);
+                            }
+                            transaction.setLastModifiedBy(login);
+                            transactionRepository.save(transaction)
+                                    .doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, item)).then();
+                            try {
+                                return ResponseEntity.created(new URI("/api/accounts/loaded" + acc.getId()))
+                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.loaded", acc.getAccount()))
+                                        .body(acc);
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
+    }
+
+    private final void publishTransactionEvent(String eventType, Transaction item) {
+        this.publisher.publishEvent(new TransactionEvent(eventType, item));
     }
 }
