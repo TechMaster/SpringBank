@@ -31,9 +31,9 @@ public class AccountController {
         return accountService.createAccount(accountDTO);
     }
 
-    @PostMapping("/loaded")
+    @PostMapping("/deposit")
     public Mono<ResponseEntity<Account>> loaded(@Valid @RequestBody WithDrawDTO data) {
-        return accountService.loaded(data);
+        return accountService.deposit(data);
     }
 
     @PostMapping("/withdraw")
