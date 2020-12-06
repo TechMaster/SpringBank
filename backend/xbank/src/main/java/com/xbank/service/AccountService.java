@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -90,11 +91,27 @@ public class AccountService {
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
                         .flatMap(account -> {
-                            account.setBalance(account.getBalance().subtract(data.getBalance()));
-                            return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
-                                acc1.setBalance(acc1.getBalance().add(data.getBalance()));
-                                return accountRepository.save(acc1);
-                            }));
+                            Transaction transaction = new Transaction();
+                            transaction.setOwner(login);
+                            transaction.setAction(1);
+                            transaction.setAccount(data.getAccount());
+                            transaction.setToAccount(data.getAccount());
+                            transaction.setAmount(data.getBalance());
+                            transaction.setCurrency("VND");
+                            transaction.setTransactAt(LocalDateTime.now());
+                            transaction.setResult(1);
+                            transaction.setError("No error");
+                            if (transaction.getCreatedBy() == null) {
+                                transaction.setCreatedBy(login);
+                            }
+                            transaction.setLastModifiedBy(login);
+                            return transactionRepository.save(transaction).flatMap(t -> {
+                                account.setBalance(account.getBalance().subtract(data.getBalance()));
+                                return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
+                                    acc1.setBalance(acc1.getBalance().add(data.getBalance()));
+                                    return accountRepository.save(acc1);
+                                }));
+                            });
                         }).map(acc -> {
                             try {
                                 return ResponseEntity.created(new URI("/api/accounts/tranfer" + acc.getId()))
@@ -112,28 +129,6 @@ public class AccountService {
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
                         .flatMap(account -> {
-                            account.setBalance(account.getBalance().subtract(data.getBalance()));
-                            return accountRepository.save(account);
-                        }).map(acc -> {
-                            try {
-                                return ResponseEntity.created(new URI("/api/accounts/withdraw" + acc.getId()))
-                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.withdraw", acc.getAccount()))
-                                        .body(acc);
-                            } catch (URISyntaxException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }));
-    }
-
-    @Transactional
-    public Mono<ResponseEntity<Account>> loaded(WithDrawDTO data) {
-        return SecurityUtils.getCurrentUserLogin()
-                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
-                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
-                        .flatMap(account -> {
-                            account.setBalance(account.getBalance().add(data.getBalance()));
-                            return accountRepository.save(account);
-                        }).map(acc -> {
                             Transaction transaction = new Transaction();
                             transaction.setOwner(login);
                             transaction.setAction(1);
@@ -148,11 +143,49 @@ public class AccountService {
                                 transaction.setCreatedBy(login);
                             }
                             transaction.setLastModifiedBy(login);
-                            transactionRepository.save(transaction)
-                                    .doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, item)).then();
+                            return transactionRepository.save(transaction).flatMap(t -> {
+                                account.setBalance(account.getBalance().subtract(data.getBalance()));
+                                return accountRepository.save(account);
+                            });
+                        }).map(acc -> {
                             try {
-                                return ResponseEntity.created(new URI("/api/accounts/loaded" + acc.getId()))
-                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.loaded", acc.getAccount()))
+                                return ResponseEntity.created(new URI("/api/accounts/withdraw" + acc.getId()))
+                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.withdraw", acc.getAccount()))
+                                        .body(acc);
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
+    }
+
+    @Transactional
+    public Mono<ResponseEntity<Account>> deposit(WithDrawDTO data) {
+        return SecurityUtils.getCurrentUserLogin()
+                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
+                        .flatMap(account -> {
+                            Transaction transaction = new Transaction();
+                            transaction.setOwner(login);
+                            transaction.setAction(2);
+                            transaction.setAccount(data.getAccount());
+                            transaction.setToAccount(data.getAccount());
+                            transaction.setAmount(data.getBalance());
+                            transaction.setCurrency("VND");
+                            transaction.setTransactAt(LocalDateTime.now());
+                            transaction.setResult(1);
+                            transaction.setError("No error");
+                            if (transaction.getCreatedBy() == null) {
+                                transaction.setCreatedBy(login);
+                            }
+                            transaction.setLastModifiedBy(login);
+                            return transactionRepository.save(transaction).flatMap(t -> {
+                                account.setBalance(account.getBalance().add(data.getBalance()));
+                                return accountRepository.save(account);
+                            });
+                        }).map(acc -> {
+                            try {
+                                return ResponseEntity.created(new URI("/api/accounts/deposit" + acc.getId()))
+                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.deposit", acc.getAccount()))
                                         .body(acc);
                             } catch (URISyntaxException e) {
                                 throw new RuntimeException(e);
