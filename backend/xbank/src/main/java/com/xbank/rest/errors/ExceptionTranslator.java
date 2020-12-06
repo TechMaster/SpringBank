@@ -140,6 +140,15 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         return create(ex, problem, request);
     }
 
+    @ExceptionHandler
+    public Mono<ResponseEntity<Problem>> handleConcurrencyFailure(WithdrawException ex, ServerWebExchange request) {
+        Problem problem = Problem.builder()
+                .withStatus(Status.CONFLICT)
+                .with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE)
+                .build();
+        return create(ex, problem, request);
+    }
+
     @Override
     public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
 

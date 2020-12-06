@@ -12,7 +12,6 @@ import com.xbank.rest.errors.LoginAlreadyUsedException;
 import com.xbank.rest.vm.KeyAndPasswordVM;
 import com.xbank.rest.vm.ManagedUserVM;
 import com.xbank.security.AuthoritiesConstants;
-import com.xbank.security.SecurityUtils;
 import com.xbank.service.MailService;
 import com.xbank.service.UserService;
 

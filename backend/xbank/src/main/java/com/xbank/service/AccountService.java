@@ -10,8 +10,10 @@ import com.xbank.event.TransactionEvent;
 import com.xbank.repository.AccountRepository;
 import com.xbank.repository.TransactionRepository;
 import com.xbank.rest.errors.AccountExitsException;
+import com.xbank.rest.errors.WithdrawException;
 import com.xbank.security.SecurityUtils;
 import io.github.jhipster.web.util.HeaderUtil;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -129,9 +131,12 @@ public class AccountService {
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
                         .flatMap(account -> {
+                            if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
+                                throw new WithdrawException();
+                            }
                             Transaction transaction = new Transaction();
                             transaction.setOwner(login);
-                            transaction.setAction(1);
+                            transaction.setAction(2);
                             transaction.setAccount(data.getAccount());
                             transaction.setToAccount(data.getAccount());
                             transaction.setAmount(data.getBalance());
@@ -166,7 +171,7 @@ public class AccountService {
                         .flatMap(account -> {
                             Transaction transaction = new Transaction();
                             transaction.setOwner(login);
-                            transaction.setAction(2);
+                            transaction.setAction(3);
                             transaction.setAccount(data.getAccount());
                             transaction.setToAccount(data.getAccount());
                             transaction.setAmount(data.getBalance());
