@@ -26,7 +26,7 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://13.229.132.148:5432/xbank
+    url: jdbc:h2:file:./target/h2db/db/xbank;DB_CLOSE_DELAY=-1
   mail:
     host: localhost
     port: 25
@@ -35,9 +35,9 @@ spring:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://13.229.132.148:5432/xbank
+    url: r2dbc:h2:file:///./target/h2db/db/xbank?options=DB_CLOSE_DELAY=-1
     username: root
-    password: xbank@123
+    password:
   thymeleaf:
     cache: false
   security:
@@ -47,4 +47,4 @@ spring:
           issuer-uri: http://localhost:8080/auth/realms/microservice
 
 server:
-  port: 8081
+  port: 8082

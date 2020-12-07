@@ -86,6 +86,8 @@ public class SecurityConfiguration {
                 .frameOptions().disable()
                 .and()
                 .authorizeExchange()
+                .pathMatchers("/h2").permitAll()
+                .pathMatchers("/h2-console").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/authenticate").permitAll()
