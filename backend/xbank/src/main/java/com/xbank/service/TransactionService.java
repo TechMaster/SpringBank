@@ -47,7 +47,7 @@ public class TransactionService {
 
                     Transaction transaction = new Transaction();
                     transaction.setOwner(transactionDTO.getAccount());
-                    transaction.setAction(1);
+                    transaction.setAction(transactionDTO.getAction());
                     transaction.setAccount(transactionDTO.getAccount());
                     transaction.setToAccount(transactionDTO.getToAccount());
                     transaction.setAmount(transactionDTO.getAmount());

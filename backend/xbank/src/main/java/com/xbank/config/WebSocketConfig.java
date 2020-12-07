@@ -1,7 +1,7 @@
 package com.xbank.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xbank.domain.Transaction;
 import com.xbank.event.TransactionEvent;
 import com.xbank.event.TransactionEventPublisher;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,6 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,48 +49,28 @@ public class WebSocketConfig {
             Map<String, String> queryMap = getQueryMap(query);
             String userId = queryMap.getOrDefault("id", "");
             userMap.put(userId, session);
-            return session.receive().flatMap(webSocketMessage -> {
-                String payload = webSocketMessage.getPayloadAsText();
-                Message message;
-                try {
-                    message = objectMapper.readValue(payload, Message.class);
-                    String targetId = message.getTargetId();
-                    if (userMap.containsKey(targetId)) {
-                        WebSocketSession targetSession = userMap.get(targetId);
-                        if (null != targetSession) {
-                            WebSocketMessage textMessage = targetSession.textMessage(message.getMessageText());
-                            return targetSession.send(Mono.just(textMessage));
-                        }
-                    }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                    return session.send(Mono.just(session.textMessage(e.getMessage())));
-                }
-                return session.send(Mono.just(session.textMessage("target user is not online")));
-            }).then().doFinally(signal -> userMap.remove(userId));
 
-//            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
-//
-//                try {
-//                    // Get source from event and set the type of event in map when pushing the message
-//                    Transaction item = (Transaction) evt.getSource();
-//                    userMap.put(item.getAccount(), session);
-//
-//                    Map<String, Transaction> data = new HashMap<>();
-//                    data.put(evt.getEventType(), item);
-//
-//                    return objectMapper.writeValueAsString(data);
-//                } catch (JsonProcessingException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }).map(str -> {
-//                System.out.println("Publishing message to Websocket : " + str);
-//                return session.textMessage(str);
-//            });
-//            System.out.println("session getId ===>>>:" + session.getId());
-//            System.out.println("session getHandshakeInfo ===>>>:" + session.getHandshakeInfo());
-//            System.out.println("session getAttributes ===>>>:" + session.getAttributes());
-//            return session.send(messageFlux);
+            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
+                Transaction item = (Transaction) evt.getSource();
+                return item;
+            }).map(tx -> {
+                WebSocketMessage textMessage = null;
+                if (tx.getAction() == 1) {
+                    // Tranfer action
+                    textMessage = session.textMessage(tx.getAccount() + " has transferred to you " + tx.getAmount() + " at " + tx.getTransactAt());
+                } else if (tx.getAction() == 2) {
+                    // withdraw action
+                    textMessage = session.textMessage("Withdraw " + tx.getAmount() + " at " + tx.getTransactAt());
+                } else if (tx.getAction() == 3) {
+                    // deposit action
+                    textMessage = session.textMessage("Deposit " + tx.getAmount() + " at " + tx.getTransactAt());
+                }
+                return textMessage;
+            });
+            System.out.println("session getId ===>>>:" + session.getId());
+            System.out.println("session getHandshakeInfo ===>>>:" + session.getHandshakeInfo());
+            System.out.println("session getAttributes ===>>>:" + session.getAttributes());
+            return session.send(messageFlux);
         };
     }
 
