@@ -2,7 +2,6 @@ package com.xbank.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xbank.domain.Transaction;
 import com.xbank.event.TransactionEvent;
 import com.xbank.event.TransactionEventPublisher;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +14,7 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,9 +28,9 @@ public class WebSocketConfig {
     private static final Map<String, WebSocketSession> userMap = new ConcurrentHashMap<>();
     public static final String WS_EVENTS = "/ws/events";
     @Bean
-    HandlerMapping handlerMapping(WebSocketHandler wsh) {
+    HandlerMapping handlerMapping(WebSocketHandler webSocketHandler) {
         return new SimpleUrlHandlerMapping() {{
-            setUrlMap(Collections.singletonMap(WS_EVENTS, wsh));
+            setUrlMap(Collections.singletonMap(WS_EVENTS, webSocketHandler));
             setOrder(10);
         }};
     }
@@ -46,29 +46,52 @@ public class WebSocketConfig {
         Flux<TransactionEvent> publish = Flux.create(transactionEventPublisher).share();
         // Push events that are captured when catalogue item is added or updated
         return session -> {
-
-            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
-
+            String query = session.getHandshakeInfo().getUri().getQuery();
+            Map<String, String> queryMap = getQueryMap(query);
+            String userId = queryMap.getOrDefault("id", "");
+            userMap.put(userId, session);
+            return session.receive().flatMap(webSocketMessage -> {
+                String payload = webSocketMessage.getPayloadAsText();
+                Message message;
                 try {
-                    // Get source from event and set the type of event in map when pushing the message
-                    Transaction item = (Transaction) evt.getSource();
-                    userMap.put(item.getAccount(), session);
-
-                    Map<String, Transaction> data = new HashMap<>();
-                    data.put(evt.getEventType(), item);
-
-                    return objectMapper.writeValueAsString(data);
+                    message = objectMapper.readValue(payload, Message.class);
+                    String targetId = message.getTargetId();
+                    if (userMap.containsKey(targetId)) {
+                        WebSocketSession targetSession = userMap.get(targetId);
+                        if (null != targetSession) {
+                            WebSocketMessage textMessage = targetSession.textMessage(message.getMessageText());
+                            return targetSession.send(Mono.just(textMessage));
+                        }
+                    }
                 } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    return session.send(Mono.just(session.textMessage(e.getMessage())));
                 }
-            }).map(str -> {
-                System.out.println("Publishing message to Websocket : " + str);
-                return session.textMessage(str);
-            });
-            System.out.println("session getId ===>>>:" + session.getId());
-            System.out.println("session getHandshakeInfo ===>>>:" + session.getHandshakeInfo());
-            System.out.println("session getAttributes ===>>>:" + session.getAttributes());
-            return session.send(messageFlux);
+                return session.send(Mono.just(session.textMessage("target user is not online")));
+            }).then().doFinally(signal -> userMap.remove(userId));
+
+//            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
+//
+//                try {
+//                    // Get source from event and set the type of event in map when pushing the message
+//                    Transaction item = (Transaction) evt.getSource();
+//                    userMap.put(item.getAccount(), session);
+//
+//                    Map<String, Transaction> data = new HashMap<>();
+//                    data.put(evt.getEventType(), item);
+//
+//                    return objectMapper.writeValueAsString(data);
+//                } catch (JsonProcessingException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }).map(str -> {
+//                System.out.println("Publishing message to Websocket : " + str);
+//                return session.textMessage(str);
+//            });
+//            System.out.println("session getId ===>>>:" + session.getId());
+//            System.out.println("session getHandshakeInfo ===>>>:" + session.getHandshakeInfo());
+//            System.out.println("session getAttributes ===>>>:" + session.getAttributes());
+//            return session.send(messageFlux);
         };
     }
 
