@@ -45,3 +45,11 @@ To launch your application's tests, run:
 ```
 ./mvnw verify
 ```
+
+## Swagger 
+
+To check swagger, go to url:
+
+```
+https://app.swaggerhub.com/apis/hoaronal/XBANK/1.0.0
+```
