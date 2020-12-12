@@ -25,7 +25,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
@@ -78,7 +81,7 @@ public class UserController {
      * {@code POST  /register} : register the user.
      *
      * @param managedUserVM the managed user View Model.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
+     * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
@@ -89,8 +92,8 @@ public class UserController {
             throw new InvalidPasswordException();
         }
         return userService.registerUser(managedUserVM, managedUserVM.getPassword())
-            .doOnSuccess(mailService::sendActivationEmail)
-            .then();
+                .doOnSuccess(mailService::sendActivationEmail)
+                .then();
     }
 
     /**
@@ -102,8 +105,8 @@ public class UserController {
     @GetMapping("/activate")
     public Mono<Void> activateAccount(@RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
-            .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this activation key")))
-            .then();
+                .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this activation key")))
+                .then();
     }
 
     /**
@@ -127,8 +130,8 @@ public class UserController {
     @GetMapping("/info")
     public Mono<UserDTO> getAccount() {
         return userService.getUserWithAuthorities()
-            .map(UserDTO::new)
-            .switchIfEmpty(Mono.error(new AccountResourceException("User could not be found")));
+                .map(UserDTO::new)
+                .switchIfEmpty(Mono.error(new AccountResourceException("User could not be found")));
     }
 
     /**
@@ -153,16 +156,16 @@ public class UserController {
     @PostMapping(path = "/reset-password/init")
     public Mono<Void> requestPasswordReset(@RequestBody String mail) {
         return userService.requestPasswordReset(mail)
-            .doOnSuccess(user -> {
-                if (Objects.nonNull(user)) {
-                    mailService.sendPasswordResetMail(user);
-                } else {
-                    // Pretend the request has been successful to prevent checking which emails really exist
-                    // but log that an invalid attempt has been made
-                    log.warn("Password reset requested for non existing mail");
-                }
-            })
-            .then();
+                .doOnSuccess(user -> {
+                    if (Objects.nonNull(user)) {
+                        mailService.sendPasswordResetMail(user);
+                    } else {
+                        // Pretend the request has been successful to prevent checking which emails really exist
+                        // but log that an invalid attempt has been made
+                        log.warn("Password reset requested for non existing mail");
+                    }
+                })
+                .then();
     }
 
     /**
@@ -170,7 +173,7 @@ public class UserController {
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the password could not be reset.
+     * @throws RuntimeException         {@code 500 (Internal Server Error)} if the password could not be reset.
      */
     @PostMapping(path = "/reset-password/finish")
     public Mono<Void> finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
@@ -178,14 +181,14 @@ public class UserController {
             throw new InvalidPasswordException();
         }
         return userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
-            .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this reset key")))
-            .then();
+                .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this reset key")))
+                .then();
     }
 
     private static boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
-            password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
-            password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+                password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
+                password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
 
     /**
@@ -274,7 +277,7 @@ public class UserController {
     /**
      * {@code GET /users} : get all users.
      *
-     * @param request a {@link ServerHttpRequest} request.
+     * @param request  a {@link ServerHttpRequest} request.
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
@@ -296,6 +299,7 @@ public class UserController {
 
     /**
      * Gets a list of all roles.
+     *
      * @return a string list of all roles.
      */
     @GetMapping("/authorities")
@@ -330,6 +334,19 @@ public class UserController {
     public Mono<ResponseEntity<Void>> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         return userService.deleteUser(login)
-                .map(it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert( applicationName, "userManagement.deleted", login)).build());
+                .map(it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build());
+    }
+
+    private static final String UPLOAD_DIRECTORY = "./temp";
+
+    @PostMapping(value = "/change-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Mono<User> upload(@RequestPart("file") final FilePart filePart) {
+        final File directory = new File(UPLOAD_DIRECTORY);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        final File file = new File(directory, filePart.filename());
+        return filePart.transferTo(file)
+                .then(userService.uploadAvatar(file));
     }
 }

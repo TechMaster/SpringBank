@@ -32,6 +32,7 @@
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
+            <column name="avatar" type="binary"/>
             <column name="created_date" type="timestamp"/>
             <column name="reset_date" type="timestamp">
                 <constraints nullable="true"/>

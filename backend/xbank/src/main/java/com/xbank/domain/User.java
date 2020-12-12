@@ -7,13 +7,14 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.Lob;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-@Table("\"user\"")
+@Table("user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +53,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @Column("activation_key")
     private String activationKey;
+
+    @Lob
+    @Column("avatar")
+    private byte[] avatar;
 
     @JsonIgnore
     @Column("reset_key")
@@ -175,5 +180,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }
