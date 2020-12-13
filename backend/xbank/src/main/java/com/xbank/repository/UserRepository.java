@@ -39,6 +39,9 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
     @Query("SELECT * FROM user WHERE login = :login")
     Mono<User> findOneByLogin(String login);
 
+    @Query("SELECT * FROM user WHERE email = :email")
+    Mono<User> findOneByEmail(String email);
+
     @Query("SELECT COUNT(DISTINCT id) FROM user WHERE login != :anonymousUser")
     Mono<Long> countAllByLoginNot(String anonymousUser);
 

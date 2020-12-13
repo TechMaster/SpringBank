@@ -65,6 +65,13 @@ public class UserService {
     }
 
     @Transactional
+    public Mono<User> findByEmail(String email) {
+        log.debug("findByEmail {}", email);
+        return userRepository.findOneByEmail(email)
+                .flatMap(user -> Mono.just(user));
+    }
+
+    @Transactional
     public Mono<User> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
         return userRepository.findOneByResetKey(key)
@@ -128,6 +135,9 @@ public class UserService {
                 newUser.setActivated(false);
                 // new user gets registration key
                 newUser.setActivationKey(RandomUtil.generateActivationKey());
+                // activate given user for the registration key.
+                newUser.setActivated(true);
+                newUser.setActivationKey(null);
                 return newUser;
             }))
             .flatMap(newUser -> {

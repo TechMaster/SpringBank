@@ -53,3 +53,11 @@ To check swagger, go to url:
 ```
 https://app.swaggerhub.com/apis/hoaronal/XBANK/1.0.0
 ```
+
+## Paging and soft 
+
+To check swagger, go to url:
+
+```
+http://localhost:8082/api/users?page=2&size=1
+```

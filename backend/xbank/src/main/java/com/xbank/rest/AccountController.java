@@ -20,14 +20,13 @@ public class AccountController {
 
     private final AccountService accountService;
 
-
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
     @PostMapping
 //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public Mono<ResponseEntity<Account>> createUser(@Valid @RequestBody AccountDTO accountDTO) {
+    public Mono<ResponseEntity<Account>> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
         return accountService.createAccount(accountDTO);
     }
 

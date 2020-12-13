@@ -1,7 +1,6 @@
 package com.xbank.rest;
 
 import com.xbank.domain.Notification;
-import com.xbank.domain.Transaction;
 import com.xbank.service.NotificationService;
 import io.github.jhipster.web.util.PaginationUtil;
 import org.springframework.data.domain.PageImpl;

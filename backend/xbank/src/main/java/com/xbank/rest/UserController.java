@@ -293,8 +293,9 @@ public class UserController {
                 .map(headers -> ResponseEntity.ok().headers(headers).body(userService.getAllManagedUsers(pageable)));
     }
 
-    private boolean onlyContainsAllowedProperties(Pageable pageable) {
-        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
+    @GetMapping("/find-by-email")
+    public Mono<User> findByEmail(@RequestParam String email) {
+        return userService.findByEmail(email);
     }
 
     /**
@@ -349,4 +350,9 @@ public class UserController {
         return filePart.transferTo(file)
                 .then(userService.uploadAvatar(file));
     }
+
+    private boolean onlyContainsAllowedProperties(Pageable pageable) {
+        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
+    }
+
 }
