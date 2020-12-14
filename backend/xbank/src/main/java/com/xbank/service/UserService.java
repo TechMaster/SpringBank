@@ -11,6 +11,7 @@ import com.xbank.dto.UserDTO;
 
 import io.github.jhipster.security.RandomUtil;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -59,6 +62,13 @@ public class UserService {
                 return saveUser(user);
             })
             .doOnNext(user -> log.debug("Activated user: {}", user));
+    }
+
+    @Transactional
+    public Mono<User> findByEmail(String email) {
+        log.debug("findByEmail {}", email);
+        return userRepository.findOneByEmail(email)
+                .flatMap(user -> Mono.just(user));
     }
 
     @Transactional
@@ -125,6 +135,9 @@ public class UserService {
                 newUser.setActivated(false);
                 // new user gets registration key
                 newUser.setActivationKey(RandomUtil.generateActivationKey());
+                // activate given user for the registration key.
+                newUser.setActivated(true);
+                newUser.setActivationKey(null);
                 return newUser;
             }))
             .flatMap(newUser -> {
@@ -322,4 +335,28 @@ public class UserService {
         return authorityRepository.findAll().map(Authority::getName);
     }
 
+    @Transactional
+    public Mono<User> uploadAvatar(File file) {
+        return SecurityUtils.getCurrentUserLogin()
+                .flatMap(userRepository::findOneByLogin)
+                .publishOn(Schedulers.boundedElastic())
+                .map(user -> {
+                    try {
+                        user.setAvatar(FileUtils.readFileToByteArray(file));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return user;
+                }).flatMap(this::saveUser)
+                .doOnNext(user -> log.debug("Changed password for User: {}", user));
+//        return userRepository.findOneByLogin("system").flatMap(user -> {
+//                    try {
+//                        user.setAvatar(FileUtils.readFileToByteArray(file));
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    return saveUser(user);
+//                }).flatMap(this::saveUser)
+//                .doOnNext(user -> log.debug("Changed password for User: {}", user));
+    }
 }

@@ -24,22 +24,25 @@ import java.util.stream.Collectors;
 @Repository
 public interface UserRepository extends R2dbcRepository<User, Long>, UserRepositoryInternal {
 
-    @Query("SELECT * FROM \"user\" WHERE activation_key = :activationKey")
+    @Query("SELECT * FROM user WHERE activation_key = :activationKey")
     Mono<User> findOneByActivationKey(String activationKey);
 
-    @Query("SELECT * FROM \"user\" WHERE activated = false AND activation_key IS NOT NULL AND created_date < :dateTime")
+    @Query("SELECT * FROM user WHERE activated = false AND activation_key IS NOT NULL AND created_date < :dateTime")
     Flux<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(LocalDateTime dateTime);
 
-    @Query("SELECT * FROM \"user\" WHERE reset_key = :resetKey")
+    @Query("SELECT * FROM user WHERE reset_key = :resetKey")
     Mono<User> findOneByResetKey(String resetKey);
 
-    @Query("SELECT * FROM \"user\" WHERE LOWER(email) = LOWER(:email)")
+    @Query("SELECT * FROM user WHERE LOWER(email) = LOWER(:email)")
     Mono<User> findOneByEmailIgnoreCase(String email);
 
-    @Query("SELECT * FROM \"user\" WHERE login = :login")
+    @Query("SELECT * FROM user WHERE login = :login")
     Mono<User> findOneByLogin(String login);
 
-    @Query("SELECT COUNT(DISTINCT id) FROM \"user\" WHERE login != :anonymousUser")
+    @Query("SELECT * FROM user WHERE email = :email")
+    Mono<User> findOneByEmail(String email);
+
+    @Query("SELECT COUNT(DISTINCT id) FROM user WHERE login != :anonymousUser")
     Mono<Long> countAllByLoginNot(String anonymousUser);
 
     @Query("INSERT INTO user_authority VALUES(:userId, :authority)")
@@ -82,7 +85,7 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     }
 
     private Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue) {
-        return db.execute("SELECT * FROM \"user\" u LEFT JOIN user_authority ua ON u.id=ua.user_id WHERE u." + fieldName + " = :" + fieldName)
+        return db.execute("SELECT * FROM user u LEFT JOIN user_authority ua ON u.id=ua.user_id WHERE u." + fieldName + " = :" + fieldName)
             .bind(fieldName, fieldValue)
             .map((row, metadata) ->
                 Tuples.of(

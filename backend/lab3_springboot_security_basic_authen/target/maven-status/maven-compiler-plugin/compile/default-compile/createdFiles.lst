@@ -1,0 +1,4 @@
+com/xbank/config/SpringSecurityConfig.class
+com/xbank/controller/ApplicationController.class
+com/xbank/BasicSecurityApplication.class
+com/xbank/controller/NoAuthController.class

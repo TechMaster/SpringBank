@@ -1,0 +1,11 @@
+com/xbank/model/LoginResponse$LoginResponseBuilder.class
+com/xbank/model/LoginResponse.class
+com/xbank/controller/AuthController.class
+com/xbank/controller/FixedBugSwaggerApiDocsController.class
+com/xbank/model/LoginRequest.class
+com/xbank/model/User.class
+com/xbank/model/User$UserBuilder.class
+com/xbank/config/SwaggerConfig.class
+com/xbank/controller/UserController.class
+com/xbank/AppStarter.class
+com/xbank/controller/HomeController.class

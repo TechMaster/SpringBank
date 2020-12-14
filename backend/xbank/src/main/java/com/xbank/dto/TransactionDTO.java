@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class TransactionDTO {
     private String account;
 
-    private long action;
+    private int action;
 
     private String toAccount;
 
@@ -24,11 +24,11 @@ public class TransactionDTO {
         this.account = account;
     }
 
-    public long getAction() {
+    public int getAction() {
         return action;
     }
 
-    public void setAction(long action) {
+    public void setAction(int action) {
         this.action = action;
     }
 

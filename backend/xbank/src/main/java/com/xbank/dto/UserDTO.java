@@ -50,6 +50,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private byte[] avatar;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -70,6 +72,8 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+
+        this.avatar = user.getAvatar();
     }
 
     public Long getId() {
@@ -174,6 +178,14 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 
     // prettier-ignore
