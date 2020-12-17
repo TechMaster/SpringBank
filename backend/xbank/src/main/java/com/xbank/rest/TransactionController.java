@@ -40,7 +40,6 @@ public class TransactionController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<Transaction>> createTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
         return transactionService.createTransaction(transactionDTO).map(tran -> {
             try {
