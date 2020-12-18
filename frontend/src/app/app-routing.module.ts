@@ -7,9 +7,6 @@ import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { UsersComponent } from './pages/users/users.component';
-import { CreateUserComponent } from './pages/users/create-user/create-user.component';
-import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -21,17 +18,8 @@ const routes: Routes = [
       { path: 'about', component: AboutComponent },
       {
         path: 'users',
-        component: UsersComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'users/create',
-        component: CreateUserComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'users/edit/:id',
-        component: EditUserComponent,
+        loadChildren: () =>
+          import('./pages/users/users.module').then((m) => m.UsersModule),
         canActivate: [AuthGuard],
       },
       {

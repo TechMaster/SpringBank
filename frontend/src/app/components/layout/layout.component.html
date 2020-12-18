@@ -16,10 +16,10 @@
       <li>
         <a routerLink="/about" routerLinkActive="active">Giới thiệu</a>
       </li>
-      <li *ngIf="currentUser">
+      <li *ngIf="currentUser && currentUser.roles.includes('bank_operator')">
         <a routerLink="/users" routerLinkActive="active">Quản lý User</a>
       </li>
-      <li *ngIf="currentUser">
+      <li *ngIf="currentUser && currentUser.roles.includes('customer')">
         <a routerLink="/profile" routerLinkActive="active">Trang cá nhân</a>
       </li>
     </ul>

@@ -27,9 +27,8 @@ export class UserService {
   public redirectUrl: string = '/';
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
-
   public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
+  // public userProfile: KeycloakProfile | null = null;
 
   constructor(private http: HttpClient, private keycloak: KeycloakService) {
     this.currentUserSubject = new BehaviorSubject<User>(
@@ -48,8 +47,10 @@ export class UserService {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-      this.currentUserSubject.next(this.userProfile as User);
+      const userProfile = await this.keycloak.loadUserProfile();
+      const roles = this.keycloak.getUserRoles();
+
+      this.currentUserSubject.next({ ...userProfile, roles } as User);
     }
   }
 

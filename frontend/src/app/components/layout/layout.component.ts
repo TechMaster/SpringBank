@@ -14,7 +14,6 @@ export class LayoutComponent {
   constructor(private userService: UserService, private router: Router) {
     this.userService.currentUser.subscribe((user) => {
       if (user) {
-        console.log(user)
         this.currentUser = user;
         this.router.navigateByUrl('/');
       }

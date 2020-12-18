@@ -5,6 +5,7 @@ export class User {
   lastName?: string;
   email: string;
   imageUrl: string;
+  roles?: string[];
   token?: string;
   activated?: boolean;
 }

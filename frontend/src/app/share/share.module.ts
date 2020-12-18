@@ -22,9 +22,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { UserFormComponent } from '../components/user-form/user-form.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [UserFormComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -74,6 +75,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
+    UserFormComponent,
   ],
 })
 export class ShareModule {}
