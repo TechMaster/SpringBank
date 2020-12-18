@@ -12,10 +12,7 @@ To start your application in the dev profile, run:
 To build the final jar and optimize the xbank application for production, run:
 
 ```
-
 ./mvnw -Pprod clean verify
-
-
 ```
 
 To ensure everything worked, run:
