@@ -23,9 +23,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { UserFormComponent } from '../components/user-form/user-form.component';
+import { PasswordFormComponent } from '../components/password-form/password-form.component';
+import { DialogConfirmDeleteComponent } from '../components/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @NgModule({
-  declarations: [UserFormComponent],
+  declarations: [
+    UserFormComponent,
+    PasswordFormComponent,
+    DialogConfirmDeleteComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -76,6 +82,8 @@ import { UserFormComponent } from '../components/user-form/user-form.component';
     MatSortModule,
     MatTableModule,
     UserFormComponent,
+    PasswordFormComponent,
+    DialogConfirmDeleteComponent,
   ],
 })
 export class ShareModule {}

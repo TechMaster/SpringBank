@@ -7,11 +7,11 @@ import { UsersComponent } from './users.component';
 const routes: Routes = [
   { path: '', component: UsersComponent },
   {
-    path: '/create',
+    path: 'create',
     component: CreateUserComponent,
   },
   {
-    path: '/edit/:id',
+    path: 'edit/:id',
     component: EditUserComponent,
   },
 ];

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_ENDPOINT: 'http://localhost:8081/api',
+  API_ENDPOINT: 'http://localhost:8082/api',
   SOCKET_ENDPOINT: 'http://localhost:3333',
   keycloak: {
       url: 'http://localhost:8080/auth',

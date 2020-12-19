@@ -16,7 +16,8 @@ import { BankAccount } from '../models/bank-account.model';
 
 import { environment } from 'src/environments/environment';
 
-const USER_API_ENDPOINT: string = environment.API_ENDPOINT + '/users';
+const KEYCLOAK = environment.keycloak;
+const USER_API_ENDPOINT: string = `${KEYCLOAK.url}/admin/realms/${KEYCLOAK.realm}/users`;
 const KEYCLOAK_REALMS = 'microservice';
 const LOCALSTORAGE_KEY = 'user';
 
@@ -28,7 +29,6 @@ export class UserService {
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
   public isLoggedIn = false;
-  // public userProfile: KeycloakProfile | null = null;
 
   constructor(private http: HttpClient, private keycloak: KeycloakService) {
     this.currentUserSubject = new BehaviorSubject<User>(
@@ -86,11 +86,8 @@ export class UserService {
 
   getUsers(options: TableOptions): Observable<HttpResponse<User[]>> {
     let queryParams = [];
-    queryParams.push('_page=' + (options.currentPage || 1));
-    queryParams.push('_sort=' + (options.column || 'id'));
-    queryParams.push('_order=' + (options.direction || 'desc'));
-    queryParams.push('_limit=' + (options.itemsPerPage || 10));
-    queryParams.push('q=' + (options.keyword || ''));
+    queryParams.push('max=' + (options.itemsPerPage || 100));
+    queryParams.push('search=' + (options.keyword || ''));
     const queryParamsUrl = queryParams.join('&');
 
     const api = USER_API_ENDPOINT + `?${queryParamsUrl}`;

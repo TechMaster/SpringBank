@@ -11,7 +11,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { PasswordFormComponent } from './components/password-form/password-form.component';
 
 // import { httpInterceptorProviders } from './http-interceptors';
 import { NotificationsBoxComponent } from './components/notifications-box/notifications-box.component';
@@ -38,7 +37,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     AboutComponent,
     NotFoundComponent,
-    PasswordFormComponent,
     NotificationsBoxComponent,
   ],
   imports: [
