@@ -18,9 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -50,6 +52,22 @@ public class AccountService {
         this.transactionRepository = transactionRepository;
         this.publisher = publisher;
     }
+
+    @Transactional(readOnly = true)
+    public Mono<Long> countAccountsByUser(String username) {
+        return accountRepository.countByUser(username);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Mono<Long> countAccounts() {
+        return accountRepository.countAll();
+    }
+
+    public Flux<Account> getAccountByUser(Pageable pageable) {
+        return accountRepository.findByOwnerAsPage(pageable);
+    }
+
 
     @Transactional
     public Mono<ResponseEntity<Account>> createAccount(AccountDTO accountDTO) {
