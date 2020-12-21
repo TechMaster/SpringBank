@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity(name = "account")
+@Entity(name = "ACCOUNT")
 public class Account extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

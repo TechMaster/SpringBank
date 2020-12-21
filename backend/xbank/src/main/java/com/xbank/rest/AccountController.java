@@ -5,6 +5,7 @@ import com.xbank.domain.Transaction;
 import com.xbank.dto.AccountDTO;
 import com.xbank.dto.AccountTranferDTO;
 import com.xbank.dto.WithDrawDTO;
+import com.xbank.rest.errors.BadRequestAlertException;
 import com.xbank.service.AccountService;
 import io.github.jhipster.web.util.PaginationUtil;
 import org.springframework.data.domain.PageImpl;
@@ -35,24 +36,42 @@ public class AccountController {
     @PostMapping
 //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<Account>> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
-        return accountService.createAccount(accountDTO);
+        try {
+            return accountService.createAccount(accountDTO);
+        } catch (Exception e) {
+            throw new BadRequestAlertException(e.getMessage(), "Account", null);
+        }
     }
 
-    @GetMapping
+    @GetMapping("/{username}")
     public Mono<ResponseEntity<Flux<Account>>> getAccountsByUser(ServerHttpRequest request, Pageable pageable,
-                                                                @Valid @RequestParam String username) {
+                                                                @Valid @PathVariable String username) {
         return accountService.countAccountsByUser(username)
                 .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
-                        .body(accountService.getAccountByUser(pageable)));
+                        .body(accountService.getAccountByUser(username)));
+    }
+
+    @GetMapping("/{username}/{account}")
+    public Mono<ResponseEntity<Mono<Account>>> getAccountDetail(ServerHttpRequest request, Pageable pageable,
+                                                                 @Valid @PathVariable String username,
+                                                                 @Valid @PathVariable String account) {
+        return accountService.countAccountsByUser(username)
+                .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
+                .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
+                        .body(accountService.getAccountDetail(username, account)));
     }
 
     @GetMapping
     public Mono<ResponseEntity<Flux<Account>>> getAccounts(ServerHttpRequest request, Pageable pageable) {
-        return accountService.countAccounts()
-                .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
-                .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
-                        .body(accountService.getAccountByUser(pageable)));
+        try {
+            return accountService.countAccounts()
+                    .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
+                    .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
+                            .body(accountService.getAccounts(pageable)));
+        } catch (Exception e) {
+            throw new BadRequestAlertException(e.getMessage(), "Account", null);
+        }
     }
 
     @PostMapping("/deposit")

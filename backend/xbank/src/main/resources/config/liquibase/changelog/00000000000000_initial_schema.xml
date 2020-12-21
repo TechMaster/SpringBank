@@ -62,8 +62,7 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-
-        <createTable tableName="account">
+        <createTable tableName="ACCOUNT">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" startWith="1050" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
