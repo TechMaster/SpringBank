@@ -54,18 +54,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       })
       .subscribe((result) => {
         this.users = result.body;
-        this.totalItems = parseInt(result.headers.get('X-Total-Count'));
       });
 
     // Listen search user input change
     this.searchUserInput$
       .pipe(debounceTime(400), distinctUntilChanged())
       .subscribe((value) => {
-        // Move to first page and mark it is not manual change page to prevent duplicate call api
-        this.isUserChangePage = false;
-        this.paginator.firstPage();
-        this.isUserChangePage = true;
-
         // Call API to update data
         this.userService
           .getUsers({
@@ -76,50 +70,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           })
           .subscribe((result) => {
             this.users = result.body;
-            this.totalItems = parseInt(result.headers.get('X-Total-Count'));
           });
-      });
-  }
-
-  changePage(event: PageEvent) {
-    if (this.isUserChangePage) {
-      this.itemsPerPage = event.pageSize;
-
-      this.userService
-        .getUsers({
-          currentPage: event.pageIndex + 1,
-          column: this.column,
-          direction: this.direction,
-          itemsPerPage: this.itemsPerPage,
-          keyword: this.searchUserInput,
-        })
-        .subscribe((result) => {
-          this.users = result.body;
-          this.totalItems = parseInt(result.headers.get('X-Total-Count'));
-        });
-    }
-  }
-
-  sortData(sort: Sort) {
-    this.column = sort.active;
-    this.direction = sort.direction;
-
-    // Move to first page and mark it is not manual change page to prevent duplicate call api
-    this.isUserChangePage = false;
-    this.paginator.firstPage();
-    this.isUserChangePage = true;
-
-    // Call API to update data
-    this.userService
-      .getUsers({
-        column: this.column,
-        direction: this.direction,
-        itemsPerPage: this.itemsPerPage,
-        keyword: this.searchUserInput,
-      })
-      .subscribe((result) => {
-        this.users = result.body;
-        this.totalItems = parseInt(result.headers.get('X-Total-Count'));
       });
   }
 

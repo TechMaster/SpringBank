@@ -11,6 +11,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 export class TransferMoneyComponent implements OnInit {
   transferForm = this.fb.group({
     account: [''],
+    owner: ['robin'],
     toAccount: [''],
     bankTarget: [''],
     amount: [''],

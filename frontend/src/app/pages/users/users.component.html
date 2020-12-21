@@ -21,10 +21,7 @@
 
 <div style="position: relative">
   <div class="mat-elevation-z1">
-    <table
-      mat-table
-      [dataSource]="users"
-    >
+    <table mat-table [dataSource]="users">
       <ng-container matColumnDef="imageUrl">
         <th mat-header-cell *matHeaderCellDef>Ảnh đại diện</th>
         <td mat-cell *matCellDef="let element">
@@ -40,7 +37,7 @@
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef>Họ tên</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.firstName }}
+          {{ element.firstName + ' ' + (element?.lastName || '') }}
         </td>
       </ng-container>
 

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Transaction } from '../models/transaction.model';
 import { environment } from 'src/environments/environment';
 
-const TRANSACTION_API_ENDPOINT: string = environment.API_ENDPOINT + '/transactions';
+const TRANSACTION_API_ENDPOINT: string = environment.API_ENDPOINT + '/accounts';
 
 @Injectable({
   providedIn: 'root',

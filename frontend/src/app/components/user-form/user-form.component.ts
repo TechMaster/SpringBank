@@ -31,10 +31,8 @@ export class UserFormComponent
   implements ControlValueAccessor, Validator, OnDestroy {
   userForm = this.fb.group({
     firstName: ['', [Validators.required]],
-    // email: ["", [Validators.email]],
-    login: [''],
-    birthday: [''],
-    phone: [''],
+    lastName: [''],
+    email: ['', [Validators.email]],
   });
   onChange: any = () => {};
   onTouched: any = () => {};

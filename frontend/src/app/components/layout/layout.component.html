@@ -16,7 +16,13 @@
       <li>
         <a routerLink="/about" routerLinkActive="active">Giới thiệu</a>
       </li>
-      <li *ngIf="currentUser && currentUser.roles.includes('bank_operator')">
+      <li
+        *ngIf="
+          currentUser &&
+          (currentUser.roles.includes('admin') ||
+            currentUser.roles.includes('bank_operator'))
+        "
+      >
         <a routerLink="/users" routerLinkActive="active">Quản lý User</a>
       </li>
       <li *ngIf="currentUser && currentUser.roles.includes('customer')">

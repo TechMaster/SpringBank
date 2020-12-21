@@ -2,11 +2,20 @@
   <mat-form-field>
     <input
       matInput
-      placeholder="Name"
+      placeholder="First Name"
       autocomplete="off"
       formControlName="firstName"
     />
-    <mat-error>You must enter a value</mat-error>
+    <mat-error>Xin vui lòng nhập tên</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Last Name"
+      autocomplete="off"
+      formControlName="lastName"
+    />
   </mat-form-field>
 
   <mat-form-field>
@@ -14,31 +23,8 @@
       matInput
       placeholder="Email"
       autocomplete="off"
-      formControlName="login"
+      formControlName="email"
     />
-    <mat-error>Invalid email address</mat-error>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input
-      matInput
-      [matDatepicker]="picker"
-      placeholder="Birthday"
-      autocomplete="off"
-      formControlName="birthday"
-    />
-    <mat-error>Invalid date format</mat-error>
-
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Phone"
-      autocomplete="off"
-      formControlName="phone"
-    />
+    <mat-error>Sai định dạng email</mat-error>
   </mat-form-field>
 </div>
