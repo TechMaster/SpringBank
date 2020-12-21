@@ -109,9 +109,4 @@ export class UserService {
   deleteUser(userId: string): Observable<any> {
     return this.http.delete<User>(USER_API_ENDPOINT + '/' + userId);
   }
-
-  getUserBankAccounts(userId: string): Observable<BankAccount[]> {
-    const api = environment.API_ENDPOINT + '/accounts';
-    return this.http.get<BankAccount[]>(api);
-  }
 }

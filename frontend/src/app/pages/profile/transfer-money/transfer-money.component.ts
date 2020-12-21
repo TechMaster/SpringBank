@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { TransactionService } from 'src/app/services/transaction.service';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-transfer-money',
@@ -24,7 +24,7 @@ export class TransferMoneyComponent implements OnInit {
   constructor(
     private titleService: Title,
     private fb: FormBuilder,
-    private transactionService: TransactionService,
+    private accountService: AccountService,
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class TransferMoneyComponent implements OnInit {
 
   transferMoney() {
     const formValues = this.transferForm.value;
-    this.transactionService.createTransaction(formValues).subscribe(
+    this.accountService.createTransaction(formValues).subscribe(
       () => (this.isDone = true),
       () => alert('Giao dịch thất bại!')
     );
