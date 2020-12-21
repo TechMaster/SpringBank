@@ -194,7 +194,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .withType(type)
             .withTitle(status.getReasonPhrase())
             .withStatus(status)
-            .withDetail(throwable.getMessage())
+//            .withDetail(throwable.getMessage())
             .withCause(Optional.ofNullable(throwable.getCause())
                 .filter(cause -> isCausalChainsEnabled())
                 .map(this::toProblem)

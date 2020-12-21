@@ -16,14 +16,20 @@ import reactor.core.publisher.Mono;
  */
 public interface AccountRepository extends R2dbcRepository<Account, Long>, AccountRepositoryCustom {
 
-    @Query("SELECT * FROM account WHERE account = :account")
+    @Query("SELECT * FROM \"ACCOUNT\" WHERE account = :account")
     Mono<Account> findOneByAccount(String account);
 
-    @Query("SELECT COUNT(DISTINCT id) FROM account")
+    @Query("SELECT COUNT(DISTINCT id) FROM \"ACCOUNT\"")
     Mono<Long> countAll();
 
-    @Query("SELECT COUNT(DISTINCT id) FROM where owner = :owner")
+    @Query("SELECT COUNT(DISTINCT id) FROM \"ACCOUNT\" where owner = :owner")
     Mono<Long> countByUser(@Param("owner") String owner);
+
+    @Query("SELECT * FROM \"ACCOUNT\" where owner = :owner")
+    Flux<Account> findByOwner(String owner);
+
+    @Query("SELECT * FROM \"ACCOUNT\" where owner = :owner AND account = :account")
+    Mono<Account> getAccountDetail(String username, String account);
 }
 
 interface AccountRepositoryCustom {

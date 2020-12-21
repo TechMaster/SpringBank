@@ -22,9 +22,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -64,10 +66,18 @@ public class AccountService {
         return accountRepository.countAll();
     }
 
-    public Flux<Account> getAccountByUser(Pageable pageable) {
-        return accountRepository.findByOwnerAsPage(pageable);
+    public Flux<Account> getAccountByUser(String owner) {
+        return accountRepository.findByOwner(owner);
     }
 
+    public Mono<Account> getAccountDetail(String username, String account) {
+        return accountRepository.getAccountDetail(username, account);
+    }
+
+
+    public Flux<Account> getAccounts(Pageable pageable) {
+        return accountRepository.findByOwnerAsPage(pageable);
+    }
 
     @Transactional
     public Mono<ResponseEntity<Account>> createAccount(AccountDTO accountDTO) {

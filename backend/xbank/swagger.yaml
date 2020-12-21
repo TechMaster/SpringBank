@@ -70,6 +70,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Meta500'
+    get:
+      tags:
+        - Accounts
+      description: Get Accounts
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+            example: 1
+        - in: query
+          name: size
+          required: true
+          schema:
+            type: number
+            example: 10
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/{username}:
+    get:
+      tags:
+        - Accounts
+      description: Get Accounts By User
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+            example: admin
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/{username}/{account}:
+    get:
+      tags:
+        - Accounts
+      description: Get Account detail
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+            example: admin
+        - in: path
+          name: account
+          required: true
+          schema:
+            type: string
+            example: quanghoa
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
   /api/accounts/deposit:
     post:
       tags:

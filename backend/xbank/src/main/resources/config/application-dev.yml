@@ -1,8 +1,8 @@
 logging:
   level:
-    ROOT: DEBUG
-    io.github.jhipster: DEBUG
-    com.xbank: DEBUG
+    ROOT: INFO
+    io.github.jhipster: INFO
+    com.xbank: INFO
 
 spring:
   profiles:
@@ -22,7 +22,7 @@ spring:
       indent-output: true
   h2:
     console:
-      enabled: false
+      enabled: true
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
