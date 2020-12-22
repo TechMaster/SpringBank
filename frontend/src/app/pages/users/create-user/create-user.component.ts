@@ -12,7 +12,6 @@ import { Title } from '@angular/platform-browser';
 export class CreateUserComponent {
   createUserForm = this.fb.group({
     profile: [],
-    password: [],
   });
 
   constructor(

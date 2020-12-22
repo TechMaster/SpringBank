@@ -6,13 +6,10 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { KeycloakService } from 'keycloak-angular';
-import { KeycloakProfile } from 'keycloak-js';
 
 import { User } from '../models/user.model';
-import { TableOptions } from '../models/table-options.model';
-import { BankAccount } from '../models/bank-account.model';
+import { KeyCloakTableOptions } from '../models/table-options.model';
 
 import { environment } from 'src/environments/environment';
 
@@ -84,10 +81,15 @@ export class UserService {
     this.keycloak.logout();
   }
 
-  getUsers(options: TableOptions): Observable<HttpResponse<User[]>> {
+  countUsers(): Observable<number> {
+    return this.http.get<number>(USER_API_ENDPOINT + '/count');
+  }
+
+  getUsers(options: KeyCloakTableOptions): Observable<HttpResponse<User[]>> {
     let queryParams = [];
-    queryParams.push('max=' + (options.itemsPerPage || 100));
-    queryParams.push('search=' + (options.keyword || ''));
+    queryParams.push('first=' + (options.first || 0));
+    queryParams.push('max=' + (options.max || 100));
+    queryParams.push('search=' + (options.search || ''));
     const queryParamsUrl = queryParams.join('&');
 
     const api = USER_API_ENDPOINT + `?${queryParamsUrl}`;

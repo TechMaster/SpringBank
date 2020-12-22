@@ -2,6 +2,18 @@
   <mat-form-field>
     <input
       matInput
+      placeholder="Username"
+      autocomplete="off"
+      formControlName="username"
+    />
+    <mat-error
+      >Xin vui lòng nhập tên tài khoản chỉ chứa các ký tự alphabet</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
       placeholder="First Name"
       autocomplete="off"
       formControlName="firstName"

@@ -3,7 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
-import { Subject } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmDeleteComponent } from 'src/app/components/dialog-confirm-delete/dialog-confirm-delete.component';
@@ -17,17 +17,11 @@ import { Title } from '@angular/platform-browser';
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
-  displayedColumns: string[] = [
-    'imageUrl',
-    'firstName',
-    'email',
-    'action',
-  ];
+  displayedColumns: string[] = ['imageUrl', 'fullName', 'email', 'action'];
 
   itemsPerPage: number = 10;
   totalItems: number = 0;
-  column: string = 'id';
-  direction: string = 'desc';
+  first: number = 0;
 
   searchUserInput: string = '';
   searchUserInput$ = new Subject<string>();
@@ -45,16 +39,16 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.titleService.setTitle('Quản lý User');
 
-    // Get users with default options
-    this.userService
-      .getUsers({
-        column: this.column,
-        direction: this.direction,
-        itemsPerPage: this.itemsPerPage,
-      })
-      .subscribe((result) => {
-        this.users = result.body;
-      });
+    // Get & count users
+    forkJoin([
+      this.userService.getUsers({
+        max: this.itemsPerPage,
+      }),
+      this.userService.countUsers(),
+    ]).subscribe((result) => {
+      this.users = result[0].body;
+      this.totalItems = result[1];
+    });
 
     // Listen search user input change
     this.searchUserInput$
@@ -63,15 +57,29 @@ export class UsersComponent implements OnInit, OnDestroy {
         // Call API to update data
         this.userService
           .getUsers({
-            column: this.column,
-            direction: this.direction,
-            itemsPerPage: this.itemsPerPage,
-            keyword: value,
+            max: this.itemsPerPage,
+            search: value,
           })
           .subscribe((result) => {
             this.users = result.body;
           });
       });
+  }
+
+  changePage(event: PageEvent) {
+    if (this.isUserChangePage) {
+      this.itemsPerPage = event.pageSize;
+
+      this.userService
+        .getUsers({
+          first: event.pageIndex * event.pageSize,
+          max: this.itemsPerPage,
+          search: this.searchUserInput,
+        })
+        .subscribe((result) => {
+          this.users = result.body;
+        });
+    }
   }
 
   searchUser() {

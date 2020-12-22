@@ -30,9 +30,10 @@ import { Subscription } from 'rxjs';
 export class UserFormComponent
   implements ControlValueAccessor, Validator, OnDestroy {
   userForm = this.fb.group({
-    firstName: ['', [Validators.required]],
+    username: ['', Validators.pattern(/^[a-zA-Z0-9]+$/)],
+    firstName: ['', Validators.required],
     lastName: [''],
-    email: ['', [Validators.email]],
+    email: ['', Validators.email],
   });
   onChange: any = () => {};
   onTouched: any = () => {};
