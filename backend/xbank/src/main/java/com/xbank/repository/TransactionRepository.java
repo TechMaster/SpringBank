@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 public interface TransactionRepository extends R2dbcRepository<Transaction, Long>, TransactionRepositoryCustom {
 
-    @Query("SELECT COUNT(DISTINCT id) FROM \"transaction\"")
+    @Query("SELECT COUNT(DISTINCT id) FROM transaction")
     Mono<Long> countAll();
 
     @Query("INSERT INTO transaction VALUES(:owner, :action, :account, :toAccount, :amount, :currency, :transactAt, :result, :error)")
