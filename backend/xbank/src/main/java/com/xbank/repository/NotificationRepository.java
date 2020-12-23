@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
  */
 public interface NotificationRepository extends R2dbcRepository<Notification, Long>, NotificationRepositoryCustom {
 
-    @Query("SELECT COUNT(DISTINCT id) FROM \"notification\"")
+    @Query("SELECT COUNT(DISTINCT id) FROM notification")
     Mono<Long> countAll();
 
 }
