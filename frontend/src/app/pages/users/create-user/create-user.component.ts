@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-user',
@@ -18,7 +19,8 @@ export class CreateUserComponent {
     private titleService: Title,
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +36,11 @@ export class CreateUserComponent {
       })
       .subscribe(
         () => this.router.navigate(['/users']),
-        () => alert('Thêm User thất bại!')
+        () =>
+          this._snackBar.open('Thêm User thất bại', 'Đóng', {
+            duration: 2000,
+            verticalPosition: 'top',
+          })
       );
   }
 }

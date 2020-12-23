@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -10,11 +11,11 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class TransferMoneyComponent implements OnInit {
   transferForm = this.fb.group({
-    account: [''],
+    account: ['', Validators.required],
     owner: ['robin'],
-    toAccount: [''],
+    toAccount: ['', Validators.required],
     bankTarget: [''],
-    amount: [''],
+    amount: ['', Validators.pattern(/^[0-9]+$/)],
     cost: ['1'],
     note: [''],
   });
@@ -25,6 +26,7 @@ export class TransferMoneyComponent implements OnInit {
     private titleService: Title,
     private fb: FormBuilder,
     private accountService: AccountService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +35,13 @@ export class TransferMoneyComponent implements OnInit {
 
   transferMoney() {
     const formValues = this.transferForm.value;
-    this.accountService.createTransaction(formValues).subscribe(
+    this.accountService.transferMoney(formValues).subscribe(
       () => (this.isDone = true),
-      () => alert('Giao dịch thất bại!')
+      () =>
+        this._snackBar.open('Giao dịch thất bại', 'Đóng', {
+          duration: 2000,
+          verticalPosition: 'top',
+        })
     );
   }
 }

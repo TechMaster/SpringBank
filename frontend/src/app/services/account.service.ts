@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BankAccount } from '../models/bank-account.model';
 import { Observable } from 'rxjs';
 
-const TRANSACTION_API_ENDPOINT: string = environment.API_ENDPOINT + '/accounts';
+const ACCOUNT_API_ENDPOINT: string = environment.API_ENDPOINT + '/accounts';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,19 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   getAccounts(): Observable<BankAccount[]> {
-    return this.http.get<BankAccount[]>(TRANSACTION_API_ENDPOINT);
+    return this.http.get<BankAccount[]>(ACCOUNT_API_ENDPOINT);
   }
 
-  createTransaction(transaction: Transaction) {
-    return this.http.post<Transaction>(TRANSACTION_API_ENDPOINT, transaction);
+  createBankAccount(bankAccount: BankAccount) {
+    return this.http.post<BankAccount>(ACCOUNT_API_ENDPOINT, {
+      ...bankAccount,
+      owner: 'robin',
+      action: 1,
+      currency: 'VND',
+    });
+  }
+
+  transferMoney(data) {
+    return this.http.post(ACCOUNT_API_ENDPOINT + '/transfer', data);
   }
 }

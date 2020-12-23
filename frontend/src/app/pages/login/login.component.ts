@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.rest.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,13 +24,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.userService.login(this.username, this.password).subscribe(
-      () => {
-        this.router.navigateByUrl(this.userService.redirectUrl);
-      },
-      (err) => {
-        this.errorMessage = err?.error?.message || err?.message;
-      }
-    );
+    // this.userService.login(this.username, this.password).subscribe(
+    //   () => {
+    //     this.router.navigateByUrl(this.userService.redirectUrl);
+    //   },
+    //   (err) => {
+    //     this.errorMessage = err?.error?.message || err?.message;
+    //   }
+    // );
   }
 }

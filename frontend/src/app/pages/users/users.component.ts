@@ -17,7 +17,7 @@ import { Title } from '@angular/platform-browser';
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
-  displayedColumns: string[] = ['imageUrl', 'fullName', 'email', 'action'];
+  displayedColumns: string[] = ['fullName', 'email', 'action'];
 
   itemsPerPage: number = 10;
   totalItems: number = 0;

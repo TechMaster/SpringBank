@@ -3,8 +3,8 @@
 <mat-accordion>
   <mat-expansion-panel *ngFor="let account of bankAccounts">
     <mat-expansion-panel-header>
-      <mat-panel-title>{{ account.id }}</mat-panel-title>
-      <mat-panel-description>{{ account.type }}</mat-panel-description>
+      <mat-panel-title>{{ account.account }}</mat-panel-title>
+      <mat-panel-description>Tài khoản thanh toán</mat-panel-description>
     </mat-expansion-panel-header>
     <p>Số dư: {{ account.balance | currency: "VND" }}</p>
   </mat-expansion-panel>
@@ -13,3 +13,13 @@
 <button mat-raised-button routerLink="/profile" style="margin-top: 30px">
   <mat-icon>chevron_left</mat-icon> Quay lại
 </button>
+
+<button
+    mat-raised-button
+    class="btn-new"
+    color="primary"
+    routerLink="/profile/create-account"
+  >
+    <mat-icon aria-hidden="false" aria-label="Add icon">add</mat-icon>
+    <span> Thêm tài khoản </span>
+  </button>

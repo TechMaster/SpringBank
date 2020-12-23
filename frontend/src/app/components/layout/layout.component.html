@@ -37,7 +37,9 @@
         <img [src]="currentUser.imageUrl || 'assets/img/default-avatar.png'" />
       </div>
 
-      <div class="user-name">{{ currentUser.firstName }}</div>
+      <div class="user-name">
+        {{ currentUser.firstName + " " + (currentUser.lastName || "") }}
+      </div>
     </div>
 
     <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">

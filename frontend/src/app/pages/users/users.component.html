@@ -22,18 +22,6 @@
 <div style="position: relative">
   <div class="mat-elevation-z1">
     <table mat-table [dataSource]="users">
-      <ng-container matColumnDef="imageUrl">
-        <th mat-header-cell *matHeaderCellDef>Ảnh đại diện</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="avatar">
-            <img
-              [src]="element.imageUrl || 'assets/img/default-avatar.png'"
-              alt="avatar"
-            />
-          </div>
-        </td>
-      </ng-container>
-
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef>Họ tên</th>
         <td mat-cell *matCellDef="let element">

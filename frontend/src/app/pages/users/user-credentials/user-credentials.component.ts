@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-credentials',
@@ -22,7 +23,8 @@ export class UserCredentialsComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,11 @@ export class UserCredentialsComponent implements OnInit {
 
     this.userService.updateUser(user).subscribe(
       () => this.router.navigate(['/users']),
-      () => alert('Cập nhật thất bại!')
+      () =>
+        this._snackBar.open('Cập nhật thất bại', 'Đóng', {
+          duration: 2000,
+          verticalPosition: 'top',
+        })
     );
   }
 }

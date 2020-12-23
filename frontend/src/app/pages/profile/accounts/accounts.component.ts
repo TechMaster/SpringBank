@@ -5,10 +5,10 @@ import { AccountService } from 'src/app/services/account.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
+  selector: 'app-accounts',
+  templateUrl: './accounts.component.html',
 })
-export class AccountComponent implements OnInit {
+export class AccountsComponent implements OnInit {
   bankAccounts: BankAccount[];
 
   constructor(
