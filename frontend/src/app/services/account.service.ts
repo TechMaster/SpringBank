@@ -29,4 +29,12 @@ export class AccountService {
   transferMoney(data) {
     return this.http.post(ACCOUNT_API_ENDPOINT + '/transfer', data);
   }
+
+  depositMoney(data) {
+    return this.http.post(ACCOUNT_API_ENDPOINT + '/deposit', data);
+  }
+
+  withdrawMoney(data) {
+    return this.http.post(ACCOUNT_API_ENDPOINT + '/withdraw', data);
+  }
 }

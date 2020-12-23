@@ -9,13 +9,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
 
 import { User } from '../models/user.model';
+import { Role } from '../models/role.model';
 import { KeyCloakTableOptions } from '../models/table-options.model';
-
 import { environment } from 'src/environments/environment';
 
 const KEYCLOAK = environment.keycloak;
-const USER_API_ENDPOINT: string = `${KEYCLOAK.url}/admin/realms/${KEYCLOAK.realm}/users`;
-const KEYCLOAK_REALMS = 'microservice';
+const KEYCLOAK_ADMIN_ENDPOINT = `${KEYCLOAK.url}/admin/realms/${KEYCLOAK.realm}`;
+const USER_API_ENDPOINT: string = `${KEYCLOAK_ADMIN_ENDPOINT}/users`;
 const LOCALSTORAGE_KEY = 'user';
 
 @Injectable({
@@ -46,34 +46,12 @@ export class UserService {
     if (this.isLoggedIn) {
       const userProfile = await this.keycloak.loadUserProfile();
       const roles = this.keycloak.getUserRoles();
-
       this.currentUserSubject.next({ ...userProfile, roles } as User);
     }
   }
 
   login() {
     this.keycloak.login();
-  }
-
-  loginWithKeycloakREST(username: string, password: string) {
-    const body = new HttpParams()
-      .set('client_id', environment.keycloak.clientId)
-      .set('client_secret', environment.keycloak.clientSecret)
-      .set('username', username)
-      .set('password', password)
-      .set('grant_type', 'password');
-
-    return this.http.post(
-      environment.keycloak.url +
-        `/realms/${KEYCLOAK_REALMS}/protocol/openid-connect/token`,
-      body.toString(),
-      {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        ),
-      }
-    );
   }
 
   logout(): void {
@@ -110,5 +88,18 @@ export class UserService {
 
   deleteUser(userId: string): Observable<any> {
     return this.http.delete<User>(USER_API_ENDPOINT + '/' + userId);
+  }
+
+  getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(
+      `${KEYCLOAK_ADMIN_ENDPOINT}/clients/${KEYCLOAK.clientName}/roles`
+    );
+  }
+
+  setRole(userId: string, role: Role) {
+    return this.http.post(
+      `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientName}`,
+      [role]
+    );
   }
 }

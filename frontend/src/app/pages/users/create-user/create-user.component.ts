@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CreateUserComponent {
   createUserForm = this.fb.group({
     profile: [],
+    password: [],
   });
 
   constructor(
@@ -29,10 +30,18 @@ export class CreateUserComponent {
 
   createUser() {
     const formValues = this.createUserForm.value;
+
     this.userService
       .createUser({
+        enabled: true,
         ...formValues.profile,
-        ...formValues.password,
+        credentials: [
+          {
+            type: 'password',
+            value: formValues.password.password,
+            temporary: false,
+          },
+        ],
       })
       .subscribe(
         () => this.router.navigate(['/users']),

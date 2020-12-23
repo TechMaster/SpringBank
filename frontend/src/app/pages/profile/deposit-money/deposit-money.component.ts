@@ -30,8 +30,20 @@ export class DepositMoneyComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Nạp tiền');
 
-    this.accountService.getAccounts().subscribe(console.log)
+    this.accountService
+      .getAccounts()
+      .subscribe((data) => (this.accounts = data));
   }
 
-  depositMoney() {}
+  depositMoney() {
+    const formValues = this.depositForm.value;
+    this.accountService.depositMoney(formValues).subscribe(
+      () => (this.isDone = true),
+      () =>
+        this._snackBar.open('Giao dịch thất bại', 'Đóng', {
+          duration: 2000,
+          verticalPosition: 'top',
+        })
+    );
+  }
 }

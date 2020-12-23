@@ -30,8 +30,20 @@ export class WithdrawMoneyComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Rút tiền');
 
-    this.accountService.getAccounts().subscribe(console.log)
+    this.accountService
+      .getAccounts()
+      .subscribe((data) => (this.accounts = data));
   }
 
-  withdrawMoney() {}
+  withdrawMoney() {
+    const formValues = this.withdrawForm.value;
+    this.accountService.withdrawMoney(formValues).subscribe(
+      () => (this.isDone = true),
+      () =>
+        this._snackBar.open('Giao dịch thất bại', 'Đóng', {
+          duration: 2000,
+          verticalPosition: 'top',
+        })
+    );
+  }
 }

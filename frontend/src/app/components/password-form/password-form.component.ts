@@ -43,9 +43,9 @@ export class PasswordFormComponent
         "",
         [
           Validators.required,
-          Validators.pattern(
-            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/
-          ),
+          // Validators.pattern(
+          //   /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/
+          // ),
         ],
       ],
       confirmPassword: [""],

@@ -6,6 +6,18 @@
   <div [formGroup]="updateUserForm" class="form-wrapper">
     <app-user-form formControlName="profile"></app-user-form>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Quyền hạn</mat-label>
+      <mat-select formControlName="role">
+        <mat-option
+          *ngFor="let role of roles"
+          [value]="role.id + '@' + role.name"
+        >
+          {{ role.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <div class="button-group">
       <button mat-raised-button routerLink="/users">Hủy</button>
 

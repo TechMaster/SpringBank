@@ -35,7 +35,9 @@ export class NotificationService {
   }
 
   public connect(): void {
+    console.log('connect')
     if (!this.socket$ || this.socket$.closed) {
+      console.log('open')
       this.socket$ = this.getNewWebSocket();
       const messages = this.socket$.pipe(
         tap({

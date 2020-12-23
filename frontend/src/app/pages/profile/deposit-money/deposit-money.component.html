@@ -7,13 +7,11 @@
     <div class="form">
       <mat-form-field appearance="fill">
         <mat-label>Chọn tài khoản</mat-label>
-        <mat-select formControlName="bankTarget">
-          <mat-option value="agribank"
-            >NNO&PT NONG THON VN (AGRIBANK)</mat-option
-          >
-          <mat-option value="bidv">DAU TU VA PHAT TRIEN VN (BIDV)</mat-option>
-          <mat-option value="vietinbank"
-            >CONG THUONG VN (VIETINBANK)</mat-option
+        <mat-select formControlName="account">
+          <mat-option
+            *ngFor="let account of accounts"
+            [value]="account.account"
+            >{{ account.account }}</mat-option
           >
         </mat-select>
         <mat-error>Vui lòng chọn tài khoản</mat-error>
@@ -24,7 +22,7 @@
           matInput
           placeholder="Số tiền"
           autocomplete="off"
-          formControlName="amount"
+          formControlName="balance"
         />
         <mat-error>Vui lòng nhập số tiền nạp</mat-error>
       </mat-form-field>
@@ -48,7 +46,7 @@
     <h1>Giao dịch thành công. Bạn có muốn thực hiện giao dịch khác?</h1>
 
     <div class="button-group">
-      <button mat-raised-button routerLink="/profile/account">Không</button>
+      <button mat-raised-button routerLink="/profile">Không</button>
 
       <button mat-raised-button color="primary" (click)="isDone = false">
         Tiếp tục
