@@ -23,15 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpkix_jdk15on_1_60.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk15on_1_60.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_keycloak_keycloak_common_8_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_keycloak_keycloak_core_8_0_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ff9302da-d0ae-4cd5-81c8-0dd38c07e480.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ff9302da-d0ae-4cd5-81c8-0dd38c07e480/storage_v2/_src_/database/xbank.tArJBg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ff9302da-d0ae-4cd5-81c8-0dd38c07e480/storage_v2/_src_/database/xbank.tArJBg/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ff9302da-d0ae-4cd5-81c8-0dd38c07e480/storage_v2/_src_/database/xbank.tArJBg/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ff9302da-d0ae-4cd5-81c8-0dd38c07e480/storage_v2/_src_/database/xbank.tArJBg/schema/public.abK9xQ.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xbank/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xbank/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xbank.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xbank.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../xbank/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +125,7 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -151,11 +155,12 @@
       <workItem from="1606064760113" duration="4984000" />
       <workItem from="1606143808771" duration="1254000" />
       <workItem from="1608137600064" duration="803000" />
+      <workItem from="1608746210653" duration="1398000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -273,6 +278,10 @@
     <state width="1877" height="594" key="GridCell.Tab.2.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605521807239" />
     <state width="1493" height="184" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1605930647650" />
     <state width="1810" height="235" key="GridCell.Tab.2.right/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1606070469935" />
+    <state x="2445" y="198" width="924" height="691" key="Maven.ArtifactSearchDialog" timestamp="1608746467564">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2445" y="198" width="924" height="691" key="Maven.ArtifactSearchDialog/64.27.1856.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1608746467564" />
     <state x="2401" y="175" width="1022" height="737" key="SettingsEditor" timestamp="1605026945622">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -300,7 +309,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/xbank/controller/UserController.java</url>
-          <line>106</line>
+          <line>108</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

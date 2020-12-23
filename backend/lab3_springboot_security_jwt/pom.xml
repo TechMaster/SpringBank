@@ -131,6 +131,11 @@
          <artifactId>lombok</artifactId>
          <version>1.18.12</version>
       </dependency>
+       <dependency>
+           <groupId>org.keycloak</groupId>
+           <artifactId>keycloak-core</artifactId>
+           <version>8.0.1</version>
+       </dependency>
    </dependencies>
 
    <build>
