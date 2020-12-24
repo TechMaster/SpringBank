@@ -57,13 +57,13 @@ public class WebSocketConfig {
                 WebSocketMessage textMessage = null;
                 if (tx.getAction() == 1) {
                     // Tranfer action
-                    textMessage = session.textMessage(tx.getAccount() + " has transferred to you " + tx.getAmount() + " at " + tx.getTransactAt());
+                    textMessage = session.textMessage("Account " + tx.getAccount() + " has transferred to you " + tx.getAmount() + " at " + tx.getTransactAt());
                 } else if (tx.getAction() == 2) {
                     // withdraw action
-                    textMessage = session.textMessage("Withdraw " + tx.getAmount() + " at " + tx.getTransactAt());
+                    textMessage = session.textMessage("Account " + tx.getAccount() + " withdraw " + tx.getAmount() + " at " + tx.getTransactAt());
                 } else if (tx.getAction() == 3) {
-                    // deposit action
-                    textMessage = session.textMessage("Deposit " + tx.getAmount() + " at " + tx.getTransactAt());
+                    // deposit actiond
+                    textMessage = session.textMessage("Account " + tx.getAccount() + " deposit " + tx.getAmount() + " at " + tx.getTransactAt());
                 }
                 return textMessage;
             });

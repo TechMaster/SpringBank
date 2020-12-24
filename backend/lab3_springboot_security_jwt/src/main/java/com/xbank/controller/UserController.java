@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.log4j.Logger;
+import org.keycloak.KeycloakPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -98,6 +99,7 @@ public class UserController {
     @ApiOperation(value = "Logs the specified user device and clears the refresh tokens associated with it")
     public ResponseEntity logoutUser(@CurrentUser CustomUserDetails customUserDetails,
                                      @ApiParam(value = "The LogOutRequest payload") @Valid @RequestBody LogOutRequest logOutRequest) {
+        KeycloakPrincipal
         userService.logoutUser(customUserDetails, logOutRequest);
         Object credentials = SecurityContextHolder.getContext().getAuthentication().getCredentials();
 
