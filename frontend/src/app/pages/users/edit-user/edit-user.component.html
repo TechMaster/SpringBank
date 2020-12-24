@@ -8,7 +8,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Quyền hạn</mat-label>
-      <mat-select formControlName="role">
+      <mat-select formControlName="roles" multiple>
         <mat-option
           *ngFor="let role of roles"
           [value]="role.id + '@' + role.name"

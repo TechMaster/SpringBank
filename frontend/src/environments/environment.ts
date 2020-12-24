@@ -10,7 +10,7 @@ export const environment = {
     url: 'http://localhost:8080/auth',
     realm: 'microservice',
     clientId: 'xbank',
-    clientName: 'b309b7a7-fba4-4d1d-a3ff-6a099a0549c5',
+    clientUUID: '1411a7e8-97c1-47c5-b1d8-7e388ae21f40',
   },
 };
 

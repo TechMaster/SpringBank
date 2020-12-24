@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Role } from 'src/app/models/role.model';
+import { Role } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-edit-user',
@@ -17,7 +17,7 @@ export class EditUserComponent implements OnInit {
 
   updateUserForm = this.fb.group({
     profile: [],
-    role: [''],
+    roles: [],
   });
 
   constructor(
@@ -38,7 +38,10 @@ export class EditUserComponent implements OnInit {
     this.userService.getRoles().subscribe((data) => (this.roles = data));
 
     this.userService.getUserById(id).subscribe((user) => {
-      this.updateUserForm.patchValue({ profile: user });
+      this.updateUserForm.patchValue({
+        profile: user,
+        roles: user.roles.map((role: Role) => role.id + '@' + role.name),
+      });
     });
   }
 
@@ -48,11 +51,13 @@ export class EditUserComponent implements OnInit {
 
     this.userService.updateUser(user).subscribe(
       () => {
-        if (formValues.role) {
-          const roleArray = formValues.role.split('@');
-          const role = { id: roleArray[0], name: roleArray[1] };
+        if (formValues.roles?.length > 0) {
+          const roles = formValues.roles.map((role) => {
+            const roleData = role.split('@');
+            return { id: roleData[0], name: roleData[1] };
+          });
           this.userService
-            .setRole(user.id, role)
+            .setRole(user.id, roles)
             .subscribe(() => this.router.navigate(['/users']));
         } else {
           this.router.navigate(['/users']);

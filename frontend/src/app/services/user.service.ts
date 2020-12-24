@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
 
-import { User } from '../models/user.model';
-import { Role } from '../models/role.model';
+import { User, Role } from '../models/user.model';
 import { KeyCloakTableOptions } from '../models/table-options.model';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 const KEYCLOAK = environment.keycloak;
 const KEYCLOAK_ADMIN_ENDPOINT = `${KEYCLOAK.url}/admin/realms/${KEYCLOAK.realm}`;
@@ -74,8 +69,16 @@ export class UserService {
     return this.http.get<User[]>(api, { observe: 'response' });
   }
 
-  getUserById(userId: string): Observable<User> {
-    return this.http.get<User>(USER_API_ENDPOINT + '/' + userId);
+  getUserById(userId: string): Observable<any> {
+    return forkJoin([
+      // Get User info
+      this.http.get<User>(`${USER_API_ENDPOINT}/${userId}`),
+
+      // Get User role
+      this.http.get(
+        `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientUUID}`
+      ),
+    ]).pipe(map((result) => ({ ...result[0], roles: result[1] })));
   }
 
   createUser(user: User): Observable<User> {
@@ -83,23 +86,23 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.put<User>(USER_API_ENDPOINT + '/' + user.id, user);
+    return this.http.put<User>(`${USER_API_ENDPOINT}/${user.id}`, user);
   }
 
   deleteUser(userId: string): Observable<any> {
-    return this.http.delete<User>(USER_API_ENDPOINT + '/' + userId);
+    return this.http.delete<User>(`${USER_API_ENDPOINT}/${userId}`);
   }
 
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(
-      `${KEYCLOAK_ADMIN_ENDPOINT}/clients/${KEYCLOAK.clientName}/roles`
+      `${KEYCLOAK_ADMIN_ENDPOINT}/clients/${KEYCLOAK.clientUUID}/roles`
     );
   }
 
-  setRole(userId: string, role: Role) {
+  setRole(userId: string, roles: Role[]) {
     return this.http.post(
-      `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientName}`,
-      [role]
+      `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientUUID}`,
+      roles
     );
   }
 }
