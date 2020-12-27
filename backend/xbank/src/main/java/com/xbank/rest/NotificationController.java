@@ -41,4 +41,15 @@ public class NotificationController {
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
                         .body(notificationService.getAllNotifications(pageable)));
     }
+
+    /**
+     * {@code GET /notifications} : get all notifications.
+     *
+     * @param id  id notification.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
+     */
+    @GetMapping("/{id}")
+    public Mono<Notification> detailNotification(@PathVariable long id){
+        return notificationService.detailNotification(id);
+    }
 }

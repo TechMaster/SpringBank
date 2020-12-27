@@ -1,6 +1,6 @@
 # Server port
 server:
-  port: 8080
+  port: 8081
   ssl:
     key-store-type: PKCS12 # The format used for the keystore
     key-store: classpath:keystore.p12 # The path to the keystore containing the certificate
@@ -9,7 +9,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/xbank
+    url: jdbc:postgresql://13.229.132.148:5432/xbank
     username: root
     password: xbank@123
     driver-class-name: org.postgresql.Driver
