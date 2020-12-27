@@ -66,4 +66,15 @@ public class TransactionController {
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
                         .body(transactionService.getAllTransactions(pageable)));
     }
+
+    /**
+     * {@code GET /transactions/{id}} : get detail transaction.
+     *
+     * @param id  id transaction.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body detail Transaction.
+     */
+    @GetMapping("/{id}")
+    public Mono<Transaction> detailTransaction(@PathVariable long id){
+        return transactionService.detailTransaction(id);
+    }
 }

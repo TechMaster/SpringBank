@@ -30,4 +30,8 @@ public class NotificationService {
         return notificationRepository.findAllAsPage(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Mono<Notification> detailNotification(long id) {
+        return notificationRepository.findById(id);
+    }
 }

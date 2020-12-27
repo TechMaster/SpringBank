@@ -74,6 +74,11 @@ public class TransactionService {
         return transactionRepository.findAllAsPage(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Mono<Transaction> detailTransaction(Long id) {
+        return transactionRepository.findById(id);
+    }
+
     private final void publishTransactionEvent(String eventType, Transaction transaction) {
         this.publisher.publishEvent(new TransactionEvent(eventType, transaction));
         Notification notification = new Notification();

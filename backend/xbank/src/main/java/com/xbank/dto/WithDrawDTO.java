@@ -11,6 +11,7 @@ public class WithDrawDTO {
     @NotBlank
     private String account;
 
+    @NotBlank
     private BigDecimal balance;
 
     public String getAccount() {
