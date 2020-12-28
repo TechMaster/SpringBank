@@ -46,13 +46,13 @@ public class AccountController {
 //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<Account>> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
         try {
-            KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken)
-                    SecurityContextHolder.getContext().getAuthentication();
-            Principal principal = (Principal) authentication.getPrincipal();
-
-            if (Objects.nonNull(principal.getName())) {
-                accountDTO.setOwner(principal.getName());
-            }
+//            KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken)
+//                    SecurityContextHolder.getContext().getAuthentication();
+//            Principal principal = (Principal) authentication.getPrincipal();
+//
+//            if (Objects.nonNull(principal.getName())) {
+//                accountDTO.setOwner(principal.getName());
+//            }
 
             return accountService.createAccount(accountDTO);
         } catch (Exception e) {

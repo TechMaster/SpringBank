@@ -12,9 +12,12 @@ import com.xbank.repository.AccountRepository;
 import com.xbank.repository.NotificationRepository;
 import com.xbank.repository.TransactionRepository;
 import com.xbank.rest.errors.AccountExitsException;
+import com.xbank.rest.errors.TranferException;
+import com.xbank.rest.errors.UserNotfoundException;
 import com.xbank.rest.errors.WithdrawException;
 import com.xbank.security.SecurityUtils;
 import io.github.jhipster.web.util.HeaderUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +89,6 @@ public class AccountService {
     public Mono<ResponseEntity<Account>> createAccount(AccountDTO accountDTO) {
         Account account = new Account();
         account.setAccount(accountDTO.getAccount());
-        account.setOwner(accountDTO.getOwner());
         account.setAction(accountDTO.getAction());
         account.setCurrency(accountDTO.getCurrency());
         account.setBalance(accountDTO.getBalance());
@@ -95,10 +97,11 @@ public class AccountService {
         return SecurityUtils.getCurrentUserLogin()
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
+                    account.setOwner(login);
+                    account.setLastModifiedBy(login);
                     if (account.getCreatedBy() == null) {
                         account.setCreatedBy(login);
                     }
-                    account.setLastModifiedBy(login);
                     return accountRepository.findOneByAccount(accountDTO.getAccount())
                             .hasElement()
                             .flatMap(loginExists -> {
@@ -121,112 +124,130 @@ public class AccountService {
     @Transactional
     public Mono<ResponseEntity<Account>> transfer(AccountTranferDTO data) {
         return SecurityUtils.getCurrentUserLogin()
-                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
-                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
-                        .flatMap(account -> {
-                            Transaction transaction = new Transaction();
-                            transaction.setOwner(login);
-                            transaction.setAction(1);
-                            transaction.setAccount(data.getAccount());
-                            transaction.setToAccount(data.getAccount());
-                            transaction.setAmount(data.getBalance());
-                            transaction.setCurrency("VND");
-                            transaction.setTransactAt(LocalDateTime.now());
-                            transaction.setResult(1);
-                            transaction.setError("No error");
-                            if (transaction.getCreatedBy() == null) {
-                                transaction.setCreatedBy(login);
-                            }
-                            transaction.setLastModifiedBy(login);
-                            return transactionRepository.save(transaction).flatMap(t -> {
-                                account.setBalance(account.getBalance().subtract(data.getBalance()));
-                                return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
-                                    acc1.setBalance(acc1.getBalance().add(data.getBalance()));
-                                    return accountRepository.save(acc1);
-                                }));
-                            }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
-                        }).map(acc -> {
-                            try {
-                                return ResponseEntity.created(new URI("/api/accounts/tranfer" + acc.getId()))
-                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.tranfered", acc.getAccount()))
-                                        .body(acc);
-                            } catch (URISyntaxException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }));
+//                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .flatMap(login -> {
+                    if(StringUtils.isBlank(login)) {
+                        return Mono.error(new UserNotfoundException());
+                    }
+                    return accountRepository.findOneByAccount(data.getAccount())
+                            .flatMap(account -> {
+                                if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
+                                    throw new TranferException();
+                                }
+                                Transaction transaction = new Transaction();
+                                transaction.setOwner(login);
+                                transaction.setAction(1);
+                                transaction.setAccount(data.getAccount());
+                                transaction.setToAccount(data.getAccount());
+                                transaction.setAmount(data.getBalance());
+                                transaction.setCurrency("VND");
+                                transaction.setTransactAt(LocalDateTime.now());
+                                transaction.setResult(1);
+                                transaction.setError("No error");
+                                if (transaction.getCreatedBy() == null) {
+                                    transaction.setCreatedBy(login);
+                                }
+                                transaction.setLastModifiedBy(login);
+                                return transactionRepository.save(transaction).flatMap(t -> {
+                                    account.setBalance(account.getBalance().subtract(data.getBalance()));
+                                    return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
+                                        acc1.setBalance(acc1.getBalance().add(data.getBalance()));
+                                        return accountRepository.save(acc1);
+                                    }));
+                                }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
+                            }).map(acc -> {
+                                try {
+                                    return ResponseEntity.created(new URI("/api/accounts/tranfer" + acc.getId()))
+                                            .headers(HeaderUtil.createAlert(applicationName, "accountManagement.tranfered", acc.getAccount()))
+                                            .body(acc);
+                                } catch (URISyntaxException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                });
     }
 
     @Transactional
     public Mono<ResponseEntity<Account>> withDraw(WithDrawDTO data) {
         return SecurityUtils.getCurrentUserLogin()
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
-                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
-                        .flatMap(account -> {
-                            if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
-                                throw new WithdrawException();
-                            }
-                            Transaction transaction = new Transaction();
-                            transaction.setOwner(login);
-                            transaction.setAction(2);
-                            transaction.setAccount(data.getAccount());
-                            transaction.setToAccount(data.getAccount());
-                            transaction.setAmount(data.getBalance());
-                            transaction.setCurrency("VND");
-                            transaction.setTransactAt(LocalDateTime.now());
-                            transaction.setResult(1);
-                            transaction.setError("No error");
-                            if (transaction.getCreatedBy() == null) {
-                                transaction.setCreatedBy(login);
-                            }
-                            transaction.setLastModifiedBy(login);
-                            return transactionRepository.save(transaction).flatMap(t -> {
-                                account.setBalance(account.getBalance().subtract(data.getBalance()));
-                                return accountRepository.save(account);
-                            }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
-                        }).map(acc -> {
-                            try {
-                                return ResponseEntity.created(new URI("/api/accounts/withdraw" + acc.getId()))
-                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.withdraw", acc.getAccount()))
-                                        .body(acc);
-                            } catch (URISyntaxException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }));
+                .flatMap(login -> {
+                    if(StringUtils.isBlank(login)) {
+                        return Mono.error(new UserNotfoundException());
+                    }
+                    return accountRepository.findOneByAccount(data.getAccount())
+                            .flatMap(account -> {
+                                if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
+                                    throw new WithdrawException();
+                                }
+                                Transaction transaction = new Transaction();
+                                transaction.setOwner(login);
+                                transaction.setAction(2);
+                                transaction.setAccount(data.getAccount());
+                                transaction.setToAccount(data.getAccount());
+                                transaction.setAmount(data.getBalance());
+                                transaction.setCurrency("VND");
+                                transaction.setTransactAt(LocalDateTime.now());
+                                transaction.setResult(1);
+                                transaction.setError("No error");
+                                if (transaction.getCreatedBy() == null) {
+                                    transaction.setCreatedBy(login);
+                                }
+                                transaction.setLastModifiedBy(login);
+                                return transactionRepository.save(transaction).flatMap(t -> {
+                                    account.setBalance(account.getBalance().subtract(data.getBalance()));
+                                    return accountRepository.save(account);
+                                }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
+                            }).map(acc -> {
+                                try {
+                                    return ResponseEntity.created(new URI("/api/accounts/withdraw" + acc.getId()))
+                                            .headers(HeaderUtil.createAlert(applicationName, "accountManagement.withdraw", acc.getAccount()))
+                                            .body(acc);
+                                } catch (URISyntaxException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                });
     }
 
     @Transactional
     public Mono<ResponseEntity<Account>> deposit(WithDrawDTO data) {
         return SecurityUtils.getCurrentUserLogin()
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
-                .flatMap(login -> accountRepository.findOneByAccount(data.getAccount())
-                        .flatMap(account -> {
-                            Transaction transaction = new Transaction();
-                            transaction.setOwner(login);
-                            transaction.setAction(3);
-                            transaction.setAccount(data.getAccount());
-                            transaction.setToAccount(data.getAccount());
-                            transaction.setAmount(data.getBalance());
-                            transaction.setCurrency("VND");
-                            transaction.setTransactAt(LocalDateTime.now());
-                            transaction.setResult(1);
-                            transaction.setError("No error");
-                            if (transaction.getCreatedBy() == null) {
-                                transaction.setCreatedBy(login);
+                .flatMap(login -> {
+                            if(StringUtils.isBlank(login)) {
+                                return Mono.error(new UserNotfoundException());
                             }
-                            transaction.setLastModifiedBy(login);
-                            return transactionRepository.save(transaction).flatMap(t -> {
-                                account.setBalance(account.getBalance().add(data.getBalance()));
-                                return accountRepository.save(account);
-                            }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
-                        }).map(acc -> {
-                            try {
-                                return ResponseEntity.created(new URI("/api/accounts/deposit" + acc.getId()))
-                                        .headers(HeaderUtil.createAlert(applicationName, "accountManagement.deposit", acc.getAccount()))
-                                        .body(acc);
-                            } catch (URISyntaxException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }));
+                            return accountRepository.findOneByAccount(data.getAccount())
+                                    .flatMap(account -> {
+                                        Transaction transaction = new Transaction();
+                                        transaction.setOwner(login);
+                                        transaction.setAction(3);
+                                        transaction.setAccount(data.getAccount());
+                                        transaction.setToAccount(data.getAccount());
+                                        transaction.setAmount(data.getBalance());
+                                        transaction.setCurrency("VND");
+                                        transaction.setTransactAt(LocalDateTime.now());
+                                        transaction.setResult(1);
+                                        transaction.setError("No error");
+                                        if (transaction.getCreatedBy() == null) {
+                                            transaction.setCreatedBy(login);
+                                        }
+                                        transaction.setLastModifiedBy(login);
+                                        return transactionRepository.save(transaction).flatMap(t -> {
+                                            account.setBalance(account.getBalance().add(data.getBalance()));
+                                            return accountRepository.save(account);
+                                        }).doOnSuccess(item -> publishTransactionEvent(TransactionEvent.ITEM_CREATED, transaction));
+                                    }).map(acc -> {
+                                        try {
+                                            return ResponseEntity.created(new URI("/api/accounts/deposit" + acc.getId()))
+                                                    .headers(HeaderUtil.createAlert(applicationName, "accountManagement.deposit", acc.getAccount()))
+                                                    .body(acc);
+                                        } catch (URISyntaxException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    });
+                        });
     }
 
     private final void publishTransactionEvent(String eventType, Transaction transaction) {
