@@ -11,10 +11,7 @@ import com.xbank.event.TransactionEvent;
 import com.xbank.repository.AccountRepository;
 import com.xbank.repository.NotificationRepository;
 import com.xbank.repository.TransactionRepository;
-import com.xbank.rest.errors.AccountExitsException;
-import com.xbank.rest.errors.TranferException;
-import com.xbank.rest.errors.UserNotfoundException;
-import com.xbank.rest.errors.WithdrawException;
+import com.xbank.rest.errors.*;
 import com.xbank.security.SecurityUtils;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -131,6 +128,9 @@ public class AccountService {
                     }
                     return accountRepository.findOneByAccount(data.getAccount())
                             .flatMap(account -> {
+                                if(data.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
+                                    return Mono.error(new TranferException());
+                                }
                                 if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
                                     throw new TranferException();
                                 }
@@ -149,6 +149,7 @@ public class AccountService {
                                 }
                                 transaction.setLastModifiedBy(login);
                                 return transactionRepository.save(transaction).flatMap(t -> {
+
                                     account.setBalance(account.getBalance().subtract(data.getBalance()));
                                     return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
                                         acc1.setBalance(acc1.getBalance().add(data.getBalance()));
@@ -177,6 +178,9 @@ public class AccountService {
                     }
                     return accountRepository.findOneByAccount(data.getAccount())
                             .flatMap(account -> {
+                                if(data.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
+                                    return Mono.error(new WithdrawException());
+                                }
                                 if (account.getBalance().subtract(data.getBalance()).compareTo(BigDecimal.ZERO) < NumberUtils.INTEGER_ZERO) {
                                     throw new WithdrawException();
                                 }
@@ -220,6 +224,9 @@ public class AccountService {
                             }
                             return accountRepository.findOneByAccount(data.getAccount())
                                     .flatMap(account -> {
+                                        if(data.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
+                                            return Mono.error(new DepositException());
+                                        }
                                         Transaction transaction = new Transaction();
                                         transaction.setOwner(login);
                                         transaction.setAction(3);

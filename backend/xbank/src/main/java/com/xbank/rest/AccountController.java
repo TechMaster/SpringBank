@@ -1,33 +1,24 @@
 package com.xbank.rest;
 
 import com.xbank.domain.Account;
-import com.xbank.domain.Transaction;
 import com.xbank.dto.AccountDTO;
 import com.xbank.dto.AccountTranferDTO;
 import com.xbank.dto.WithDrawDTO;
 import com.xbank.rest.errors.BadRequestAlertException;
 import com.xbank.service.AccountService;
 import io.github.jhipster.web.util.PaginationUtil;
-import io.jsonwebtoken.Jwt;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.IDToken;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.security.Principal;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * REST controller for managing the account.
@@ -46,14 +37,6 @@ public class AccountController {
 //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<Account>> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
         try {
-//            KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken)
-//                    SecurityContextHolder.getContext().getAuthentication();
-//            Principal principal = (Principal) authentication.getPrincipal();
-//
-//            if (Objects.nonNull(principal.getName())) {
-//                accountDTO.setOwner(principal.getName());
-//            }
-
             return accountService.createAccount(accountDTO);
         } catch (Exception e) {
             throw new BadRequestAlertException(e.getMessage(), "Account", null);
@@ -91,8 +74,12 @@ public class AccountController {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println(new BigDecimal("-2").compareTo(BigDecimal.ZERO));
+    }
+
     @PostMapping("/deposit")
-    public Mono<ResponseEntity<Account>> loaded(@Valid @RequestBody WithDrawDTO data) {
+    public Mono<ResponseEntity<Account>> deposit(@Valid @RequestBody WithDrawDTO data) {
         return accountService.deposit(data);
     }
 
