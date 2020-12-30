@@ -74,10 +74,6 @@ public class AccountController {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BigDecimal("-2").compareTo(BigDecimal.ZERO));
-    }
-
     @PostMapping("/deposit")
     public Mono<ResponseEntity<Account>> deposit(@Valid @RequestBody WithDrawDTO data) {
         return accountService.deposit(data);

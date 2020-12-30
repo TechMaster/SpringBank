@@ -88,7 +88,12 @@ public class AccountService {
         account.setAccount(accountDTO.getAccount());
         account.setAction(accountDTO.getAction());
         account.setCurrency(accountDTO.getCurrency());
-        account.setBalance(accountDTO.getBalance());
+        if(accountDTO.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
+            account.setBalance(BigDecimal.ZERO);
+        } else {
+            account.setBalance(accountDTO.getBalance());
+        }
+
 
         log.info("Insert data account.");
         return SecurityUtils.getCurrentUserLogin()
