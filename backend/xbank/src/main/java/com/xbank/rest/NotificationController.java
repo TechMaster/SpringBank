@@ -42,6 +42,11 @@ public class NotificationController {
                         .body(notificationService.getAllNotifications(pageable)));
     }
 
+    @GetMapping("/readAll")
+    public Mono<Void> readAll(){
+        return notificationService.readAll();
+    }
+
     /**
      * {@code GET /notifications} : get all notifications.
      *
