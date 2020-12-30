@@ -5,6 +5,7 @@ import com.xbank.dto.AccountDTO;
 import com.xbank.dto.AccountTranferDTO;
 import com.xbank.dto.WithDrawDTO;
 import com.xbank.rest.errors.BadRequestAlertException;
+import com.xbank.security.SecurityUtils;
 import com.xbank.service.AccountService;
 import io.github.jhipster.web.util.PaginationUtil;
 import org.springframework.data.domain.PageImpl;
@@ -17,7 +18,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -43,23 +43,25 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/user")
     public Mono<ResponseEntity<Flux<Account>>> getAccountsByUser(ServerHttpRequest request, Pageable pageable,
                                                                 @Valid @PathVariable String username) {
-        return accountService.countAccountsByUser(username)
-                .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
-                .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
-                        .body(accountService.getAccountByUser(username)));
+        return SecurityUtils.getCurrentUserLogin()
+                .flatMap(login -> accountService.countAccountsByUser(login)
+                        .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
+                        .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
+                                .body(accountService.getAccountByUser(login))));
     }
 
-    @GetMapping("/{username}/{account}")
+    @GetMapping("/{account}")
     public Mono<ResponseEntity<Mono<Account>>> getAccountDetail(ServerHttpRequest request, Pageable pageable,
                                                                  @Valid @PathVariable String username,
                                                                  @Valid @PathVariable String account) {
-        return accountService.countAccountsByUser(username)
-                .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
-                .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
-                        .body(accountService.getAccountDetail(username, account)));
+        return SecurityUtils.getCurrentUserLogin()
+                .flatMap(login -> accountService.countAccountsByUser(login)
+                        .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
+                        .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
+                                .body(accountService.getAccountDetail(login, account))));
     }
 
     @GetMapping
