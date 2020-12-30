@@ -12,4 +12,5 @@ export class User {
   roles: string[];
   token?: string;
   activated?: boolean;
+  imageUrl?: string;
 }

@@ -43,7 +43,7 @@
     </div>
 
     <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
-      <mat-icon [matBadge]="notifications?.length || 0" matBadgeColor="warn"
+      <mat-icon [matBadge]="notifications?.length || null" matBadgeColor="warn"
         >notifications</mat-icon
       >
     </div>

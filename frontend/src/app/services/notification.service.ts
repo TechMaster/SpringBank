@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { EMPTY, Observable, Subject, timer } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
 import {
   catchError,
   tap,
   switchAll,
   retryWhen,
   delayWhen,
+  map,
+  filter,
 } from 'rxjs/operators';
+import { Notification } from 'src/app/models/notification.model';
 
 const NOTIFICATION_API_ENDPOINT: string =
   environment.API_ENDPOINT + '/notifications';
@@ -19,56 +22,46 @@ const WS_ENDPOINT = environment.SOCKET_ENDPOINT;
   providedIn: 'root',
 })
 export class NotificationService {
-  private socket$: WebSocketSubject<any>;
-  private messagesSubject$ = new Subject();
-  public messages$ = this.messagesSubject$.pipe(
-    switchAll(),
-    catchError((e) => {
-      throw e;
-    })
-  );
+  private notifications$: BehaviorSubject<Notification[]>;
+  public notifications: Observable<Notification[]>;
 
-  constructor(private http: HttpClient) {}
-
-  getNotifications(): Observable<any> {
-    return this.http.get<any>(NOTIFICATION_API_ENDPOINT);
+  constructor(private http: HttpClient) {
+    this.notifications$ = new BehaviorSubject<Notification[]>([]);
+    this.notifications = this.notifications$.asObservable();
+    this.getUnreadNotifications().subscribe();
   }
 
-  public connect(): void {
-    console.log('connect')
-    if (!this.socket$ || this.socket$.closed) {
-      console.log('open')
-      this.socket$ = this.getNewWebSocket();
-      const messages = this.socket$.pipe(
-        tap({
-          error: (error) => console.log(error),
-        }),
-        catchError((_) => EMPTY)
-      );
-      this.messagesSubject$.next(messages);
-    }
+  setupWebsocket() {
+    const connection = new WebSocket(WS_ENDPOINT);
+
+    connection.onmessage = (message) => {
+      const newNotifications = this.notifications$.value;
+      newNotifications.unshift({
+        title: message.data,
+        read: null,
+      });
+      this.notifications$.next(newNotifications);
+    };
   }
 
-  private getNewWebSocket() {
-    return webSocket(WS_ENDPOINT);
-  }
-
-  sendMessage(msg: any) {
-    this.socket$.next(msg);
-  }
-
-  close() {
-    this.socket$.complete();
-  }
-
-  private reconnect(observable: Observable<any>): Observable<any> {
-    return observable.pipe(
-      retryWhen((errors) =>
-        errors.pipe(
-          tap((val) => console.log('[Data Service] Try to reconnect', val)),
-          delayWhen((_) => timer(10000))
-        )
+  getUnreadNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(NOTIFICATION_API_ENDPOINT).pipe(
+      map((notifications) =>
+        notifications.filter((notification) => notification.read === null)
+      ),
+      tap((notifications) =>
+        this.notifications$.next(notifications as Notification[])
       )
     );
+  }
+
+  getNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(NOTIFICATION_API_ENDPOINT);
+  }
+
+  readAllNotifications() {
+    return this.http
+      .get<any>(NOTIFICATION_API_ENDPOINT + '/readAll')
+      .pipe(tap(() => this.notifications$.next([])));
   }
 }

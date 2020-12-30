@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Notification } from 'src/app/models/notification.model';
 
 @Component({
   selector: 'app-layout',
@@ -11,7 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class LayoutComponent {
   currentUser: User;
-  notifications;
+  notifications: Notification[];
 
   constructor(
     private userService: UserService,
@@ -27,11 +28,13 @@ export class LayoutComponent {
   }
 
   ngOnInit() {
-    this.notificationService.connect();
+    // Listen notifications change
+    this.notificationService.notifications.subscribe(
+      (data) => (this.notifications = data)
+    );
 
-    this.notificationService
-      .getNotifications()
-      .subscribe((data) => (this.notifications = data));
+    // Connect Websocket server
+    this.notificationService.setupWebsocket();
   }
 
   login() {
@@ -40,6 +43,5 @@ export class LayoutComponent {
 
   logout() {
     this.userService.logout();
-    // this.router.navigateByUrl('/login');
   }
 }

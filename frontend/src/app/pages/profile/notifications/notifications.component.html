@@ -8,10 +8,12 @@
       <mat-divider></mat-divider>
 
       <div class="item">
-        <a routerLink="/profile/notifications">
+        <span>
           {{ item.title }}
-          <mat-icon inline color="primary">fiber_manual_record</mat-icon>
-        </a>
+          <mat-icon inline color="primary" *ngIf="!item.read"
+            >fiber_manual_record</mat-icon
+          >
+        </span>
 
         <div class="time">
           <span style="margin-right: 10px"
