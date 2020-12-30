@@ -64,7 +64,6 @@ public class AccountService {
         return accountRepository.countByUser(username);
     }
 
-
     @Transactional(readOnly = true)
     public Mono<Long> countAccounts() {
         return accountRepository.countAll();
