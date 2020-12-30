@@ -1,6 +1,5 @@
 package com.xbank.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,6 +23,9 @@ public class Notification implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "is_read")
+    private Boolean isRead;
+
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     private LocalDateTime createdDate;
@@ -32,8 +34,9 @@ public class Notification implements Serializable {
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
 
-    public Notification(String title, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public Notification(String title, Boolean isRead, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.title = title;
+        this.isRead = isRead;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
     }
@@ -79,5 +82,13 @@ public class Notification implements Serializable {
 
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Boolean getRead() {
+        return isRead;
+    }
+
+    public void setRead(Boolean read) {
+        isRead = read;
     }
 }

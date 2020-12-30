@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Service class for managing accounts.
@@ -265,18 +266,19 @@ public class AccountService {
     private final void publishTransactionEvent(String eventType, Transaction transaction) {
         this.publisher.publishEvent(new TransactionEvent(eventType, transaction));
         Notification notification = new Notification();
-        notification.setAccount(transaction.getToAccount());
+        notification.setAccount(transaction.getOwner());
         notification.setCreatedDate(LocalDateTime.now());
         notification.setLastModifiedDate(LocalDateTime.now());
+        String transactionAt = transaction.getTransactAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         if (transaction.getAction() == 1) {
             // Tranfer action
-            notification.setTitle(transaction.getAccount() + " has transferred to you " + transaction.getAmount() + " at " + transaction.getTransactAt());
+            notification.setTitle("Số dư tài khoản " + transaction.getToAccount() + " + " + transaction.getAmount() + "VND. Ref " + transaction.getAccount() + " at " + transactionAt);
         } else if (transaction.getAction() == 2) {
             // withdraw action
-            notification.setTitle("Withdraw " + transaction.getAmount() + " at " + transaction.getTransactAt());
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Rút tiền ngày " + transactionAt);
         } else if (transaction.getAction() == 3) {
             // deposit action
-            notification.setTitle("Deposit " + transaction.getAmount() + " at " + transaction.getTransactAt());
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " + " + transaction.getAmount() + "VND. Nạp tiền ngày " + transactionAt);
         }
         notificationRepository.save(notification).subscribe(result -> log.info("Entity has been saved: {}", result));
     }

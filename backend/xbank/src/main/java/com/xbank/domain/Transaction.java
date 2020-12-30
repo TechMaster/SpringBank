@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity(name = "transaction")
 public class Transaction extends AbstractAuditingEntity implements Serializable {

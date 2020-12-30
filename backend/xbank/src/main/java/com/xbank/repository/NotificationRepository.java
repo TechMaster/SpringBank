@@ -7,6 +7,7 @@ import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.r2dbc.core.ReactiveDataAccessStrategy;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.repository.query.Param;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -17,6 +18,9 @@ public interface NotificationRepository extends R2dbcRepository<Notification, Lo
 
     @Query("SELECT COUNT(DISTINCT id) FROM notification")
     Mono<Long> countAll();
+
+    @Query("UPDATE notification SET is_read = true WHERE account = :account")
+    Mono<Void> readAll(@Param("account") String account);
 
 }
 

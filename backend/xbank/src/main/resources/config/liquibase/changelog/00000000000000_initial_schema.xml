@@ -199,6 +199,7 @@
             </column>
             <column name="account" type="varchar(100)"/>
             <column name="title" type="varchar(256)"/>
+            <column name="is_read" type="boolean" valueBoolean="false"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
