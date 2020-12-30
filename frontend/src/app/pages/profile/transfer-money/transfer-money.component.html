@@ -5,13 +5,16 @@
 
   <div *ngIf="!isDone" [formGroup]="transferForm" class="form-wrapper">
     <div class="form">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Tài khoản nguồn"
-          autocomplete="off"
-          formControlName="account"
-        />
+      <mat-form-field appearance="fill">
+        <mat-label>Tài khoản nguồn</mat-label>
+        <mat-select formControlName="account">
+          <mat-option
+            *ngFor="let account of accounts"
+            [value]="account.account"
+            >{{ account.account }}</mat-option
+          >
+        </mat-select>
+        <mat-error>Vui lòng chọn tài khoản</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -36,7 +39,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Ngân hàng thụ hưởng</mat-label>
         <mat-select formControlName="bankTarget">
           <mat-option value="agribank"
@@ -48,14 +51,14 @@
           >
         </mat-select>
         <mat-error>Quý khách vui lòng chọn ngân hàng thụ hưởng</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
         <input
           matInput
           placeholder="Số tiền"
           autocomplete="off"
-          formControlName="amount"
+          formControlName="balance"
         />
         <mat-error>Quý khách vui lòng nhập số tiền chuyển khoản</mat-error>
       </mat-form-field>

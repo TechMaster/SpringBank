@@ -4,7 +4,7 @@ import { Sort } from '@angular/material/sort';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { forkJoin, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmDeleteComponent } from 'src/app/components/dialog-confirm-delete/dialog-confirm-delete.component';
 import { Title } from '@angular/platform-browser';
@@ -41,14 +41,15 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     // Get & count users
     forkJoin([
-      this.userService.getUsers({
-        max: this.itemsPerPage,
-      }),
-      this.userService.countUsers(),
-    ]).subscribe((result) => {
-      this.users = result[0].body;
-      this.totalItems = result[1];
-    });
+      this.userService
+        .getUsers({
+          max: this.itemsPerPage,
+        })
+        .pipe(tap((result) => (this.users = result.body))),
+      this.userService
+        .countUsers()
+        .pipe(tap((result) => (this.totalItems = result))),
+    ]).subscribe();
 
     // Listen search user input change
     this.searchUserInput$

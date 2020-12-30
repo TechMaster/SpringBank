@@ -56,7 +56,7 @@ a:hover {
 
 /* Custom style Angular Material components */
 .mat-icon {
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 .mat-form-field {
   margin-bottom: 1rem;

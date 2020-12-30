@@ -31,7 +31,7 @@ export class LayoutComponent {
 
     this.notificationService
       .getNotifications()
-      .subscribe(console.log);
+      .subscribe((data) => (this.notifications = data));
   }
 
   login() {

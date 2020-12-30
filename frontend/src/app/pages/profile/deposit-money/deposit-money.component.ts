@@ -17,7 +17,6 @@ export class DepositMoneyComponent implements OnInit {
   });
 
   accounts: BankAccount[] = [];
-
   isDone: boolean = false;
 
   constructor(
@@ -37,6 +36,7 @@ export class DepositMoneyComponent implements OnInit {
 
   depositMoney() {
     const formValues = this.depositForm.value;
+    formValues.balance = parseInt(formValues.balance);
     this.accountService.depositMoney(formValues).subscribe(
       () => (this.isDone = true),
       () =>

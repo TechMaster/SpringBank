@@ -6,51 +6,23 @@
     >
   </div>
 
-  <div class="box-item">
-    <a routerLink="/profile/notifications">
-      Khuyến mãi cho chủ thẻ mới mở sau ngày 20/10
-      <mat-icon inline color="primary">fiber_manual_record</mat-icon>
-    </a>
-
-    <div class="time">
-      <span style="margin-right: 10px"
-        ><mat-icon inline>date_range</mat-icon> 01/11/2020</span
-      >
-      <span><mat-icon inline>schedule</mat-icon> 10:00</span>
+  <ng-container *ngFor="let item of notifications">
+    <div class="box-item">
+      <a routerLink="/profile/notifications">
+        {{ item.title }}
+        <mat-icon inline color="primary">fiber_manual_record</mat-icon>
+      </a>
+      <div class="time">
+        <span style="margin-right: 10px"
+          ><mat-icon inline>date_range</mat-icon>
+          {{ item.createdDate | date: "dd/MM/yyyy" }}</span
+        >
+        <span><mat-icon inline>schedule</mat-icon> {{ item.createdDate | date: "shortTime" }}</span>
+      </div>
     </div>
-  </div>
 
-  <mat-divider></mat-divider>
-
-  <div class="box-item">
-    <a routerLink="/profile/notifications">
-      Bạn đã nhận được 500,000 VND từ Robin Huy
-    </a>
-
-    <div class="time">
-      <span style="margin-right: 10px"
-        ><mat-icon inline>date_range</mat-icon> 23/10/2020</span
-      >
-      <span><mat-icon inline>schedule</mat-icon> 15:23</span>
-    </div>
-  </div>
-
-  <mat-divider></mat-divider>
-
-  <div class="box-item">
-    <a routerLink="/profile/notifications">
-      Chuyển khoản thành công 1,000,000 VND cho Trinh Minh Cuong
-    </a>
-
-    <div class="time">
-      <span style="margin-right: 10px"
-        ><mat-icon inline>date_range</mat-icon> 11/10/2020</span
-      >
-      <span><mat-icon inline>schedule</mat-icon> 11:11</span>
-    </div>
-  </div>
-
-  <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
+  </ng-container>
 
   <div class="box-item text-center">
     <a routerLink="/profile/notifications"> Xem tất cả thông báo </a>

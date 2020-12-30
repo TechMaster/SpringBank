@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
+import { BankAccount } from 'src/app/models/bank-account.model';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -15,11 +16,11 @@ export class TransferMoneyComponent implements OnInit {
     owner: ['robin'],
     toAccount: ['', Validators.required],
     bankTarget: [''],
-    amount: ['', Validators.pattern(/^[0-9]+$/)],
+    balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     cost: ['1'],
     note: [''],
   });
-
+  accounts: BankAccount[] = [];
   isDone: boolean = false;
 
   constructor(
@@ -31,6 +32,10 @@ export class TransferMoneyComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Chuyển tiền');
+
+    this.accountService
+      .getAccounts()
+      .subscribe((data) => (this.accounts = data));
   }
 
   transferMoney() {

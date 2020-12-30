@@ -43,7 +43,9 @@
     </div>
 
     <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
-      <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+      <mat-icon [matBadge]="notifications?.length || 0" matBadgeColor="warn"
+        >notifications</mat-icon
+      >
     </div>
 
     <mat-menu #userDropdown="matMenu">
@@ -61,7 +63,9 @@
     </mat-menu>
 
     <mat-menu #notificationsDropdown="matMenu">
-      <app-notifications-box></app-notifications-box>
+      <app-notifications-box
+        [notifications]="notifications"
+      ></app-notifications-box>
     </mat-menu>
   </div>
 
@@ -84,5 +88,5 @@
 </main>
 
 <footer class="footer">
-  <div>© 2020 Spring Bank.</div>
+  <div>© 2020 Spring Bank</div>
 </footer>

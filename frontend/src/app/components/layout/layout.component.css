@@ -72,6 +72,8 @@ a:hover {
 .container {
   max-width: 1000px;
   margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .footer {
   height: 3rem;

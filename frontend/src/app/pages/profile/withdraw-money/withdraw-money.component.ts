@@ -17,7 +17,6 @@ export class WithdrawMoneyComponent implements OnInit {
   });
 
   accounts: BankAccount[] = [];
-
   isDone: boolean = false;
 
   constructor(
