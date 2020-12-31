@@ -265,6 +265,7 @@ public class AccountService {
     private final void publishTransactionEvent(String eventType, Transaction transaction) {
         this.publisher.publishEvent(new TransactionEvent(eventType, transaction));
         Notification notification = new Notification();
+        notification.setRead(false);
         notification.setAccount(transaction.getOwner());
         notification.setCreatedDate(LocalDateTime.now());
         notification.setLastModifiedDate(LocalDateTime.now());
