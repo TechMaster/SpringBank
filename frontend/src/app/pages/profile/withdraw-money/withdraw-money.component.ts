@@ -17,6 +17,7 @@ export class WithdrawMoneyComponent implements OnInit {
   });
 
   accounts: BankAccount[] = [];
+  currentBalance: number = 0;
   isDone: boolean = false;
 
   constructor(
@@ -34,6 +35,13 @@ export class WithdrawMoneyComponent implements OnInit {
       .subscribe((data) => (this.accounts = data));
   }
 
+  getBalance() {
+    // this.accountService
+    //   .getAccountById(this.withdrawForm.value.account)
+    //   .subscribe(console.log);
+    this.currentBalance = 1000000;
+  }
+
   withdrawMoney() {
     const formValues = this.withdrawForm.value;
     this.accountService.withdrawMoney(formValues).subscribe(
@@ -44,5 +52,11 @@ export class WithdrawMoneyComponent implements OnInit {
           verticalPosition: 'top',
         })
     );
+  }
+
+  resetValue() {
+    this.isDone = false;
+    this.currentBalance = 0;
+    this.withdrawForm.reset();
   }
 }

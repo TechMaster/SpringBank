@@ -15,12 +15,13 @@ export class TransferMoneyComponent implements OnInit {
     account: ['', Validators.required],
     owner: ['robin'],
     toAccount: ['', Validators.required],
-    bankTarget: [''],
+    // bankTarget: [''],
     balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     cost: ['1'],
     note: [''],
   });
   accounts: BankAccount[] = [];
+  currentBalance: number = 0;
   isDone: boolean = false;
 
   constructor(
@@ -48,5 +49,11 @@ export class TransferMoneyComponent implements OnInit {
           verticalPosition: 'top',
         })
     );
+  }
+
+  resetValue() {
+    this.isDone = false;
+    this.currentBalance = 0;
+    this.transferForm.reset();
   }
 }

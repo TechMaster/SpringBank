@@ -1,17 +1,8 @@
 import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
-import {
-  catchError,
-  tap,
-  switchAll,
-  retryWhen,
-  delayWhen,
-  map,
-  filter,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Notification } from 'src/app/models/notification.model';
 
 const NOTIFICATION_API_ENDPOINT: string =
@@ -28,7 +19,7 @@ export class NotificationService {
   constructor(private http: HttpClient) {
     this.notifications$ = new BehaviorSubject<Notification[]>([]);
     this.notifications = this.notifications$.asObservable();
-    this.getUnreadNotifications().subscribe();
+    this.getNewNotifications().subscribe();
   }
 
   setupWebsocket() {
@@ -38,21 +29,22 @@ export class NotificationService {
       const newNotifications = this.notifications$.value;
       newNotifications.unshift({
         title: message.data,
-        read: null,
+        read: false,
       });
       this.notifications$.next(newNotifications);
     };
   }
 
-  getUnreadNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(NOTIFICATION_API_ENDPOINT).pipe(
-      map((notifications) =>
-        notifications.filter((notification) => notification.read === null)
-      ),
-      tap((notifications) =>
-        this.notifications$.next(notifications as Notification[])
+  getNewNotifications(): Observable<Notification[]> {
+    return this.http
+      .get<Notification[]>(
+        NOTIFICATION_API_ENDPOINT + '?page=1&size=10&sort=id,desc'
       )
-    );
+      .pipe(
+        tap((notifications) =>
+          this.notifications$.next(notifications as Notification[])
+        )
+      );
   }
 
   getNotifications(): Observable<Notification[]> {

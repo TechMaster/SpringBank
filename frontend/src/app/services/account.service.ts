@@ -17,6 +17,10 @@ export class AccountService {
     return this.http.get<BankAccount[]>(ACCOUNT_API_ENDPOINT);
   }
 
+  getAccountById(id: string) {
+    return this.http.get<BankAccount[]>(ACCOUNT_API_ENDPOINT + '/' + id);
+  }
+
   createBankAccount(bankAccount: BankAccount) {
     return this.http.post<BankAccount>(ACCOUNT_API_ENDPOINT, {
       ...bankAccount,

@@ -5,9 +5,9 @@
 
   <div *ngIf="!isDone" [formGroup]="withdrawForm" class="form-wrapper">
     <div class="form">
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Chọn tài khoản</mat-label>
-        <mat-select formControlName="account">
+        <mat-select formControlName="account" (selectionChange)="getBalance()">
           <mat-option
             *ngFor="let account of accounts"
             [value]="account.account"
@@ -16,6 +16,13 @@
         </mat-select>
         <mat-error>Vui lòng chọn tài khoản</mat-error>
       </mat-form-field>
+
+      <div
+        *ngIf="currentBalance > 0"
+        style="margin-top: -1rem; margin-bottom: 1rem"
+      >
+        Số dư khả dụng: {{ currentBalance | currency: "VND" }}
+      </div>
 
       <mat-form-field>
         <input
@@ -48,7 +55,7 @@
     <div class="button-group">
       <button mat-raised-button routerLink="/profile">Không</button>
 
-      <button mat-raised-button color="primary" (click)="isDone = false">
+      <button mat-raised-button color="primary" (click)="resetValue()">
         Tiếp tục
       </button>
     </div>

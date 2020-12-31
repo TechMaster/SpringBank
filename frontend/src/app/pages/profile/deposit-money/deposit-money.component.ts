@@ -17,6 +17,7 @@ export class DepositMoneyComponent implements OnInit {
   });
 
   accounts: BankAccount[] = [];
+  currentBalance: number = 0;
   isDone: boolean = false;
 
   constructor(
@@ -45,5 +46,11 @@ export class DepositMoneyComponent implements OnInit {
           verticalPosition: 'top',
         })
     );
+  }
+
+  resetValue() {
+    this.isDone = false;
+    this.currentBalance = 0;
+    this.depositForm.reset();
   }
 }

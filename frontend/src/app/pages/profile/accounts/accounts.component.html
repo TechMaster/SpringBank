@@ -3,8 +3,8 @@
 <mat-accordion>
   <mat-expansion-panel *ngFor="let account of bankAccounts">
     <mat-expansion-panel-header>
-      <mat-panel-title>{{ account.account }}</mat-panel-title>
-      <mat-panel-description>Tài khoản thanh toán</mat-panel-description>
+      <mat-panel-title>STK: {{ account.account }}</mat-panel-title>
+      <mat-panel-description>Loại: Tài khoản thanh toán</mat-panel-description>
     </mat-expansion-panel-header>
     <p>Số dư: {{ account.balance | currency: "VND" }}</p>
   </mat-expansion-panel>

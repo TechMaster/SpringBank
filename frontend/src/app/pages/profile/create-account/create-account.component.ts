@@ -14,8 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CreateAccountComponent implements OnInit {
   createAccountForm = this.fb.group({
-    account: ['', Validators.pattern(/^[0-9]+$/)],
-    balance: ['', Validators.pattern(/^[0-9]+$/)],
+    account: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+    balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
   });
 
   constructor(
