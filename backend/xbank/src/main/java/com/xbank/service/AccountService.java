@@ -77,7 +77,6 @@ public class AccountService {
         return accountRepository.getAccountDetail(username, account);
     }
 
-
     public Flux<Account> getAccounts(Pageable pageable) {
         return accountRepository.findByOwnerAsPage(pageable);
     }
@@ -126,7 +125,7 @@ public class AccountService {
     @Transactional
     public Mono<ResponseEntity<Account>> transfer(AccountTranferDTO data) {
         return SecurityUtils.getCurrentUserLogin()
-//                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
+                .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
                     if(StringUtils.isBlank(login)) {
                         return Mono.error(new UserNotfoundException());
@@ -154,7 +153,6 @@ public class AccountService {
                                 }
                                 transaction.setLastModifiedBy(login);
                                 return transactionRepository.save(transaction).flatMap(t -> {
-
                                     account.setBalance(account.getBalance().subtract(data.getBalance()));
                                     return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
                                         acc1.setBalance(acc1.getBalance().add(data.getBalance()));
@@ -272,7 +270,7 @@ public class AccountService {
         String transactionAt = transaction.getTransactAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         if (transaction.getAction() == 1) {
             // Tranfer action
-            notification.setTitle("Số dư tài khoản " + transaction.getToAccount() + " + " + transaction.getAmount() + "VND. Ref " + transaction.getAccount() + " at " + transactionAt);
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Chuyển tiền sang tài khoàn " + transaction.getToAccount() + " ngày " + transactionAt);
         } else if (transaction.getAction() == 2) {
             // withdraw action
             notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Rút tiền ngày " + transactionAt);
