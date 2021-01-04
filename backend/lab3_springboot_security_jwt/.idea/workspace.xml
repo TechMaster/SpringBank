@@ -22,21 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpkix_jdk15on_1_60.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk15on_1_60.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_keycloak_keycloak_common_8_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_keycloak_keycloak_core_8_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xbank/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xbank/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xbank.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xbank.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/config/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" afterDir="false" />
-    </list>
+    <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

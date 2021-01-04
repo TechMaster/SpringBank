@@ -44,8 +44,7 @@ public class AccountController {
     }
 
     @GetMapping("/user")
-    public Mono<ResponseEntity<Flux<Account>>> getAccountsByUser(ServerHttpRequest request, Pageable pageable,
-                                                                @Valid @PathVariable String username) {
+    public Mono<ResponseEntity<Flux<Account>>> getAccountsByUser(ServerHttpRequest request, Pageable pageable) {
         return SecurityUtils.getCurrentUserLogin()
                 .flatMap(login -> accountService.countAccountsByUser(login)
                         .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
@@ -55,7 +54,6 @@ public class AccountController {
 
     @GetMapping("/{account}")
     public Mono<ResponseEntity<Mono<Account>>> getAccountDetail(ServerHttpRequest request, Pageable pageable,
-                                                                 @Valid @PathVariable String username,
                                                                  @Valid @PathVariable String account) {
         return SecurityUtils.getCurrentUserLogin()
                 .flatMap(login -> accountService.countAccountsByUser(login)

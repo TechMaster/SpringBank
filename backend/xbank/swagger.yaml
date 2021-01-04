@@ -108,18 +108,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Meta500'
-  /api/accounts/{username}:
+  /api/accounts/user:
     get:
       tags:
         - Accounts
       description: Get Accounts By User
-      parameters:
-        - in: path
-          name: username
-          required: true
-          schema:
-            type: string
-            example: admin
       responses:
         '200':
           description: Get account success
@@ -141,18 +134,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Meta500'
-  /api/accounts/{username}/{account}:
+  /api/accounts/{account}:
     get:
       tags:
         - Accounts
       description: Get Account detail
       parameters:
-        - in: path
-          name: username
-          required: true
-          schema:
-            type: string
-            example: admin
         - in: path
           name: account
           required: true
