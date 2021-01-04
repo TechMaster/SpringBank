@@ -14,6 +14,7 @@ import com.xbank.repository.TransactionRepository;
 import com.xbank.rest.errors.*;
 import com.xbank.security.SecurityUtils;
 import io.github.jhipster.web.util.HeaderUtil;
+import javassist.NotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * Service class for managing accounts.
@@ -132,6 +134,9 @@ public class AccountService {
                     }
                     return accountRepository.findOneByAccount(data.getAccount())
                             .flatMap(account -> {
+                                if (Objects.isNull(account)) {
+                                    return Mono.error(new NotFoundException("Account not found!"));
+                                }
                                 if(data.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
                                     return Mono.error(new TranferException());
                                 }
@@ -155,6 +160,9 @@ public class AccountService {
                                 return transactionRepository.save(transaction).flatMap(t -> {
                                     account.setBalance(account.getBalance().subtract(data.getBalance()));
                                     return accountRepository.save(account).flatMap(acc -> accountRepository.findOneByAccount(data.getToAccount()).flatMap(acc1 -> {
+                                        if (Objects.isNull(acc1)) {
+                                            return Mono.error(new NotFoundException("To Account not found!"));
+                                        }
                                         acc1.setBalance(acc1.getBalance().add(data.getBalance()));
                                         return accountRepository.save(acc1);
                                     }));
