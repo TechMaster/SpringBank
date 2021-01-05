@@ -3,22 +3,14 @@
 
 ## Chạy demo ứng dụng trên môi trường development
 
+### Keycloak Server
+
+Xem hướng dẫn chi tiết hơn trong thư mục `backend/keycloak-server`
+
 ### Backend
 
-Chạy server qua docker bằng lệnh:
-
-```
-  docker-compose build && docker-compose up -d
-```
-
-Xem API document tại: http://localhost:8080/swagger-ui.html
+Xem hướng dẫn chi tiết hơn trong thư mục `backend/xbank`
 
 ### Frontend
 
-Cài đặt dependencies: `npm install`
-
-Cài đặt Angular CLI: `npm install -g @angular/cli`
-
-Start server bằng lệnh: `ng serve`
-
-Website chạy ở địa chỉ: http://localhost:4200
+Xem hướng dẫn chi tiết hơn trong thư mục `frontend`

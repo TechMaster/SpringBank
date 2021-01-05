@@ -11,3 +11,13 @@
 - Start server bằng Angular CLI: `ng serve`
 
 - Website chạy ở địa chỉ: http://localhost:4200
+
+### Chỉnh sửa cấu hình kết nối backend
+
+- Cho môi trường development: `src/environment/environment.ts`
+  
+- Cho môi trường production: `src/environment/environment.prod.ts`
+
+### Build production
+
+Dùng lệnh `ng build --prod`
