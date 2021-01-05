@@ -26,7 +26,7 @@ export class AccountService {
       ...bankAccount,
       owner: 'robin',
       action: 1,
-      currency: 'VND',
+      // currency: 'VND',
     });
   }
 
