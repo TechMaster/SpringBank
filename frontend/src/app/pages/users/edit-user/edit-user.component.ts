@@ -57,7 +57,7 @@ export class EditUserComponent implements OnInit {
             return { id: roleData[0], name: roleData[1] };
           });
           this.userService
-            .setRole(user.id, roles)
+            .setRole(user.id, this.roles, roles)
             .subscribe(() => this.router.navigate(['/users']));
         } else {
           this.router.navigate(['/users']);

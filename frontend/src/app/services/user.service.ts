@@ -6,7 +6,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { User, Role } from '../models/user.model';
 import { KeyCloakTableOptions } from '../models/table-options.model';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 const KEYCLOAK = environment.keycloak;
 const KEYCLOAK_ADMIN_ENDPOINT = `${KEYCLOAK.url}/admin/realms/${KEYCLOAK.realm}`;
@@ -99,10 +99,15 @@ export class UserService {
     );
   }
 
-  setRole(userId: string, roles: Role[]) {
-    return this.http.post(
-      `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientUUID}`,
-      roles
+  setRole(userId: string, allRoles: Role[], roles: Role[]) {
+    const roleMappingsAPI = `${USER_API_ENDPOINT}/${userId}/role-mappings/clients/${KEYCLOAK.clientUUID}`;
+
+    return (
+      this.http
+        // Remove all roles of user
+        .request('delete', roleMappingsAPI, { body: allRoles })
+        // Add new roles
+        .pipe(mergeMap(() => this.http.post(roleMappingsAPI, roles)))
     );
   }
 }

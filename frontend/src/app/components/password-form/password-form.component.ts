@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,9 +9,9 @@ import {
   FormControl,
   ValidationErrors,
   Validator,
-} from "@angular/forms";
-import { Subscription } from "rxjs";
-import { ErrorStateMatcher } from "@angular/material/core";
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 export class ConfirmValidParentMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null): boolean {
@@ -20,8 +20,8 @@ export class ConfirmValidParentMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: "app-password-form",
-  templateUrl: "./password-form.component.html",
+  selector: 'app-password-form',
+  templateUrl: './password-form.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -40,15 +40,14 @@ export class PasswordFormComponent
   passwordForm = this.fb.group(
     {
       password: [
-        "",
+        '',
         [
           Validators.required,
-          Validators.pattern(
-            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/
-          ),
+          Validators.minLength(6),
+          Validators.maxLength(32),
         ],
       ],
-      confirmPassword: [""],
+      confirmPassword: [''],
     },
     { validator: this.checkPasswords }
   );
@@ -69,8 +68,8 @@ export class PasswordFormComponent
   }
 
   checkPasswords(group: FormGroup): ValidationErrors | null {
-    let password = group.get("password").value;
-    let confirmPassword = group.get("confirmPassword").value;
+    let password = group.get('password').value;
+    let confirmPassword = group.get('confirmPassword').value;
 
     return password === confirmPassword ? null : { missMatch: true };
   }

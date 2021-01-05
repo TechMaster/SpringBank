@@ -31,16 +31,6 @@
           autocomplete="off"
           formControlName="toAccount"
         />
-        <button
-          mat-button
-          *ngIf="transferForm.controls.toAccount.value"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="transferForm.controls.toAccount.value = ''"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
         <mat-error
           >Quý khách vui lòng nhập/chọn tài khoản thụ hưởng VND</mat-error
         >
