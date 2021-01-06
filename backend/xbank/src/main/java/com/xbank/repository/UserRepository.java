@@ -50,6 +50,9 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
 
     @Query("DELETE FROM user_authority")
     Mono<Void> deleteAllUserAuthorities();
+
+    @Query("DELETE FROM ACCOUNT WHERE owner = :owner")
+    Mono<Void> deleteAllUserAccount(String owner);
 }
 
 interface DeleteExtended<T> {

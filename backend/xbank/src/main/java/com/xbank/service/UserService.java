@@ -2,19 +2,26 @@ package com.xbank.service;
 
 import com.xbank.config.Constants;
 import com.xbank.domain.Authority;
+import com.xbank.domain.Transaction;
 import com.xbank.domain.User;
+import com.xbank.event.TransactionEvent;
 import com.xbank.repository.AuthorityRepository;
 import com.xbank.repository.UserRepository;
+import com.xbank.rest.errors.DepositException;
+import com.xbank.rest.errors.UserNotfoundException;
 import com.xbank.security.AuthoritiesConstants;
 import com.xbank.security.SecurityUtils;
 import com.xbank.dto.UserDTO;
 
 import io.github.jhipster.security.RandomUtil;
 
+import io.github.jhipster.web.util.HeaderUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +32,9 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -49,6 +59,14 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+    }
+
+    @Transactional
+    public Mono<Void> deleteAccountUser() {
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
+                .flatMap(username -> userRepository.deleteAllUserAccount(username).thenReturn(username))
+                .doOnNext(user -> log.debug("Deleted User: {}", user))
+                .then();
     }
 
     @Transactional

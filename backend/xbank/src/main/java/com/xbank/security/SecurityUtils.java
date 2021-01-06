@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import reactor.core.publisher.Mono;
 
 
@@ -12,6 +13,9 @@ import reactor.core.publisher.Mono;
  * Utility class for Spring Security.
  */
 public final class SecurityUtils {
+
+    private static final String USERNAME_CLAIM = "preferred_username";
+    private static final String JWT_TOKE_VALUE_CLAIM = "tokenValue";
 
     private SecurityUtils() {
     }
@@ -23,8 +27,8 @@ public final class SecurityUtils {
      */
     public static Mono<String> getCurrentUserLogin() {
         return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .flatMap(authentication -> Mono.justOrEmpty(extractPrincipal(authentication)));
+                .map(SecurityContext::getAuthentication)
+                .flatMap(authentication -> Mono.justOrEmpty(extractPrincipal(authentication)));
     }
 
     private static String extractPrincipal(Authentication authentication) {
@@ -39,6 +43,18 @@ public final class SecurityUtils {
         return null;
     }
 
+    public static Mono<String> getCurrentUserLogin(boolean isLatestVersion) {
+        if (isLatestVersion) {
+            return ReactiveSecurityContextHolder
+                    .getContext()
+                    .map(ctx -> ctx.getAuthentication().getPrincipal())
+                    .cast(Jwt.class)
+                    .map(jwt -> jwt.getClaimAsString(USERNAME_CLAIM));
+        }
+
+        return getCurrentUserLogin();
+    }
+
 
     /**
      * Get the JWT of the current user.
@@ -47,9 +63,21 @@ public final class SecurityUtils {
      */
     public static Mono<String> getCurrentUserJWT() {
         return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .filter(authentication -> authentication.getCredentials() instanceof String)
-            .map(authentication -> (String) authentication.getCredentials());
+                .map(SecurityContext::getAuthentication)
+                .filter(authentication -> authentication.getCredentials() instanceof String)
+                .map(authentication -> (String) authentication.getCredentials());
+    }
+
+    public static Mono<String> getCurrentUserJWT(boolean isLatestVersion) {
+        if (isLatestVersion) {
+            return ReactiveSecurityContextHolder
+                    .getContext()
+                    .map(ctx -> ctx.getAuthentication().getPrincipal())
+                    .cast(Jwt.class)
+                    .map(jwt -> jwt.getClaimAsString(JWT_TOKE_VALUE_CLAIM));
+        }
+
+        return getCurrentUserJWT();
     }
 
     /**
@@ -59,12 +87,22 @@ public final class SecurityUtils {
      */
     public static Mono<Boolean> isAuthenticated() {
         return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .map(Authentication::getAuthorities)
-            .map(authorities -> authorities.stream()
-                .map(GrantedAuthority::getAuthority)
-                .noneMatch(AuthoritiesConstants.ANONYMOUS::equals)
-            );
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getAuthorities)
+                .map(authorities -> authorities.stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .noneMatch(AuthoritiesConstants.ANONYMOUS::equals)
+                );
+    }
+
+    public static Mono<Boolean> isAuthenticated(boolean isLatestVersion) {
+        if (isLatestVersion) {
+            return ReactiveSecurityContextHolder
+                    .getContext()
+                    .map(ctx -> ctx.getAuthentication().isAuthenticated());
+        }
+
+        return isAuthenticated();
     }
 
     /**
@@ -77,12 +115,27 @@ public final class SecurityUtils {
      */
     public static Mono<Boolean> isCurrentUserInRole(String authority) {
         return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .map(Authentication::getAuthorities)
-            .map(authorities -> authorities.stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(authority::equals)
-            );
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getAuthorities)
+                .map(authorities -> authorities.stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .anyMatch(authority::equals)
+                );
+    }
+
+    public static Mono<Boolean> isCurrentUserInRole(String authority, boolean isLatestVersion) {
+        if (isLatestVersion) {
+            return ReactiveSecurityContextHolder
+                    .getContext()
+                    .map(ctx -> ctx.getAuthentication().getAuthorities())
+                    .map(authorities -> authorities
+                            .stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .anyMatch(authority::equalsIgnoreCase)
+                    );
+        }
+
+        return isCurrentUserInRole(authority);
     }
 
 }
