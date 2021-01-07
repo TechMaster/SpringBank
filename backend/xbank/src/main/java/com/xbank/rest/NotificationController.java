@@ -35,7 +35,7 @@ public class NotificationController {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
      */
     @GetMapping
-    public Mono<ResponseEntity<Flux<Notification>>> getAllTransactions(ServerHttpRequest request, Pageable pageable) {
+    public Mono<ResponseEntity<Flux<Notification>>> getAllNotificationUser(ServerHttpRequest request, Pageable pageable) {
         return notificationService.countNotifications()
                 .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))

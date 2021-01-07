@@ -23,18 +23,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="affadc19-e3b2-42b7-bb91-e2148d5d8126" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/TranferException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/errors/UserNotfoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/WithDrawDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/dto/WithDrawDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xbank/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/security/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/security/SecurityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../xbank/src/main/java/com/xbank/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,6 +154,7 @@
       <workItem from="1607871653397" duration="784000" />
       <workItem from="1608221905838" duration="1014000" />
       <workItem from="1608999126596" duration="1623000" />
+      <workItem from="1609264605296" duration="581000" />
     </task>
     <servers />
   </component>
