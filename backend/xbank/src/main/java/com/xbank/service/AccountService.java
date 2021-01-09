@@ -150,6 +150,7 @@ public class AccountService {
                                 transaction.setToAccount(data.getAccount());
                                 transaction.setAmount(data.getBalance());
                                 transaction.setCurrency("VND");
+                                transaction.setNote(data.getNote());
                                 transaction.setTransactAt(LocalDateTime.now());
                                 transaction.setResult(1);
                                 transaction.setError("No error");

@@ -82,12 +82,6 @@ public class TransactionController {
         return transactionService.getAllTransactionsByUser();
     }
 
-    public static void main(String[] args) {
-        DecimalFormat formatter = new DecimalFormat("###,###,###.##");
-
-        System.out.println(formatter.format(new BigDecimal("10000000"))+" VNĐ");
-    }
-
     /**
      * {@code GET /transactions/{id}} : get detail transaction.
      *

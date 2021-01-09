@@ -16,6 +16,8 @@ public class AccountTranferDTO {
 
     private BigDecimal balance;
 
+    private String note;
+
     public String getAccount() {
         return account;
     }
@@ -38,5 +40,13 @@ public class AccountTranferDTO {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
