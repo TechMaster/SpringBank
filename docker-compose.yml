@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  keycloak:
+    image: handuy1992/keycloak
+    ports:
+      - 8080:8080
+    volumes:
+      - /tmp/
+  web:
+    image: handuy1992/springbank
+    ports:
+      - 4200:80
+    depends_on: 
+      - keycloak

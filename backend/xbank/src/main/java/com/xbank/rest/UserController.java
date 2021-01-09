@@ -71,10 +71,15 @@ public class UserController {
     private final MailService mailService;
 
     public UserController(UserRepository userRepository, UserService userService, MailService mailService) {
-
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+    }
+
+    @DeleteMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Void> deleteAllUser() {
+        return userService.deleteAccountUser();
     }
 
     /**
