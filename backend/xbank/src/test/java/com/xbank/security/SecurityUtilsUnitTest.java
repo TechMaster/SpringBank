@@ -19,7 +19,7 @@ public class SecurityUtilsUnitTest {
 
     @Test
     public void testgetCurrentUserLogin() {
-        String login = SecurityUtils.getCurrentUserLogin()
+        String login = SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
             .subscriberContext(
                 ReactiveSecurityContextHolder.withAuthentication(
                     new UsernamePasswordAuthenticationToken("admin", "admin")

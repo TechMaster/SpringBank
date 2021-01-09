@@ -4,6 +4,7 @@ import com.xbank.domain.Transaction;
 import com.xbank.dto.TransactionDTO;
 import com.xbank.dto.UserDTO;
 import com.xbank.security.AuthoritiesConstants;
+import com.xbank.security.SecurityUtils;
 import com.xbank.service.TransactionService;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -19,9 +20,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * REST controller for managing the Transaction.
@@ -65,6 +71,21 @@ public class TransactionController {
                 .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
                         .body(transactionService.getAllTransactions(pageable)));
+    }
+
+    /**
+     * {@code GET /transactions} : get all transactions.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
+     */
+    @GetMapping
+    public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser() {
+        return transactionService.getAllTransactionsByUser();
+    }
+
+    public static void main(String[] args) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###.##");
+
+        System.out.println(formatter.format(new BigDecimal("10000000"))+" VNĐ");
     }
 
     /**

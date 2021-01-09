@@ -31,6 +31,7 @@ import reactor.core.publisher.Mono;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -88,16 +89,15 @@ public class AccountService {
         Account account = new Account();
         account.setAccount(accountDTO.getAccount());
         account.setAction(accountDTO.getAction());
-        account.setCurrency(accountDTO.getCurrency());
+        account.setCurrency("VND");
         if(accountDTO.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
             account.setBalance(BigDecimal.ZERO);
         } else {
             account.setBalance(accountDTO.getBalance());
         }
 
-
         log.info("Insert data account.");
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
                     account.setOwner(login);
@@ -126,7 +126,7 @@ public class AccountService {
 
     @Transactional
     public Mono<ResponseEntity<Account>> transfer(AccountTranferDTO data) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
                     if(StringUtils.isBlank(login)) {
@@ -181,7 +181,7 @@ public class AccountService {
 
     @Transactional
     public Mono<ResponseEntity<Account>> withDraw(WithDrawDTO data) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
                     if(StringUtils.isBlank(login)) {
@@ -227,7 +227,7 @@ public class AccountService {
 
     @Transactional
     public Mono<ResponseEntity<Account>> deposit(WithDrawDTO data) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
                             if(StringUtils.isBlank(login)) {
@@ -276,15 +276,16 @@ public class AccountService {
         notification.setCreatedDate(LocalDateTime.now());
         notification.setLastModifiedDate(LocalDateTime.now());
         String transactionAt = transaction.getTransactAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        DecimalFormat formatter = new DecimalFormat("###,###,###.##");
         if (transaction.getAction() == 1) {
             // Tranfer action
-            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Chuyển tiền sang tài khoàn " + transaction.getToAccount() + " ngày " + transactionAt);
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + formatter.format(transaction.getAmount()) + "VNĐ. Chuyển tiền sang tài khoàn " + transaction.getToAccount() + " ngày " + transactionAt);
         } else if (transaction.getAction() == 2) {
             // withdraw action
-            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Rút tiền ngày " + transactionAt);
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + formatter.format(transaction.getAmount()) + "VNĐ. Rút tiền ngày " + transactionAt);
         } else if (transaction.getAction() == 3) {
             // deposit action
-            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " + " + transaction.getAmount() + "VND. Nạp tiền ngày " + transactionAt);
+            notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " + " + formatter.format(transaction.getAmount()) + "VNĐ. Nạp tiền ngày " + transactionAt);
         }
         notificationRepository.save(notification).subscribe(result -> log.info("Entity has been saved: {}", result));
     }

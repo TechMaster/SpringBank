@@ -34,7 +34,6 @@ public class AccountController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<ResponseEntity<Account>> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
         try {
             return accountService.createAccount(accountDTO);
@@ -45,7 +44,7 @@ public class AccountController {
 
     @GetMapping("/user")
     public Mono<ResponseEntity<Flux<Account>>> getAccountsByUser(ServerHttpRequest request, Pageable pageable) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .flatMap(login -> accountService.countAccountsByUser(login)
                         .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                         .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
@@ -55,7 +54,7 @@ public class AccountController {
     @GetMapping("/{account}")
     public Mono<ResponseEntity<Mono<Account>>> getAccountDetail(ServerHttpRequest request, Pageable pageable,
                                                                  @Valid @PathVariable String account) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .flatMap(login -> accountService.countAccountsByUser(login)
                         .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                         .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))

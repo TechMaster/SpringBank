@@ -62,9 +62,8 @@ public class UserService {
     }
 
     @Transactional
-    public Mono<Void> deleteAccountUser() {
-        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
-                .flatMap(username -> userRepository.deleteAllUserAccount(username).thenReturn(username))
+    public Mono<Void> deleteAccountUser(String username) {
+        return userRepository.deleteAllUserAccount(username).thenReturn(username)
                 .doOnNext(user -> log.debug("Deleted User: {}", user))
                 .then();
     }
@@ -251,7 +250,7 @@ public class UserService {
      */
     @Transactional
     public Mono<Void> updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
             .flatMap(userRepository::findOneByLogin)
             .flatMap(user -> {
                 user.setFirstName(firstName);
@@ -269,7 +268,7 @@ public class UserService {
 
     @Transactional
     Mono<User> saveUser(User user) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
             .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
             .flatMap(login -> {
                 if (user.getCreatedBy() == null) {
@@ -289,7 +288,7 @@ public class UserService {
 
     @Transactional
     public Mono<Void> changePassword(String currentClearTextPassword, String newPassword) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
             .flatMap(userRepository::findOneByLogin)
             .publishOn(Schedulers.boundedElastic())
             .map(user -> {
@@ -323,7 +322,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Mono<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE).flatMap(userRepository::findOneWithAuthoritiesByLogin);
     }
 
     /**
@@ -355,7 +354,7 @@ public class UserService {
 
     @Transactional
     public Mono<User> uploadAvatar(File file) {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .flatMap(userRepository::findOneByLogin)
                 .publishOn(Schedulers.boundedElastic())
                 .map(user -> {

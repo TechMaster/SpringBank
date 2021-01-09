@@ -56,7 +56,7 @@ public class NotificationService {
 
     @Transactional
     public Mono<Void> readAll() {
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> notificationRepository.readAll(login));
     }
