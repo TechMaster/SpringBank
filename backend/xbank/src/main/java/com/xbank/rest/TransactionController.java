@@ -13,21 +13,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * REST controller for managing the Transaction.
@@ -77,7 +71,7 @@ public class TransactionController {
      * {@code GET /transactions} : get all transactions.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
      */
-    @GetMapping
+    @GetMapping("/user")
     public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser() {
         return transactionService.getAllTransactionsByUser();
     }

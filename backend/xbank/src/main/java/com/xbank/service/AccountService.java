@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.json.Json;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -55,7 +56,8 @@ public class AccountService {
 
     private final ApplicationEventPublisher publisher;
 
-    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository, NotificationRepository notificationRepository, ApplicationEventPublisher publisher) {
+    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository,
+                          NotificationRepository notificationRepository, ApplicationEventPublisher publisher) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.notificationRepository = notificationRepository;
@@ -290,4 +292,21 @@ public class AccountService {
         }
         notificationRepository.save(notification).subscribe(result -> log.info("Entity has been saved: {}", result));
     }
+
+    /**
+     * Create a json representation.
+     *
+     * @param message
+     * @return
+     */
+    private static String getMessage(String message, String targetId) {
+        return Json.createObjectBuilder()
+                .add("targetId", "bot")
+                .add("messageText", message)
+                .add("userId", targetId)
+                .build()
+                .toString();
+    }
+
 }
+
