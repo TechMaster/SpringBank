@@ -11,14 +11,9 @@ public class AccountDTO {
     @NotBlank
     private String account;
 
-    @NotBlank
-    private String owner;
-
     private int action;
 
     private BigDecimal balance;
-
-    private String currency;
 
     public String getAccount() {
         return account;
@@ -26,14 +21,6 @@ public class AccountDTO {
 
     public void setAccount(String account) {
         this.account = account;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public int getAction() {
@@ -51,13 +38,4 @@ public class AccountDTO {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
 }

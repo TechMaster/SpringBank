@@ -47,4 +47,4 @@ spring:
           issuer-uri: http://localhost:8080/auth/realms/microservice
 
 server:
-  port: 8082
+  port: 8081

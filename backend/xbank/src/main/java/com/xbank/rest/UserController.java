@@ -76,10 +76,10 @@ public class UserController {
         this.mailService = mailService;
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Void> deleteAllUser() {
-        return userService.deleteAccountUser();
+    public Mono<Void> deleteAllUser(@PathVariable String username) {
+        return userService.deleteAccountUser(username);
     }
 
     /**

@@ -1,24 +1,37 @@
 package com.xbank.service;
 
 import com.xbank.config.Constants;
+import com.xbank.domain.Account;
 import com.xbank.domain.Notification;
 import com.xbank.domain.Transaction;
 import com.xbank.dto.TransactionDTO;
 import com.xbank.event.TransactionEvent;
 import com.xbank.repository.NotificationRepository;
 import com.xbank.repository.TransactionRepository;
+import com.xbank.rest.errors.DepositException;
+import com.xbank.rest.errors.UserNotfoundException;
 import com.xbank.security.SecurityUtils;
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * Service class for managing Transactions.
@@ -42,7 +55,7 @@ public class TransactionService {
     @Transactional
     public Mono<Transaction> createTransaction(TransactionDTO transactionDTO) {
         log.info("Insert data Transaction.");
-        return SecurityUtils.getCurrentUserLogin()
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
                 .flatMap(login -> {
 
@@ -75,6 +88,12 @@ public class TransactionService {
         return transactionRepository.findAllAsPage(pageable);
     }
 
+    @Transactional
+    public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser() {
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
+                .map(login -> ResponseEntity.ok().body(transactionRepository.getAllTransactionsByUser(login)));
+    }
+
     @Transactional(readOnly = true)
     public Mono<Transaction> detailTransaction(Long id) {
         return transactionRepository.findById(id);
@@ -89,7 +108,7 @@ public class TransactionService {
         String transactionAt = transaction.getTransactAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         if (transaction.getAction() == 1) {
             // Tranfer action
-            notification.setTitle("Số dư tài khoản " + transaction.getToAccount() + " + " + transaction.getAmount() + "VND. Ref " + transaction.getAccount() + " ngày " + transactionAt);
+            notification.setTitle("Số dư tài khoản " + transaction.getToAccount() + " + " + transaction.getAmount() + "VND. Tham chiếu " + transaction.getAccount() + " ngày " + transactionAt);
         } else if (transaction.getAction() == 2) {
             // withdraw action
             notification.setTitle("Số dư tài khoản " + transaction.getAccount() + " - " + transaction.getAmount() + "VND. Rút tiền ngày " + transactionAt);

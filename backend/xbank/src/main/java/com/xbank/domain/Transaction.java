@@ -34,6 +34,9 @@ public class Transaction extends AbstractAuditingEntity implements Serializable 
     @Column(name = "currency")
     private String currency;
 
+    @Column(name = "note")
+    private String note;
+
     @Column(name = "transact_at", nullable = false)
     private LocalDateTime transactAt;
 
@@ -97,6 +100,14 @@ public class Transaction extends AbstractAuditingEntity implements Serializable 
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public LocalDateTime getTransactAt() {

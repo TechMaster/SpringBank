@@ -51,6 +51,7 @@
             <column name="to_account" type="varchar(50)"/>
             <column name="amount" type="bigint"/>
             <column name="currency" type="varchar(20)"/>
+            <column name="note" type="varchar(500)"/>
             <column name="transact_at" type="timestamp"/>
             <column name="result" type="int"/>
             <column name="error" type="varchar(256)"/>

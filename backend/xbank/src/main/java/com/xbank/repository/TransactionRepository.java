@@ -7,6 +7,7 @@ import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.r2dbc.core.ReactiveDataAccessStrategy;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,12 @@ public interface TransactionRepository extends R2dbcRepository<Transaction, Long
     @Query("INSERT INTO transaction VALUES(:owner, :action, :account, :toAccount, :amount, :currency, :transactAt, :result, :error)")
     Mono<Void> saveTransactionData(String owner, int action, String account, String toAccount,
                                    BigDecimal amount, String currency, LocalDateTime transactAt, int result, String error);
+
+    @Query("SELECT COUNT(DISTINCT id) FROM transaction where owner = :owner")
+    Flux<Transaction> getAllTransactionsByUser(String owner);
+
+    @Query("SELECT COUNT(DISTINCT id) FROM transaction where owner = :owner")
+    Mono<Long> countTransactionsByUser(String owner);
 
 }
 

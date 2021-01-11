@@ -4,6 +4,7 @@ import com.xbank.domain.Transaction;
 import com.xbank.dto.TransactionDTO;
 import com.xbank.dto.UserDTO;
 import com.xbank.security.AuthoritiesConstants;
+import com.xbank.security.SecurityUtils;
 import com.xbank.service.TransactionService;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
@@ -65,6 +65,15 @@ public class TransactionController {
                 .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
                 .map(page -> ResponseEntity.ok().headers(PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromHttpRequest(request), page))
                         .body(transactionService.getAllTransactions(pageable)));
+    }
+
+    /**
+     * {@code GET /transactions} : get all transactions.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
+     */
+    @GetMapping("/user")
+    public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser() {
+        return transactionService.getAllTransactionsByUser();
     }
 
     /**

@@ -14,7 +14,10 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +44,6 @@ public class WebSocketConfig {
 
     @Bean
     WebSocketHandler webSocketHandler(TransactionEventPublisher transactionEventPublisher, ObjectMapper objectMapper) {
-
         Flux<TransactionEvent> publish = Flux.create(transactionEventPublisher).share();
         // Push events that are captured when catalogue item is added or updated
         return session -> {
@@ -50,27 +52,34 @@ public class WebSocketConfig {
             String userId = queryMap.getOrDefault("id", "");
             userMap.put(userId, session);
 
-            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
+            return publish.map(evt -> {
                 Transaction item = (Transaction) evt.getSource();
                 return item;
-            }).map(tx -> {
+            }).flatMap(tx -> {
+                String transactionAt = tx.getTransactAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                DecimalFormat formatter = new DecimalFormat("###,###,###.##");
+
                 WebSocketMessage textMessage = null;
                 if (tx.getAction() == 1) {
                     // Tranfer action
-                    textMessage = session.textMessage("Account " + tx.getAccount() + " has transferred to you " + tx.getAmount() + " at " + tx.getTransactAt());
+                    textMessage = session.textMessage("Số dư tài khoản " + tx.getAccount() + " - " + formatter.format(tx.getAmount()) + "VNĐ. Chuyển tiền sang tài khoàn " + tx.getToAccount() + " ngày " + transactionAt);
                 } else if (tx.getAction() == 2) {
                     // withdraw action
-                    textMessage = session.textMessage("Account " + tx.getAccount() + " withdraw " + tx.getAmount() + " at " + tx.getTransactAt());
+                    textMessage = session.textMessage("Số dư tài khoản " + tx.getAccount() + " - " + formatter.format(tx.getAmount()) + "VNĐ. Rút tiền ngày " + transactionAt);
                 } else if (tx.getAction() == 3) {
-                    // deposit actiond
-                    textMessage = session.textMessage("Account " + tx.getAccount() + " deposit " + tx.getAmount() + " at " + tx.getTransactAt());
+                    // deposit action
+                    textMessage = session.textMessage("Số dư tài khoản " + tx.getAccount() + " + " + formatter.format(tx.getAmount()) + "VNĐ. Nạp tiền ngày " + transactionAt);
                 }
-                return textMessage;
-            });
-            System.out.println("session getId ===>>>:" + session.getId());
-            System.out.println("session getHandshakeInfo ===>>>:" + session.getHandshakeInfo());
-            System.out.println("session getAttributes ===>>>:" + session.getAttributes());
-            return session.send(messageFlux);
+
+                String targetId = tx.getAccount();
+                if (userMap.containsKey(targetId)) {
+                    WebSocketSession targetSession = userMap.get(targetId);
+                    if (null != targetSession) {
+                        return targetSession.send(Mono.just(textMessage)).doFinally(signal ->  userMap.remove(userId));
+                    }
+                }
+                return session.send(Mono.just(textMessage));
+            }).then();
         };
     }
 

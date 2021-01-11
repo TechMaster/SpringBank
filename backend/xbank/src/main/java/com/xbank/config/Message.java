@@ -1,7 +1,6 @@
 package com.xbank.config;
 
-public
-class Message {
+public class Message {
     private String targetId;
     private String messageText;
     private String userId;
