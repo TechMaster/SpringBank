@@ -56,5 +56,10 @@ https://app.swaggerhub.com/apis/hoaronal/XBANK/1.0.0
 To check swagger, go to url:
 
 ```
-http://localhost:8082/api/users?page=2&size=1
+http://localhost:8081/api/users?page=2&size=1
+```
+## run with docker
+
+```bash
+docker-compose build && docker-compose up -d
 ```

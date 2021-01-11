@@ -1,0 +1,9 @@
+FROM maven:latest AS MAVEN_BUILD
+COPY pom.xml /build/
+COPY src /build/src/
+WORKDIR /build/
+RUN mvn clean install -DskipTests
+FROM openjdk:8-jre-alpine
+WORKDIR /app
+COPY --from=MAVEN_BUILD /build/target/xbank-0.0.1.jar /app/
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "xbank-0.0.1.jar"]
