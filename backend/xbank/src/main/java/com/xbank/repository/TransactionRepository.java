@@ -26,6 +26,9 @@ public interface TransactionRepository extends R2dbcRepository<Transaction, Long
     Mono<Void> saveTransactionData(String owner, int action, String account, String toAccount,
                                    BigDecimal amount, String currency, LocalDateTime transactAt, int result, String error);
 
+    @Query("SELECT * FROM transaction where account = :account")
+    Flux<Transaction> getAllTransactionsByAccount(String account);
+
     @Query("SELECT * FROM transaction where owner = :owner")
     Flux<Transaction> getAllTransactionsByUser(String owner);
 

@@ -68,6 +68,15 @@ public class TransactionController {
     }
 
     /**
+     * {@code GET /transactions} : get all transactions by account.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
+     */
+    @GetMapping("/{account}")
+    public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser(@PathVariable String account) {
+        return transactionService.getAllTransactionsByAccount(account);
+    }
+
+    /**
      * {@code GET /transactions} : get all transactions.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all transactions.
      */

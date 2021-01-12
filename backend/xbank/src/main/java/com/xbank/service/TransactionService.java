@@ -89,6 +89,12 @@ public class TransactionService {
     }
 
     @Transactional
+    public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByAccount(String account) {
+        return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
+                .map(login -> ResponseEntity.ok().body(transactionRepository.getAllTransactionsByAccount(account)));
+    }
+
+    @Transactional
     public Mono<ResponseEntity<Flux<Transaction>>> getAllTransactionsByUser() {
         return SecurityUtils.getCurrentUserLogin(Boolean.TRUE)
                 .map(login -> ResponseEntity.ok().body(transactionRepository.getAllTransactionsByUser(login)));
