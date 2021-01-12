@@ -32,6 +32,18 @@
   </nav>
 
   <div *ngIf="currentUser" class="right-menu">
+    <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
+      <mat-icon [matBadge]="notifications?.length || null" matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+    </div>
+
+    <mat-menu #notificationsDropdown="matMenu">
+      <app-notifications-box
+        [notifications]="notifications"
+      ></app-notifications-box>
+    </mat-menu>
+
     <div [matMenuTriggerFor]="userDropdown" class="user">
       <div class="user-avatar">
         <img [src]="currentUser.imageUrl || 'assets/img/default-avatar.png'" />
@@ -39,13 +51,8 @@
 
       <div class="user-name">
         {{ currentUser.firstName + " " + (currentUser.lastName || "") }}
+        <mat-icon inline style="margin-right: 5px">arrow_drop_down</mat-icon>
       </div>
-    </div>
-
-    <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
-      <mat-icon [matBadge]="notifications?.length || null" matBadgeColor="warn"
-        >notifications</mat-icon
-      >
     </div>
 
     <mat-menu #userDropdown="matMenu">
@@ -60,12 +67,6 @@
       <a mat-menu-item (click)="logout()"
         ><mat-icon inline>login</mat-icon> Đăng xuất</a
       >
-    </mat-menu>
-
-    <mat-menu #notificationsDropdown="matMenu">
-      <app-notifications-box
-        [notifications]="notifications"
-      ></app-notifications-box>
     </mat-menu>
   </div>
 

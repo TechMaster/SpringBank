@@ -16,6 +16,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NotificationsBoxComponent } from './components/notifications-box/notifications-box.component';
 import { environment } from 'src/environments/environment';
 
+// Set default locale
+import localeVi from '@angular/common/locales/vi';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeVi);
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({

@@ -8,6 +8,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { DepositMoneyComponent } from './deposit-money/deposit-money.component';
 import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
+import { TransactionComponent } from './transaction/transaction.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'transfer-money', component: TransferMoneyComponent },
   { path: 'deposit-money', component: DepositMoneyComponent },
   { path: 'withdraw-money', component: WithdrawMoneyComponent },
+  { path: 'transaction/:id', component: TransactionComponent },
   { path: 'notifications', component: NotificationsComponent },
 ];
 

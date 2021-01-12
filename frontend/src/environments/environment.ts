@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_ENDPOINT: 'http://localhost:8082/api',
-  SOCKET_ENDPOINT: 'ws://localhost:8082/ws/events',
+  API_ENDPOINT: 'http://localhost:8081/api',
+  SOCKET_ENDPOINT: 'ws://localhost:8081/ws/events',
   keycloak: {
     url: 'http://localhost:8080/auth',
     realm: 'microservice',

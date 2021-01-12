@@ -13,11 +13,9 @@ import { AccountService } from 'src/app/services/account.service';
 export class TransferMoneyComponent implements OnInit {
   transferForm = this.fb.group({
     account: ['', Validators.required],
-    owner: ['robin'],
     toAccount: ['', Validators.required],
-    // bankTarget: [''],
     balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-    cost: ['1'],
+    // cost: ['1'],
     note: [''],
   });
   accounts: BankAccount[] = [];
@@ -37,6 +35,12 @@ export class TransferMoneyComponent implements OnInit {
     this.accountService
       .getAccounts()
       .subscribe((data) => (this.accounts = data));
+  }
+
+  getBalance() {
+    this.accountService
+      .getAccountById(this.transferForm.value.account)
+      .subscribe((data: BankAccount) => (this.currentBalance = data.balance));
   }
 
   transferMoney() {

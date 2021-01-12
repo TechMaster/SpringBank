@@ -35,6 +35,12 @@ export class DepositMoneyComponent implements OnInit {
       .subscribe((data) => (this.accounts = data));
   }
 
+  getBalance() {
+    this.accountService
+      .getAccountById(this.depositForm.value.account)
+      .subscribe((data: BankAccount) => (this.currentBalance = data.balance));
+  }
+
   depositMoney() {
     const formValues = this.depositForm.value;
     formValues.balance = parseInt(formValues.balance);

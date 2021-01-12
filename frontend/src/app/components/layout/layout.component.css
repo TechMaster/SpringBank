@@ -48,11 +48,15 @@ a:hover {
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 0.1rem;
+  background: #e4e6eb;
+  border-radius: 2rem;
 }
 .user-avatar img {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2.4rem;
+  width: 2.4rem;
   border-radius: 50%;
+  vertical-align: middle;
 }
 .user-name {
   margin-left: 0.5rem;
@@ -61,7 +65,10 @@ a:hover {
   color: #192038;
 }
 .notifications {
-  margin: 0 20px;
+  margin: 0 18px;
+  padding: 8px;
+  background: #e4e6eb;
+  border-radius: 50%;
   cursor: pointer;
 }
 .main {

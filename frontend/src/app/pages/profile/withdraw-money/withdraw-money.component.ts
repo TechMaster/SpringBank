@@ -36,10 +36,9 @@ export class WithdrawMoneyComponent implements OnInit {
   }
 
   getBalance() {
-    // this.accountService
-    //   .getAccountById(this.withdrawForm.value.account)
-    //   .subscribe(console.log);
-    this.currentBalance = 1000000;
+    this.accountService
+      .getAccountById(this.withdrawForm.value.account)
+      .subscribe((data: BankAccount) => (this.currentBalance = data.balance));
   }
 
   withdrawMoney() {

@@ -7,7 +7,7 @@
     <div class="form">
       <mat-form-field>
         <mat-label>Chọn tài khoản</mat-label>
-        <mat-select formControlName="account">
+        <mat-select formControlName="account" (selectionChange)="getBalance()">
           <mat-option
             *ngFor="let account of accounts"
             [value]="account.account"
@@ -16,6 +16,13 @@
         </mat-select>
         <mat-error>Vui lòng chọn tài khoản</mat-error>
       </mat-form-field>
+
+      <div
+        *ngIf="depositForm.controls.account.touched"
+        style="margin-top: -1rem; margin-bottom: 1rem"
+      >
+        Số dư khả dụng: <b>{{ currentBalance | currency:"VND":"symbol":undefined:"vi-VN" }}</b>
+      </div>
 
       <div
         *ngIf="currentBalance > 0"

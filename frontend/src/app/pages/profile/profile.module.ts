@@ -7,8 +7,9 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { NotificationsComponent } from './notifications/notifications.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { DepositMoneyComponent } from './deposit-money/deposit-money.component';
-import { InfoComponent } from './info/info.component';
 import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
+import { InfoComponent } from './info/info.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.componen
     DepositMoneyComponent,
     WithdrawMoneyComponent,
     InfoComponent,
+    TransactionComponent,
   ],
   imports: [ShareModule, ProfileRoutingModule],
 })

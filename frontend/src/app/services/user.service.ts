@@ -54,6 +54,18 @@ export class UserService {
     this.keycloak.logout();
   }
 
+  changePassword(userId) {
+    return this.http.put<User>(
+      `${USER_API_ENDPOINT}/${userId}/reset-password`,
+      {
+      
+          type: 'password',
+          value: '111111',
+       
+      }
+    );
+  }
+
   countUsers(): Observable<number> {
     return this.http.get<number>(USER_API_ENDPOINT + '/count');
   }
