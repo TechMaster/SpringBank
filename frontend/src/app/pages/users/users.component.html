@@ -1,0 +1,79 @@
+<div class="page-header">
+  <button
+    mat-raised-button
+    class="btn-new"
+    color="primary"
+    routerLink="/users/create"
+  >
+    <mat-icon aria-hidden="false" aria-label="Add icon">add</mat-icon>
+    <span> Thêm User </span>
+  </button>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Tìm kiếm"
+      [(ngModel)]="searchUserInput"
+      (input)="searchUser()"
+    />
+  </mat-form-field>
+</div>
+
+<div style="position: relative">
+  <div class="mat-elevation-z1">
+    <table mat-table [dataSource]="users">
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef>Họ tên</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.firstName + ' ' + (element?.lastName || '') }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthday">
+        <th mat-header-cell *matHeaderCellDef>Ngày sinh</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.birthday | date: "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef class="text-center"></th>
+        <td mat-cell *matCellDef="let element" class="text-center">
+          <button
+            mat-button
+            class="btn-edit"
+            [routerLink]="'/users/edit/' + element.id"
+          >
+            <mat-icon aria-hidden="false" aria-label="Edit icon">edit</mat-icon>
+          </button>
+          <button
+            mat-button
+            class="btn-delete"
+            (click)="openDialogDeleteUser(element.id)"
+          >
+            <mat-icon aria-hidden="false" aria-label="Delete icon"
+              >delete</mat-icon
+            >
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      #paginator
+      [length]="totalItems"
+      [pageSize]="itemsPerPage"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      (page)="changePage($event)"
+    ></mat-paginator>
+  </div>
+</div>

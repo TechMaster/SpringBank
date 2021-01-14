@@ -1,1 +1,84 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+body ::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+}
+body ::-webkit-scrollbar-thumb {
+  background: #e4e9f2;
+  cursor: pointer;
+  border-radius: 0.15625rem;
+}
+img {
+  max-width: 100%;
+}
+a {
+  text-decoration: none;
+  color: #192038;
+}
+a:hover {
+  color: #21409a;
+}
+
+/* Generic classes */
+.text-center {
+  text-align: center !important;
+}
+.all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-wrapper {
+  margin: 20px 16px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+.button-group > button {
+  min-width: 130px;
+}
+
+/* Custom style Angular Material components */
+.mat-icon {
+  vertical-align: bottom;
+}
+.mat-form-field {
+  margin-bottom: 1rem;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.mat-raised-button ~ .mat-raised-button {
+  margin-left: 16px;
+}
+
+/* Page transition animation */
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+router-outlet + * {
+  display: block;
+  -webkit-animation: fade 1s;
+  animation: fade 1s;
+}

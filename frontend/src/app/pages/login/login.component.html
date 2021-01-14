@@ -1,0 +1,39 @@
+<div class="all-center">
+  <mat-card class="form">
+    <h1>Đăng nhập tài khoản Spring Bank</h1>
+
+    <div class="error text-center" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        placeholder="Tài khoản"
+        autocomplete="off"
+        [(ngModel)]="username"
+      />
+      <mat-error>Xin vui lòng nhập tài khoản</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        placeholder="Mật khẩu"
+        type="password"
+        [(ngModel)]="password"
+        (keyup.enter)="login()"
+      />
+      <mat-error>Xin vui lòng nhập mật khẩu</mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="btn-login"
+      color="primary"
+      (click)="login()"
+    >
+      <span>Đăng nhập</span>
+    </button>
+
+    <a class="text-center" routerLink="/login">Quên mật khẩu?</a>
+  </mat-card>
+</div>

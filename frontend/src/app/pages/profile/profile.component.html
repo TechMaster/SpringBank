@@ -1,0 +1,70 @@
+<!-- <div class="container">
+  <mat-card class="info-box">
+    <h3>Xin chào</h3>
+    <h2 class="user-name">
+      <a routerLink="/profile/info">
+        {{ currentUser?.firstName }}
+        <mat-icon inline style="margin-top: -5px">edit</mat-icon>
+      </a>
+    </h2>
+    <p>Lần đăng nhập gần nhất</p>
+    <p>06/11/2020 10:20:23</p>
+  </mat-card>
+
+  <mat-card class="info-box">
+    <h3>Chăm sóc khách hàng 24/7</h3>
+    <h2><mat-icon inline>phone</mat-icon> 1900 12 34 56</h2>
+  </mat-card>
+</div> -->
+
+<h1 class="title text-center">Chọn dịch vụ</h1>
+
+<div class="container">
+  <mat-card class="service-box">
+    <a routerLink="/profile/accounts">
+      <mat-card-content class="text-center">
+        <p class="icon"><mat-icon inline>account_balance</mat-icon></p>
+      </mat-card-content>
+
+      <mat-card-header>
+        <mat-card-title>Tài khoản</mat-card-title>
+      </mat-card-header>
+    </a>
+  </mat-card>
+
+  <mat-card class="service-box">
+    <a routerLink="/profile/transfer-money">
+      <mat-card-content class="text-center">
+        <p class="icon"><mat-icon inline>cached</mat-icon></p>
+      </mat-card-content>
+
+      <mat-card-header>
+        <mat-card-title>Chuyển tiền</mat-card-title>
+      </mat-card-header>
+    </a>
+  </mat-card>
+
+  <mat-card class="service-box">
+    <a routerLink="/profile/deposit-money">
+      <mat-card-content class="text-center">
+        <p class="icon"><mat-icon inline>monetization_on</mat-icon></p>
+      </mat-card-content>
+
+      <mat-card-header>
+        <mat-card-title>Nạp tiền</mat-card-title>
+      </mat-card-header>
+    </a>
+  </mat-card>
+
+  <mat-card class="service-box">
+    <a routerLink="/profile/withdraw-money">
+      <mat-card-content class="text-center">
+        <p class="icon"><mat-icon inline>atm</mat-icon></p>
+      </mat-card-content>
+
+      <mat-card-header>
+        <mat-card-title>Rút tiền</mat-card-title>
+      </mat-card-header>
+    </a>
+  </mat-card>
+</div>

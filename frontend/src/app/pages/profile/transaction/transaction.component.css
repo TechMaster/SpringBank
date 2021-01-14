@@ -1,0 +1,29 @@
+:host {
+  margin-top: 30px;
+}
+.container {
+  padding: 0 16px;
+}
+.transaction-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #ddd;
+}
+.transaction-item:last-child {
+  border-bottom: none;
+}
+.transaction-date {
+  color: #8c8c8c;
+}
+.transaction-content > p:last-child {
+  margin-bottom: 0;
+}
+.red {
+  color: #f04336;
+}
+.green {
+  color: #59a703;
+}

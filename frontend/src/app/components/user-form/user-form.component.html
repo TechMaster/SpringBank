@@ -1,0 +1,42 @@
+<div class="form" [formGroup]="userForm">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Username"
+      autocomplete="off"
+      formControlName="username"
+    />
+    <mat-error
+      >Xin vui lòng nhập tên tài khoản chỉ chứa các ký tự alphabet</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="First Name"
+      autocomplete="off"
+      formControlName="firstName"
+    />
+    <mat-error>Xin vui lòng nhập tên</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Last Name"
+      autocomplete="off"
+      formControlName="lastName"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Email"
+      autocomplete="off"
+      formControlName="email"
+    />
+    <mat-error>Sai định dạng email</mat-error>
+  </mat-form-field>
+</div>

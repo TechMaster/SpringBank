@@ -1,0 +1,528 @@
+openapi: 3.0.0
+info:
+  description: XBANK
+  version: "1.0.0"
+  title: XBANK
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/hoaronal/XBANK/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://18.141.168.118:3000
+tags:
+  - name: Accounts
+    description: Các API về tài khoản
+  - name: Transactions
+    description: Các API về giao dịch của tài khoản
+  - name: Notifications
+    description: Các API về thông báo của tài khoản
+
+paths:
+  /api/accounts:
+    post:
+      tags:
+        - Accounts
+      description: Create Account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: string
+                  description: account name
+                owner:
+                  type: string
+                  description: owner account
+                action:
+                  type: number
+                  description: action account
+                balance:
+                  type: number
+                  description: balance account
+                currency:
+                  type: string
+                  description: currency account
+            example:
+              account: 0987654321
+              owner: quanghoa
+              action: 1
+              balance: 1000000
+              currency: VND
+      responses:
+        '200':
+          description: Create account success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+    get:
+      tags:
+        - Accounts
+      description: Get Accounts
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+            example: 1
+        - in: query
+          name: size
+          required: true
+          schema:
+            type: number
+            example: 10
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/user:
+    get:
+      tags:
+        - Accounts
+      description: Get Accounts By User
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/{account}:
+    get:
+      tags:
+        - Accounts
+      description: Get Account detail
+      parameters:
+        - in: path
+          name: account
+          required: true
+          schema:
+            type: string
+            example: quanghoa
+      responses:
+        '200':
+          description: Get account success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/deposit:
+    post:
+      tags:
+        - Accounts
+      description: Deposit money to account
+      operationId: Deposit account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: string
+                  description: Name account deposit
+                  example: 00123456789
+                balance:
+                  type: number
+                  example: 1000000
+      responses:
+        '200':
+          description: Deposit success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/withdraw:
+    post:
+      tags:
+        - Accounts
+      description: Withdraw money to account
+      operationId: Withdraw account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: string
+                  description: Name account withdraw
+                  example: 00123456789
+                balance:
+                  type: number
+                  example: 1000000
+      responses:
+        '200':
+          description: Withdraw success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/accounts/transfer:
+    post:
+      tags:
+        - Accounts
+      description: Transfer money to account
+      operationId: Transfer account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: string
+                  description: Name account send
+                  example: 00123456789
+                toAccount:
+                  type: string
+                  description: Name account receive
+                  example: 00987654321
+                balance:
+                  type: number
+                  example: 1000000
+      responses:
+        '200':
+          description: Withdraw success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/transactions:
+    get:
+      tags:
+        - Transactions
+      description: API danh sách giao dich
+      operationId: Transactions list
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+            example: 2
+        - in: query
+          name: size
+          schema:
+            type: number
+            example: 10
+      responses:
+        '200':
+          description: List transaction
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/transactions/{id}:
+    get:
+      tags:
+        - Transactions
+      description: API detail transaction
+      operationId: Transaction detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+            example: 10
+      responses:
+        '200':
+          description: Detail transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/notifications:
+    get:
+      tags:
+        - Notifications
+      description: API danh sách thông báo
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+  /api/notifications/{id}:
+    get:
+      tags:
+        - Notifications
+      description: API nội dung thông báo
+      operationId: Notifications detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 10001
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '400':
+          description: Bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta400'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta500'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        account:
+          type: string
+          example: 0019001244
+        owner:
+          type: string
+          example: quanghoa
+        action:
+          type: number
+          format: email
+        balance:
+          type: number
+          example: 1000000
+        currency:
+          type: string
+          example: VND
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 11
+        owner:
+          type: string
+          example: admin
+        action:
+          type: number
+          example: 1
+        account:
+          type: string
+          example: user
+        toAccount:
+          type: string
+          example: user1
+        amount:
+          type: integer
+          example: 10000
+        currency:
+          type: string
+          example: VND
+        transactAt:
+          type: string
+          format: date
+          example: 2020-12-27
+        result:
+          type: number
+          example: 1
+        error:
+          type: string
+          example: No error
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        account:
+          type: string
+          example: user
+        title:
+          type: string
+          example: user has transferred to you 10000 at 2020-12-27T23:34:03.096268
+        createdDate:
+          type: string
+          example: 2020-12-10
+        lastModifiedDate:
+          type: string
+          example:  2020-12-10
+    Meta400:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Missing field *ABCXYZ*'
+    Meta500:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: 'INTERNAL SERVER ERROR'

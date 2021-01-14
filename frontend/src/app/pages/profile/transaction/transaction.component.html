@@ -1,0 +1,67 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Lịch sử giao dịch</mat-card-title>
+  </mat-card-header>
+
+  <mat-list>
+    <mat-list-item>
+      Số tài khoản: &nbsp; <b> {{ account }} </b>
+    </mat-list-item>
+    <mat-list-item>
+      Số dư khả dụng: &nbsp;
+      <b>
+        {{ balance | currency: "VND":"symbol":undefined:"vi-VN" }}
+      </b>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
+
+<mat-card style="margin-top: 30px">
+  <div class="container">
+    <div class="transaction-item" *ngFor="let item of transactions">
+      <div class="transaction-content">
+        <p class="transaction-date">
+          {{ item.transactAt | date: "dd/MM/yyyy" }}
+        </p>
+        <p>
+          {{
+            item.action === 1
+              ? "Chuyển tiền từ tài khoản " +
+                item.account +
+                " đến tài khoản " +
+                item.toAccount +
+                ". Nội dung chuyển khoản: " +
+                item.note +
+                "."
+              : item.action === 2
+              ? "Rút tiền từ tài khoản"
+              : "Nạp tiền vào tài khoản"
+          }}{{ item.note }}
+        </p>
+      </div>
+
+      <div
+        [class]="
+          item.action === 1
+            ? item.toAccount === account
+              ? 'green'
+              : 'red'
+            : item.action === 2
+            ? 'red'
+            : 'green'
+        "
+      >
+        {{
+          item.action === 1
+            ? item.toAccount === account
+              ? "+"
+              : "-"
+            : item.action === 2
+            ? "-"
+            : "+"
+        }}
+        {{ item.amount | currency: "VND":"symbol":undefined:"vi-VN" }}
+      </div>
+    </div>
+  </div>
+</mat-card>

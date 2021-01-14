@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Thêm User</mat-card-title>
+  </mat-card-header>
+
+  <div [formGroup]="createUserForm" class="form-wrapper">
+    <app-user-form formControlName="profile"></app-user-form>
+
+    <app-password-form formControlName="password"></app-password-form>
+
+    <div class="button-group">
+      <button mat-raised-button routerLink="/users">Hủy</button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!createUserForm.valid"
+        (click)="createUser()"
+      >
+        Thêm mới
+      </button>
+    </div>
+  </div>
+</mat-card>

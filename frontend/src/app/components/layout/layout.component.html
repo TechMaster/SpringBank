@@ -1,0 +1,93 @@
+<header class="header mat-elevation-z2">
+  <nav class="nav">
+    <div class="logo">
+      <a routerLink="/">Spring Bank</a>
+    </div>
+
+    <ul class="menu">
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Trang chủ</a
+        >
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active">Giới thiệu</a>
+      </li>
+      <li
+        *ngIf="
+          currentUser &&
+          (currentUser.roles.includes('admin') ||
+            currentUser.roles.includes('bank_operator'))
+        "
+      >
+        <a routerLink="/users" routerLinkActive="active">Quản lý User</a>
+      </li>
+      <li *ngIf="currentUser && currentUser.roles.includes('customer')">
+        <a routerLink="/profile" routerLinkActive="active">Trang cá nhân</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div *ngIf="currentUser" class="right-menu">
+    <div [matMenuTriggerFor]="notificationsDropdown" class="notifications">
+      <mat-icon [matBadge]="notifications?.length || null" matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+    </div>
+
+    <mat-menu #notificationsDropdown="matMenu">
+      <app-notifications-box
+        [notifications]="notifications"
+      ></app-notifications-box>
+    </mat-menu>
+
+    <div [matMenuTriggerFor]="userDropdown" class="user">
+      <div class="user-avatar">
+        <img [src]="currentUser.imageUrl || 'assets/img/default-avatar.png'" />
+      </div>
+
+      <div class="user-name">
+        {{ currentUser.firstName + " " + (currentUser.lastName || "") }}
+        <mat-icon inline style="margin-right: 5px">arrow_drop_down</mat-icon>
+      </div>
+    </div>
+
+    <mat-menu #userDropdown="matMenu">
+      <!-- <a mat-menu-item routerLink="/profile/info"
+        ><mat-icon inline>person</mat-icon> Thông tin cá nhân</a
+      > -->
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="/profile"
+        ><mat-icon inline>lock</mat-icon> Đổi mật khẩu</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-menu-item (click)="logout()"
+        ><mat-icon inline>login</mat-icon> Đăng xuất</a
+      >
+    </mat-menu>
+  </div>
+
+  <ul class="menu" *ngIf="!currentUser">
+    <li>
+      <!-- <a class="all-center" routerLink="/login" routerLinkActive="active">
+        <mat-icon inline>person</mat-icon> &nbsp;<span>Đăng nhập</span>
+      </a> -->
+      <a class="all-center" (click)="login()" href="javascript: void(0)">
+        <mat-icon inline>person</mat-icon> &nbsp;<span>Đăng nhập</span>
+      </a>
+    </li>
+  </ul>
+</header>
+
+<main class="main">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<footer class="footer">
+  <div>© 2020 Spring Bank</div>
+</footer>

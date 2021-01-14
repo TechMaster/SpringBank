@@ -1,0 +1,38 @@
+<h1 class="title" style="margin: 30px 0">Danh sách tài khoản</h1>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let account of bankAccounts">
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        ><b>{{ account.account }}</b></mat-panel-title
+      >
+      <mat-panel-description>Loại: Tài khoản thanh toán</mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>
+      Số dư:
+      <b>{{ account.balance | currency: "VND":"symbol":undefined:"vi-VN" }}</b>
+    </p>
+    <p>
+      <a
+        [routerLink]="
+          '/profile/transaction/' + account.account + '/' + account.balance
+        "
+        ><mat-icon inline>chevron_right</mat-icon> Xem lịch sử giao dịch</a
+      >
+    </p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<button mat-raised-button routerLink="/profile" style="margin-top: 30px">
+  <mat-icon>chevron_left</mat-icon> Quay lại
+</button>
+
+<button
+  mat-raised-button
+  class="btn-new"
+  color="primary"
+  routerLink="/profile/create-account"
+>
+  <mat-icon aria-hidden="false" aria-label="Add icon">add</mat-icon>
+  <span> Thêm tài khoản </span>
+</button>

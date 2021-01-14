@@ -1,0 +1,41 @@
+:host {
+  margin-top: 10%;
+}
+
+h1 {
+  color: #636363;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.error {
+  margin: 1rem 0;
+  padding: 0.75rem 1.25rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  border-color: #f5c6cb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.form > * {
+  width: 100%;
+}
+
+.form-field {
+  margin: 0.5rem 0;
+}
+
+.btn-login {
+  margin: 1rem auto;
+  padding: 0.5rem;
+  font-size: 1rem;
+}

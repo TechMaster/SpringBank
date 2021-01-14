@@ -1,0 +1,81 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Thông tin cá nhân</mat-card-title>
+  </mat-card-header>
+
+  <div class="container form-wrapper">
+    <div class="form" [formGroup]="profileForm">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Name"
+          autocomplete="off"
+          formControlName="name"
+        />
+        <mat-error>You must enter a value</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Birthday"
+          autocomplete="off"
+          formControlName="birthday"
+        />
+        <mat-error>Invalid date format</mat-error>
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Phone"
+          autocomplete="off"
+          formControlName="phone"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea
+          matInput
+          placeholder="Bio"
+          rows="4"
+          formControlName="bio"
+        ></textarea>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-update"
+        [disabled]="!profileForm.valid"
+        (click)="updateProfile()"
+      >
+        Update Profile
+      </button>
+    </div>
+
+    <div class="avatar">
+      <img [src]="avatarUrl" alt="avatar" />
+
+      <input
+        #avatar
+        type="file"
+        accept="image/*"
+        style="display: none"
+        (change)="onFileChange($event)"
+      />
+
+      <button
+        mat-raised-button
+        (click)="avatar.click()"
+        style="margin-top: 1rem"
+      >
+        Change Avatar
+      </button>
+    </div>
+  </div>
+</mat-card>

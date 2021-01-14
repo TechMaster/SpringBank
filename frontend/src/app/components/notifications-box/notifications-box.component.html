@@ -1,0 +1,43 @@
+<div>
+  <div class="box-title">
+    <h3 style="margin: 0 20px 0 0">Thông báo</h3>
+    <a href="javascript:void(0)" (click)="readAllNotifications()"
+      ><mat-icon inline>done_all</mat-icon> Đã xem tất cả</a
+    >
+  </div>
+
+  <ng-container *ngFor="let item of notifications">
+    <div class="box-item">
+      <span>
+        {{ item.title }}
+        <mat-icon inline color="primary" *ngIf="!item.read"
+          >fiber_manual_record</mat-icon
+        >
+      </span>
+      <!-- <div class="time">
+        <span style="margin-right: 10px"
+          ><mat-icon inline>date_range</mat-icon>
+          {{ item.createdDate | date: "dd/MM/yyyy" }}</span
+        >
+        <span
+          ><mat-icon inline>schedule</mat-icon>
+          {{ item.createdDate | date: "shortTime" }}</span
+        >
+      </div> -->
+    </div>
+
+    <mat-divider></mat-divider>
+  </ng-container>
+
+  <ng-container *ngIf="notifications?.length === 0">
+    <div class="box-item">
+      <span> Chưa có thông báo mới nào </span>
+    </div>
+
+    <mat-divider></mat-divider>
+  </ng-container>
+
+  <div class="box-item text-center">
+    <a routerLink="/profile/notifications"> Xem tất cả thông báo </a>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Tạo tài khoản</mat-card-title>
+  </mat-card-header>
+
+  <div [formGroup]="createAccountForm" class="form-wrapper">
+    <div class="form">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Số tài khoản"
+          autocomplete="off"
+          formControlName="account"
+        />
+        <mat-error>Xin vui lòng nhập số tài khoản gồm 9 số</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Số tiền"
+          autocomplete="off"
+          formControlName="balance"
+        />
+      </mat-form-field>
+
+      <div class="button-group">
+        <button mat-raised-button routerLink="/profile/accounts">Hủy</button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!createAccountForm.valid"
+          (click)="createAccount()"
+        >
+          Tạo tài khoản
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>

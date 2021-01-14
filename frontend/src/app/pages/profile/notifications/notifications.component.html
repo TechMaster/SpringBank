@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Thông báo</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngFor="let item of notifications">
+      <mat-divider></mat-divider>
+
+      <div class="item">
+        <span>
+          {{ item.title }}
+          <mat-icon inline color="primary" *ngIf="!item.read"
+            >fiber_manual_record</mat-icon
+          >
+        </span>
+
+        <div class="time">
+          <span style="margin-right: 10px"
+            ><mat-icon inline>date_range</mat-icon>
+            {{ item.createdDate | date: "dd/MM/yyyy" }}</span
+          >
+          <span
+            ><mat-icon inline>schedule</mat-icon>
+            {{ item.createdDate | date: "shortTime" }}</span
+          >
+        </div>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

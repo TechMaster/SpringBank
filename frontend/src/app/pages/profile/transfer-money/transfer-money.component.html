@@ -1,0 +1,105 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Chuyển tiền</mat-card-title>
+  </mat-card-header>
+
+  <div *ngIf="!isDone" [formGroup]="transferForm" class="form-wrapper">
+    <div class="form">
+      <mat-form-field>
+        <mat-label>Tài khoản nguồn</mat-label>
+        <mat-select formControlName="account" (selectionChange)="getBalance()">
+          <mat-option
+            *ngFor="let account of accounts"
+            [value]="account.account"
+            >{{ account.account }}</mat-option
+          >
+        </mat-select>
+        <mat-error>Vui lòng chọn tài khoản</mat-error>
+      </mat-form-field>
+
+      <div
+        *ngIf="transferForm.controls.account.touched"
+        style="margin-top: -1rem; margin-bottom: 1rem"
+      >
+        Số dư khả dụng:
+        <b>{{ currentBalance | currency: "VND":"symbol":undefined:"vi-VN" }}</b>
+      </div>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Tài khoản thụ hưởng"
+          autocomplete="off"
+          formControlName="toAccount"
+          [errorStateMatcher]="checkToAccountValidParentMatcher"
+        />
+        <mat-error
+          >Quý khách vui lòng nhập tài khoản thụ hưởng khác tài khoản
+          nguồn</mat-error
+        >
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+        <mat-label>Ngân hàng thụ hưởng</mat-label>
+        <mat-select formControlName="bankTarget">
+          <mat-option value="agribank"
+            >NNO&PT NONG THON VN (AGRIBANK)</mat-option
+          >
+          <mat-option value="bidv">DAU TU VA PHAT TRIEN VN (BIDV)</mat-option>
+          <mat-option value="vietinbank"
+            >CONG THUONG VN (VIETINBANK)</mat-option
+          >
+        </mat-select>
+        <mat-error>Quý khách vui lòng chọn ngân hàng thụ hưởng</mat-error>
+      </mat-form-field> -->
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Số tiền"
+          autocomplete="off"
+          formControlName="balance"
+        />
+        <mat-error>Quý khách vui lòng nhập số tiền chuyển khoản</mat-error>
+      </mat-form-field>
+
+      <!-- <p>Phí giao dịch</p>
+      <mat-radio-group formControlName="cost">
+        <mat-radio-button value="1"> Người chuyển trả </mat-radio-button>
+        <mat-radio-button value="2"> Người nhận trả </mat-radio-button>
+      </mat-radio-group>
+      <br /> -->
+
+      <mat-form-field>
+        <mat-label>Nội dung</mat-label>
+        <textarea matInput formControlName="note">Chuyển tiền</textarea>
+        <mat-error>Nhập nội dung chuyển tiền</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="button-group">
+      <button mat-raised-button routerLink="/profile">Hủy</button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!transferForm.valid"
+        (click)="transferMoney()"
+      >
+        Xác nhận
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isDone" class="form-wrapper">
+    <h1>Giao dịch thành công. Bạn có muốn thực hiện giao dịch khác?</h1>
+
+    <div class="button-group">
+      <button mat-raised-button routerLink="/profile">Không</button>
+
+      <button mat-raised-button color="primary" (click)="resetValue()">
+        Tiếp tục
+      </button>
+    </div>
+  </div>
+</mat-card>

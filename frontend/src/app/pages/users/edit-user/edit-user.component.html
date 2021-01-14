@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cập nhật User</mat-card-title>
+  </mat-card-header>
+
+  <div [formGroup]="updateUserForm" class="form-wrapper">
+    <app-user-form formControlName="profile"></app-user-form>
+
+    <mat-form-field>
+      <mat-label>Quyền hạn</mat-label>
+      <mat-select formControlName="roles" multiple>
+        <mat-option
+          *ngFor="let role of roles"
+          [value]="role.id + '@' + role.name"
+        >
+          {{ role.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-group">
+      <button mat-raised-button routerLink="/users">Hủy</button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!updateUserForm.valid"
+        (click)="updateUser()"
+      >
+        Cập nhật
+      </button>
+    </div>
+  </div>
+</mat-card>

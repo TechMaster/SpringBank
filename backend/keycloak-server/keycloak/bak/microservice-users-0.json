@@ -1,0 +1,82 @@
+{
+  "realm" : "microservice",
+  "users" : [ {
+    "id" : "3c71e367-0da3-4a87-b4b1-41508b07510e",
+    "createdTimestamp" : 1608731079525,
+    "username" : "admin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "admin",
+    "lastName" : "admin",
+    "email" : "admin@gmail.com",
+    "credentials" : [ {
+      "id" : "3a842809-c31e-47d2-8afa-c3227bb13d31",
+      "type" : "password",
+      "createdDate" : 1608731090740,
+      "secretData" : "{\"value\":\"E+aMqK7z6AAl2531JXVgAEHyI/NJuAh8+LI4lB/F+2SrbiKIDW7uwba3fltsrqmbDiRRMsBJ6zlp2GIt2z51ww==\",\"salt\":\"Y1EEs/WFrtI28BdV2qTdgg==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "bank_operator", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "xbank" : [ "bank_operator" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "ac7aa32d-aa9c-4d78-940e-fcef7f3e2bb2",
+    "createdTimestamp" : 1608731125970,
+    "username" : "customer_1",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "customer",
+    "lastName" : "1",
+    "email" : "customer_1@gmail.com",
+    "credentials" : [ {
+      "id" : "3d61b6f8-f920-46e7-9ee7-77d12b2777fd",
+      "type" : "password",
+      "createdDate" : 1608731137150,
+      "secretData" : "{\"value\":\"4V/xOnA/J1ezE3h6dMp6Tuera2oYWUkBxBNQyKtsGKgTzhct4LAH1w3cTZEXeM0RoNpRsbdJCqjYLEgdGWP0Jw==\",\"salt\":\"q5qjOQB+Ow7fDtH7oC3ewA==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "customer", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "xbank" : [ "customer" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "c1fdbbfa-b696-473d-b035-ff0b61dae907",
+    "createdTimestamp" : 1608731167255,
+    "username" : "customer_2",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "customer",
+    "lastName" : "2",
+    "email" : "customer_2@gmail.com",
+    "credentials" : [ {
+      "id" : "9767aae1-9ac3-4abb-99c8-005ff8a549f7",
+      "type" : "password",
+      "createdDate" : 1608731178491,
+      "secretData" : "{\"value\":\"WEexk/m6mvXOXU+Ka2obPZeewM2rDL4DHRmTStG8+ITdJfq8+ZkMGunXP8HuQoY3ux0G1QAvkCb5eFgZ0o0NcA==\",\"salt\":\"j0RFNV87+ifv+NhRLhl80A==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "customer", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "xbank" : [ "customer" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
