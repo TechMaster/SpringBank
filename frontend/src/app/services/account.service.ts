@@ -39,7 +39,9 @@ export class AccountService {
     return this.http.post(ACCOUNT_API_ENDPOINT + '/withdraw', data);
   }
 
-  getTransaction() {
-    return this.http.get(environment.API_ENDPOINT + '/transaction/user');
+  getTransaction(bankAccount: string) {
+    return this.http.get(
+      `${environment.API_ENDPOINT}/transactions/user/${bankAccount}`
+    );
   }
 }

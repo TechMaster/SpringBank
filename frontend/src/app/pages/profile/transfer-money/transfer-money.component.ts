@@ -1,9 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { BankAccount } from 'src/app/models/bank-account.model';
 import { AccountService } from 'src/app/services/account.service';
+
+export class CheckToAccountValidParentMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null): boolean {
+    return (
+      control.touched &&
+      control.parent.invalid &&
+      control.parent.errors?.toAccountInvalid
+    );
+  }
+}
 
 @Component({
   selector: 'app-transfer-money',
@@ -11,13 +28,17 @@ import { AccountService } from 'src/app/services/account.service';
   styles: [':host {width: 100%; max-width: 500px; margin: 30px auto;}'],
 })
 export class TransferMoneyComponent implements OnInit {
-  transferForm = this.fb.group({
-    account: ['', Validators.required],
-    toAccount: ['', Validators.required],
-    balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-    // cost: ['1'],
-    note: [''],
-  });
+  transferForm = this.fb.group(
+    {
+      account: ['', Validators.required],
+      toAccount: ['', Validators.required],
+      balance: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      // cost: ['1'],
+      note: ['', Validators.required],
+    },
+    { validator: this.checkToAccount }
+  );
+  checkToAccountValidParentMatcher = new CheckToAccountValidParentMatcher();
   accounts: BankAccount[] = [];
   currentBalance: number = 0;
   isDone: boolean = false;
@@ -35,6 +56,13 @@ export class TransferMoneyComponent implements OnInit {
     this.accountService
       .getAccounts()
       .subscribe((data) => (this.accounts = data));
+  }
+
+  // Do not allow toAccount equal account
+  checkToAccount(group: FormGroup): ValidationErrors | null {
+    let account = group.get('account').value;
+    let toAccount = group.get('toAccount').value;
+    return account !== toAccount ? null : { toAccountInvalid: true };
   }
 
   getBalance() {

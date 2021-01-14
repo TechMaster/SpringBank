@@ -21,7 +21,8 @@
         *ngIf="transferForm.controls.account.touched"
         style="margin-top: -1rem; margin-bottom: 1rem"
       >
-        Số dư khả dụng: <b>{{ currentBalance | currency:"VND":"symbol":undefined:"vi-VN" }}</b>
+        Số dư khả dụng:
+        <b>{{ currentBalance | currency: "VND":"symbol":undefined:"vi-VN" }}</b>
       </div>
 
       <mat-form-field>
@@ -30,9 +31,11 @@
           placeholder="Tài khoản thụ hưởng"
           autocomplete="off"
           formControlName="toAccount"
+          [errorStateMatcher]="checkToAccountValidParentMatcher"
         />
         <mat-error
-          >Quý khách vui lòng nhập/chọn tài khoản thụ hưởng VND</mat-error
+          >Quý khách vui lòng nhập tài khoản thụ hưởng khác tài khoản
+          nguồn</mat-error
         >
       </mat-form-field>
 
@@ -70,6 +73,7 @@
       <mat-form-field>
         <mat-label>Nội dung</mat-label>
         <textarea matInput formControlName="note">Chuyển tiền</textarea>
+        <mat-error>Nhập nội dung chuyển tiền</mat-error>
       </mat-form-field>
     </div>
 

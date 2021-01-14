@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-transaction',
@@ -8,36 +10,24 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./transaction.component.css'],
 })
 export class TransactionComponent implements OnInit {
-  avatarUrl: string = 'assets/img/default-avatar.png';
+  account: string;
+  balance: string;
+  transactions;
 
-  profileForm = this.fb.group({
-    name: ['Robin', [Validators.required]],
-    birthday: [''],
-    phone: ['', Validators.required],
-    bio: [''],
-  });
-
-  constructor(private titleService: Title, private fb: FormBuilder) {}
+  constructor(
+    private titleService: Title,
+    private accountService: AccountService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('Thông tin cá nhân');
-  }
 
-  onFileChange(event): void {
-    const files = event.target.files;
-    let reader = new FileReader();
+    this.account = this.route.snapshot.paramMap.get('account');
+    this.balance = this.route.snapshot.paramMap.get('balance');
 
-    if (files && files.length) {
-      const file = event.target.files[0];
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.avatarUrl = reader.result.toString();
-      };
-    }
-  }
-
-  updateProfile() {
-    console.log(this.profileForm.value);
+    this.accountService.getTransaction(this.account).subscribe((data) => {
+      this.transactions = data;
+    });
   }
 }

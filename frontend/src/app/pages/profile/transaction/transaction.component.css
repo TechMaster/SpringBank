@@ -1,32 +1,29 @@
 :host {
   margin-top: 30px;
 }
-
 .container {
+  padding: 0 16px;
+}
+.transaction-item {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #ddd;
 }
-
-.avatar {
-  display: flex;
-  flex-direction: column;
-  margin-left: 15px;
+.transaction-item:last-child {
+  border-bottom: none;
 }
-
-.avatar img {
-  max-width: 300px;
+.transaction-date {
+  color: #8c8c8c;
 }
-
-.btn-update {
-  margin-top: 2rem;
-  max-width: 200px;
+.transaction-content > p:last-child {
+  margin-bottom: 0;
 }
-
-.addresses {
-  display: flex;
+.red {
+  color: #f04336;
 }
-
-.address-input {
-  width: 100%;
-  margin-right: 1.5rem;
+.green {
+  color: #59a703;
 }

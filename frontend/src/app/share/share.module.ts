@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -48,6 +49,7 @@ import { DialogConfirmDeleteComponent } from '../components/dialog-confirm-delet
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
@@ -73,6 +75,7 @@ import { DialogConfirmDeleteComponent } from '../components/dialog-confirm-delet
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,

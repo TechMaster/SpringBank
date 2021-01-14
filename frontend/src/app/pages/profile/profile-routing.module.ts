@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'transfer-money', component: TransferMoneyComponent },
   { path: 'deposit-money', component: DepositMoneyComponent },
   { path: 'withdraw-money', component: WithdrawMoneyComponent },
-  { path: 'transaction/:id', component: TransactionComponent },
+  { path: 'transaction/:account/:balance', component: TransactionComponent },
   { path: 'notifications', component: NotificationsComponent },
 ];
 
